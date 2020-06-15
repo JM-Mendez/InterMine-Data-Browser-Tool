@@ -3147,6 +3147,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@popperjs/core@npm:^2.4.0":
+  version: 2.4.2
+  resolution: "@popperjs/core@npm:2.4.2"
+  checksum: 70c26e8d97f927d98d26232c08571163c46f4174fbfe60c8e721dd9e878d54409a2a9c00f1527d3c287969b7460e08327993d60c10c89e35917d4ef26885041e
+  languageName: node
+  linkType: hard
+
 "@reach/router@npm:^1.3.3":
   version: 1.3.3
   resolution: "@reach/router@npm:1.3.3"
@@ -6447,6 +6454,13 @@ __metadata:
     raw-body: 2.4.0
     type-is: ~1.6.17
   checksum: 18c2a81df5eabc7e3541bc9ace394b88e6fbd390989b5e764ff34c3f9dbd097e19986c31baa9b855ec5c2cff2b79157449afb0cdfb97bb99c11d6239b2c47a34
+  languageName: node
+  linkType: hard
+
+"body-scroll-lock@npm:^3.0.2":
+  version: 3.0.3
+  resolution: "body-scroll-lock@npm:3.0.3"
+  checksum: a870a48368c752c8660160c2eaabb7219f088e0738ab9a61b431c733d5e9c950401d4f7f7eaa3d974793d8de9c6c7e5bc5de195ef84501a705ca7d9d2097a23a
   languageName: node
   linkType: hard
 
@@ -11757,6 +11771,7 @@ fsevents@^1.2.7:
     react: ^16.13.1
     react-dom: ^16.13.1
     react-scripts: 3.4.1
+    reakit: ^1.0.4
     serve: ^11.3.2
     stylelint: ^13.6.0
     stylelint-8-point-grid: ^0.2.6
@@ -18012,6 +18027,55 @@ fsevents@^1.2.7:
   dependencies:
     picomatch: ^2.0.7
   checksum: 97ad7dd846ab1a81850a7e934d0b20168d6737c7db2e28c682ab300fcbfd9549c6962788fde20cae11445756f1d8e63f4496a96d7be8e35c7c5c82cb192f0ce3
+  languageName: node
+  linkType: hard
+
+"reakit-system@npm:^0.12.2":
+  version: 0.12.2
+  resolution: "reakit-system@npm:0.12.2"
+  dependencies:
+    reakit-utils: ^0.12.1
+  peerDependencies:
+    react: ^16.8.0
+    react-dom: ^16.8.0
+  checksum: 71a6d2ff33810e3b1ab3ea59abe510c2631cffa4df5d60d1028a01d3b3c323b765274c94f69e9bcd0231550b5d09721ac6d41a80de2d81c937db5e3e8a316447
+  languageName: node
+  linkType: hard
+
+"reakit-utils@npm:^0.12.1":
+  version: 0.12.1
+  resolution: "reakit-utils@npm:0.12.1"
+  peerDependencies:
+    react: ^16.8.0
+    react-dom: ^16.8.0
+  checksum: 0370f9113727041a54417ce16d98ca35f5b8e39fe18dd8a5945ed099bc78712fdc98d59cd0c86020e6d13186f7df9883d075679b95304095be298139a6a6caf2
+  languageName: node
+  linkType: hard
+
+"reakit-warning@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "reakit-warning@npm:0.3.1"
+  dependencies:
+    reakit-utils: ^0.12.1
+  peerDependencies:
+    react: ^16.8.0
+  checksum: adfab80a46b61b940e1e3f2ecfd6899498ea00c270f659e1ab2a92631b236030b28882f0ef88a40c6da4a102fca632d15043b1746ca1ff6a9e5bfbd9eff367bf
+  languageName: node
+  linkType: hard
+
+"reakit@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "reakit@npm:1.0.4"
+  dependencies:
+    "@popperjs/core": ^2.4.0
+    body-scroll-lock: ^3.0.2
+    reakit-system: ^0.12.2
+    reakit-utils: ^0.12.1
+    reakit-warning: ^0.3.1
+  peerDependencies:
+    react: ^16.8.0
+    react-dom: ^16.8.0
+  checksum: 5e17f94fef4b42e52aead72b1050b5bf832f76911d97d28e21193f955270777478a01dcbef53782761cbef90dda1dff2eaf8e03b0abcaefcc5841efe9af452cb
   languageName: node
   linkType: hard
 
