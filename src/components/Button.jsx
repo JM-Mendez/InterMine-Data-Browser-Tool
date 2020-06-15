@@ -44,6 +44,11 @@ const StyledButton = styled(RKButton)`
 	cursor: pointer;
 	font-size: ${(props) => getFontSize(props.fontSize)};
 	line-height: 1;
+	outline: none;
+
+	&:focus {
+		box-shadow: 0 0 0 0.2em rgba(0, 109, 255, 0.6);
+	}
 
 	&:not([disabled]),
 	&:not([aria-disabled='true']) {
@@ -58,8 +63,8 @@ const StyledButton = styled(RKButton)`
 	}
 `
 
-// Workaround so storybook can show props table
 export const Button = ({ children, ...props }) => <StyledButton {...props}>{children}</StyledButton>
+
 Button.propTypes = {
 	intent: PropTypes.oneOf(['primary', 'success', 'danger']),
 	fontSize: PropTypes.oneOf(['s1', 's2', 'm1', 'm2', 'm3', 'l1', 'l2', 'l3']),
