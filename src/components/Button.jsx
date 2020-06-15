@@ -1,47 +1,49 @@
 import { styled } from 'linaria/react'
 import PropTypes from 'prop-types'
+import React from 'react'
 import { Button as RKButton } from 'reakit/Button'
 
+import { getFontSize } from '../theme'
 import { colors } from '../theme/colorPalette'
 
 const PRIMARY = 'primary'
-const PRIMARY_HOVER = 'primary-hover'
 const PRIMARY_ACTIVE = 'primary-active'
 
-const SUCCESS = 'success'
-// const SUCCESS_HOVER = 'success-hover'
-// const SUCCESS_ACTIVE = 'success-active'
+const INFO = 'info'
+const INFO_ACTIVE = 'info-active'
 
 const DANGER = 'danger'
-// const DANGER_HOVER = 'danger-hover'
-// const DANGER_ACTIVE = 'danger-active'
+const DANGER_ACTIVE = 'danger-active'
 
 const getIntentColor = (intent) => {
 	switch (intent) {
-		case SUCCESS:
+		case PRIMARY:
 			return colors.greenPalette.green600
+		case PRIMARY_ACTIVE:
+			return colors.greenPalette.green700
+		case INFO:
+			return colors.orangePalette.orange600
+		case INFO_ACTIVE:
+			return colors.orangePalette.orange700
 		case DANGER:
 			return colors.redPalette.red600
-		case PRIMARY:
-			return colors.orangePalette.orange400
-		case PRIMARY_HOVER:
-			return colors.orangePalette.orange500
-		case PRIMARY_ACTIVE:
-			return colors.orangePalette.orange600
+		case DANGER_ACTIVE:
+			return colors.redPalette.red700
 		default:
 			return colors.solidPalette.solidWhite
 	}
 }
 
-export const Button = styled(RKButton)`
+const StyledButton = styled(RKButton)`
 	border: 1px solid rgba(27, 31, 35, 0.2);
 	background-image: linear-gradient(360deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1));
 	color: ${colors.solidPalette.solidWhite};
 	background-color: ${(props) => getIntentColor(props.intent)};
-	border-radius: 3px;
-	height: 28px;
-	width: 100px;
+	border-radius: 0.25em;
+	padding: 0.5em 0.667em;
 	cursor: pointer;
+	font-size: ${(props) => getFontSize(props.fontSize)};
+	line-height: 1;
 
 	&:not([disabled]),
 	&:not([aria-disabled='true']) {
@@ -56,6 +58,14 @@ export const Button = styled(RKButton)`
 	}
 `
 
+// Workaround so storybook can show props table
+export const Button = ({ children, ...props }) => <StyledButton {...props}>{children}</StyledButton>
 Button.propTypes = {
 	intent: PropTypes.oneOf(['primary', 'success', 'danger']),
+	fontSize: PropTypes.oneOf(['s1', 's2', 'm1', 'm2', 'm3', 'l1', 'l2', 'l3']),
+}
+
+Button.defaultProps = {
+	intent: 'primary',
+	fontSize: 's2',
 }

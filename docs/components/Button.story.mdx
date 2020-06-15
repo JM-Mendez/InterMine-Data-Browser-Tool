@@ -1,13 +1,19 @@
 import { Meta, Props, Preview, Story } from '@storybook/addon-docs/blocks'
 import { withKnobs, text, select, boolean } from '@storybook/addon-knobs'
+import { fontSizes } from '../../src/theme'
 
 import { Button } from '../../src/components/Button'
 
 <Meta title="Components/Button" component={Button} />
 
 <Preview>
-	<Story name="Button">
-		<Button intent="primary">Hello</Button>
+	<Story name="Button" parameters={{ decorators: [withKnobs] }}>
+		<Button
+			fontSize={select('fontSize', Object.keys(fontSizes.desktop), 's2')}
+			intent={select('intent', ['primary', 'info', 'danger'])}
+		>
+			{text('Button Text', 'Run Query')}
+		</Button>
 	</Story>
 </Preview>
 
