@@ -37,7 +37,7 @@ const getIntentColor = (intent) => {
 const StyledButton = styled(RKButton)`
 	border: 1px solid rgba(27, 31, 35, 0.2);
 	background-image: linear-gradient(360deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1));
-	color: ${colors.solidPalette.solidWhite};
+	color: ${colors.bluePalette.blue000};
 	background-color: ${(props) => getIntentColor(props.intent)};
 	border-radius: 0.25em;
 	padding: 0.5em 0.667em;
@@ -49,7 +49,7 @@ const StyledButton = styled(RKButton)`
 	&:not([aria-disabled='true']) {
 		&:hover,
 		&:focus {
-			background-image: linear-gradient(360deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
+			background-image: linear-gradient(360deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
 		}
 		&:active,
 		&[data-active='true'] {
