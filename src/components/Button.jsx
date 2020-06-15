@@ -5,6 +5,7 @@ import { Button as RKButton } from 'reakit/Button'
 
 import { getFontSize } from '../theme'
 import { colors } from '../theme/colorPalette'
+import { Icon } from './Icon'
 
 const PRIMARY = 'primary'
 const PRIMARY_ACTIVE = 'primary-active'
@@ -37,7 +38,7 @@ const getIntentColor = (intent) => {
 const StyledButton = styled(RKButton)`
 	border: 1px solid rgba(27, 31, 35, 0.2);
 	background-image: linear-gradient(360deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1));
-	color: ${colors.bluePalette.blue000};
+	color: ${(props) => props.fontColor};
 	background-color: ${(props) => getIntentColor(props.intent)};
 	border-radius: 0.25em;
 	padding: 0.5em 0.667em;
@@ -63,14 +64,45 @@ const StyledButton = styled(RKButton)`
 	}
 `
 
-export const Button = ({ children, ...props }) => <StyledButton {...props}>{children}</StyledButton>
+export const Button = ({ icon, iconRight, iconColor, iconRightColor, children, ...props }) => {
+	return (
+		// using the `as` prop here as a hack because our css-in-js library passes props through
+		// to the underlying DOM node by mistake.
+		<StyledButton as="button" {...props}>
+			{icon && <Icon name={icon} iconColor={iconColor} />}
+			{children}
+			{iconRight && <Icon name={iconRight} iconColor={iconRightColor} />}
+		</StyledButton>
+	)
+}
 
 Button.propTypes = {
-	intent: PropTypes.oneOf(['primary', 'success', 'danger']),
+	intent: PropTypes.oneOf(['primary', 'info', 'danger']),
 	fontSize: PropTypes.oneOf(['s1', 's2', 'm1', 'm2', 'm3', 'l1', 'l2', 'l3']),
+	/**
+	 * Font color
+	 */
+	fontColor: PropTypes.string,
+	/**
+	 * Icon name that will be places on the **left side** of the button
+	 */
+	icon: PropTypes.string,
+	/**
+	 * Icon color for the **left side** icon
+	 */
+	iconColor: PropTypes.string,
+	/**
+	 * Icon name that will be places on the **right side** of the button
+	 */
+	iconRight: PropTypes.string,
+	/**
+	 * Icon color for the **right side** icon
+	 */
+	iconRightColor: PropTypes.string,
 }
 
 Button.defaultProps = {
 	intent: 'primary',
 	fontSize: 's2',
+	fontColor: 'black',
 }
