@@ -34,7 +34,7 @@ export const fontLineHeights = {
 	default: 1,
 }
 
-export const getFontSize = (isMobile, fontSize) => {
+export const getFontSize = (fontSize, isMobile = false) => {
 	const platform = isMobile ? 'mobile' : 'desktop'
 	return fontSizes[platform][fontSize]
 }

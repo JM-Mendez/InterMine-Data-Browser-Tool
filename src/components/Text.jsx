@@ -5,7 +5,7 @@ import * as React from 'react'
 import { fontLineHeights, fontWeights, getFontSize } from '../theme'
 
 export const Div = styled.div`
-	font-size: ${({ isMobile, fontSize }) => getFontSize(isMobile, fontSize)};
+	font-size: ${({ isMobile, fontSize }) => getFontSize(fontSize, isMobile)};
 	line-height: ${({ lineHeight }) => fontLineHeights[lineHeight]};
 	font-weight: ${({ fontWeight }) => fontWeights[fontWeight]};
 `
