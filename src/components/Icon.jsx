@@ -10,12 +10,7 @@ const formatName = (name) => {
 }
 
 const StyledIcon = styled.div`
-	margin: 0 4px;
-	width: 16px;
-	height: 16px;
-
 	& svg path {
-		width: 100%;
 		fill: ${(props) => props.fill};
 	}
 `
@@ -25,7 +20,7 @@ export const Icon = ({ name, iconColor }) => {
 
 	return (
 		<StyledIcon fill={iconColor}>
-			<IconComponent />
+			<IconComponent width="100%" height="auto" viewBox="0 0 16 16" />
 		</StyledIcon>
 	)
 }

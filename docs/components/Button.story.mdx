@@ -12,10 +12,17 @@ import { Button } from '../../src/components/Button'
 	<Story name="Button" parameters={{ decorators: [withKnobs] }}>
 		<Button
 			intent={select('intent', ['primary', 'info', 'danger'])}
-			fontSize={select('fontSize', Object.keys(fontSizes.desktop), 's1')}
+			fontSize={select('fontSize', Object.keys(fontSizes.desktop), 's2')}
 			fontColor={select('fontColor', allColors, allColors.blue000)}
+			iconColor={select('iconColor', allColors, allColors.blue000)}
 			icon={select(
 				'icon',
+				['none', ...Object.keys(Icons).map((i) => Icons[i].displayName)],
+				undefined
+			)}
+			iconRightColor={select('iconRightColor', allColors, allColors.blue000)}
+			iconRight={select(
+				'iconRight',
 				['none', ...Object.keys(Icons).map((i) => Icons[i].displayName)],
 				undefined
 			)}

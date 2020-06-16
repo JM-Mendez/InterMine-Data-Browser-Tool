@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Button as RKButton } from 'reakit/Button'
 
+import { getFontSize } from '../theme'
 import { colors } from '../theme/colorPalette'
 import { Icon } from './Icon'
 import * as Text from './Text'
@@ -45,7 +46,8 @@ const StyledButton = styled(RKButton)`
 	color: ${(props) => props.fontColor};
 	background-color: ${(props) => getIntentColor(props.intent)};
 	border-radius: 0.25em;
-	padding: 0.315em 4px 0.3em;
+	padding: 0 0.333em;
+
 	cursor: pointer;
 	line-height: 1;
 	outline: none;
@@ -67,8 +69,10 @@ const StyledButton = styled(RKButton)`
 	}
 `
 
-const textStyles = css`
-	margin: 0 4px;
+const icons = css`
+	width: 1.071em;
+	height: 1.071em;
+	margin-right: 0.286em;
 `
 
 export const Button = ({
@@ -83,17 +87,28 @@ export const Button = ({
 	return (
 		// using the `as` prop here as a hack because our css-in-js library passes props through
 		// to the underlying DOM node by mistake.
-		<StyledButton as="button" {...props}>
-			{icon && icon !== 'none' && <Icon name={icon} iconColor={iconColor} />}
+		<StyledButton as="button" fontSize={getFontSize(fontSize)} {...props}>
+			{icon && icon !== 'none' && (
+				<div className={icons}>
+					<Icon name={icon} iconColor={iconColor} />
+				</div>
+			)}
 			<Text.Span
-				className={textStyles}
-				fontSize={fontSize}
-				fontWeight="bold"
+				className={css`
+					display: inline-block;
+					margin: 0.429em 0.286em;
+					font-size: inherit;
+				`}
+				fontWeight="semibold"
 				lineHeight="condensed-ultra"
 			>
 				{children}
 			</Text.Span>
-			{iconRight && icon !== 'none' && <Icon name={iconRight} iconColor={iconRightColor} />}
+			{iconRight && iconRight !== 'none' && (
+				<div className={icons}>
+					<Icon name={iconRight} iconColor={iconRightColor} />
+				</div>
+			)}
 		</StyledButton>
 	)
 }
@@ -125,7 +140,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
 	intent: 'primary',
-	fontSize: 's1',
+	fontSize: 's2',
 	fontColor: 'black',
 	iconColor: 'black',
 }
