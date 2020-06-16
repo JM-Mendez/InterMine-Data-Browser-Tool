@@ -1,11 +1,12 @@
+import { css } from 'linaria'
 import { styled } from 'linaria/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Button as RKButton } from 'reakit/Button'
 
-import { getFontSize } from '../theme'
 import { colors } from '../theme/colorPalette'
 import { Icon } from './Icon'
+import * as Text from './Text'
 
 const PRIMARY = 'primary'
 const PRIMARY_ACTIVE = 'primary-active'
@@ -36,14 +37,16 @@ const getIntentColor = (intent) => {
 }
 
 const StyledButton = styled(RKButton)`
+	display: flex;
+	align-items: center;
+	font-size: ${(props) => props.fontSize};
 	border: 1px solid rgba(27, 31, 35, 0.2);
 	background-image: linear-gradient(360deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1));
 	color: ${(props) => props.fontColor};
 	background-color: ${(props) => getIntentColor(props.intent)};
 	border-radius: 0.25em;
-	padding: 0.5em 0.667em;
+	padding: 0.315em 4px 0.3em;
 	cursor: pointer;
-	font-size: ${(props) => getFontSize(props.fontSize)};
 	line-height: 1;
 	outline: none;
 
@@ -64,14 +67,33 @@ const StyledButton = styled(RKButton)`
 	}
 `
 
-export const Button = ({ icon, iconRight, iconColor, iconRightColor, children, ...props }) => {
+const textStyles = css`
+	margin: 0 4px;
+`
+
+export const Button = ({
+	icon,
+	iconRight,
+	iconColor,
+	iconRightColor,
+	fontSize,
+	children,
+	...props
+}) => {
 	return (
 		// using the `as` prop here as a hack because our css-in-js library passes props through
 		// to the underlying DOM node by mistake.
 		<StyledButton as="button" {...props}>
-			{icon && <Icon name={icon} iconColor={iconColor} />}
-			{children}
-			{iconRight && <Icon name={iconRight} iconColor={iconRightColor} />}
+			{icon && icon !== 'none' && <Icon name={icon} iconColor={iconColor} />}
+			<Text.Span
+				className={textStyles}
+				fontSize={fontSize}
+				fontWeight="bold"
+				lineHeight="condensed-ultra"
+			>
+				{children}
+			</Text.Span>
+			{iconRight && icon !== 'none' && <Icon name={iconRight} iconColor={iconRightColor} />}
 		</StyledButton>
 	)
 }
@@ -103,6 +125,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
 	intent: 'primary',
-	fontSize: 's2',
+	fontSize: 's1',
 	fontColor: 'black',
+	iconColor: 'black',
 }

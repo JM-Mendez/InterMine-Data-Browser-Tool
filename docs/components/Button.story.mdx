@@ -2,6 +2,7 @@ import { Meta, Props, Preview, Story } from '@storybook/addon-docs/blocks'
 import { withKnobs, text, select, boolean } from '@storybook/addon-knobs'
 import { fontSizes } from '../../src/theme'
 import { allColors } from '../../src/theme/colorPalette'
+import * as Icons from '../../src/images/icons'
 
 import { Button } from '../../src/components/Button'
 
@@ -11,8 +12,13 @@ import { Button } from '../../src/components/Button'
 	<Story name="Button" parameters={{ decorators: [withKnobs] }}>
 		<Button
 			intent={select('intent', ['primary', 'info', 'danger'])}
-			fontSize={select('fontSize', Object.keys(fontSizes.desktop), 's2')}
+			fontSize={select('fontSize', Object.keys(fontSizes.desktop), 's1')}
 			fontColor={select('fontColor', allColors, allColors.blue000)}
+			icon={select(
+				'icon',
+				['none', ...Object.keys(Icons).map((i) => Icons[i].displayName)],
+				undefined
+			)}
 		>
 			{text('Button Text', 'Run Query')}
 		</Button>

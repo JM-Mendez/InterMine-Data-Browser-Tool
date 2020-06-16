@@ -1,6 +1,11 @@
-import { ReactComponent as Delete } from './delete.svg'
-import { ReactComponent as Error } from './error.svg'
-import { ReactComponent as EyeOpen } from './eyeOpen.svg'
-import { ReactComponent as Play } from './play.svg'
+import { ReactComponent as DeleteIcon } from './delete.svg'
+import { ReactComponent as ErrorIcon } from './error.svg'
+import { ReactComponent as EyeOpenIcon } from './eyeOpen.svg'
+import { ReactComponent as PlayIcon } from './play.svg'
 
-export { Delete, Error, EyeOpen, Play }
+DeleteIcon.displayName = 'delete'
+ErrorIcon.displayName = 'error'
+EyeOpenIcon.displayName = 'eyeOpen'
+PlayIcon.displayName = 'play'
+
+export { DeleteIcon, ErrorIcon, EyeOpenIcon, PlayIcon }
