@@ -11,23 +11,25 @@ import { Button } from '../../src/components/Button'
 <Preview>
 	<Story name="Button" parameters={{ decorators: [withKnobs] }}>
 		<Button
-			intent={select('intent', ['primary', 'info', 'danger'])}
-			fontSize={select('fontSize', Object.keys(fontSizes.desktop), 's2')}
-			fontColor={select('fontColor', allColors, allColors.blue000)}
-			iconColor={select('iconColor', allColors, allColors.blue000)}
+			intent={select('intent', ['primary', 'info', 'danger'], 'primary', 'Button Props')}
+			fontSize={select('fontSize', Object.keys(fontSizes.desktop), 's2', 'Font Props')}
+			fontColor={select('fontColor', allColors, allColors.blue000, 'Font Props')}
 			icon={select(
 				'icon',
 				['none', ...Object.keys(Icons).map((i) => Icons[i].displayName)],
-				undefined
+				undefined,
+				'Icon Props'
 			)}
-			iconRightColor={select('iconRightColor', allColors, allColors.blue000)}
+			iconColor={select('iconColor', allColors, allColors.blue000, 'Icon Props')}
 			iconRight={select(
 				'iconRight',
 				['none', ...Object.keys(Icons).map((i) => Icons[i].displayName)],
-				undefined
+				undefined,
+				'Icon Props'
 			)}
+			iconRightColor={select('iconRightColor', allColors, allColors.blue000, 'Icon Props')}
 		>
-			{text('Button Text', 'Run Query')}
+			{text('button text', 'Run Query', 'Button Text')}
 		</Button>
 	</Story>
 </Preview>
