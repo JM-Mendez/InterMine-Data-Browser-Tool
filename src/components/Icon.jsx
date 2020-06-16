@@ -15,11 +15,13 @@ const StyledIcon = styled.div`
 	}
 `
 
-export const Icon = ({ name, iconColor }) => {
+export const Icon = ({ name, iconColor, wrapperClassName }) => {
+	if (name === undefined || name === 'none') return null
+
 	const IconComponent = Icons[formatName(name)]
 
 	return (
-		<StyledIcon fill={iconColor}>
+		<StyledIcon fill={iconColor} className={wrapperClassName}>
 			<IconComponent width="100%" height="auto" viewBox="0 0 16 16" />
 		</StyledIcon>
 	)

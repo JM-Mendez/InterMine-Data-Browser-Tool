@@ -69,7 +69,15 @@ const StyledButton = styled(RKButton)`
 	}
 `
 
-const icons = css`
+// have to place outside the component because of a bug in stylelint with duplicate selectors
+// when using the same component
+const leftIcon = css`
+	width: 1.071em;
+	height: 1.071em;
+	margin-right: 0;
+`
+
+const rightIcon = css`
 	width: 1.071em;
 	height: 1.071em;
 	margin-right: 0.286em;
@@ -88,27 +96,27 @@ export const Button = ({
 		// using the `as` prop here as a hack because our css-in-js library passes props through
 		// to the underlying DOM node by mistake.
 		<StyledButton as="button" fontSize={getFontSize(fontSize)} {...props}>
-			{icon && icon !== 'none' && (
-				<div className={icons}>
-					<Icon name={icon} iconColor={iconColor} />
-				</div>
-			)}
+			<Icon
+				name={icon}
+				wrapperClassName={leftIcon}
+				iconColor={props.outlined ? getIntentColor(props.intent) : iconColor}
+			/>
 			<Text.Span
 				className={css`
 					display: inline-block;
 					margin: 0.429em 0.286em;
 					font-size: inherit;
 				`}
-				fontWeight="semibold"
+				fontWeight={props.outlined ? 'regular' : 'semibold'}
 				lineHeight="condensed-ultra"
 			>
 				{children}
 			</Text.Span>
-			{iconRight && iconRight !== 'none' && (
-				<div className={icons}>
-					<Icon name={iconRight} iconColor={iconRightColor} />
-				</div>
-			)}
+			<Icon
+				name={iconRight}
+				wrapperClassName={rightIcon}
+				iconColor={props.outlined ? getIntentColor(props.intent) : iconRightColor}
+			/>
 		</StyledButton>
 	)
 }
