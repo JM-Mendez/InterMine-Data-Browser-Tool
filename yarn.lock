@@ -2563,6 +2563,41 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@blueprintjs/core@npm:^3.28.2":
+  version: 3.28.2
+  resolution: "@blueprintjs/core@npm:3.28.2"
+  dependencies:
+    "@blueprintjs/icons": ^3.18.1
+    "@types/dom4": ^2.0.1
+    classnames: ^2.2
+    dom4: ^2.1.5
+    normalize.css: ^8.0.1
+    popper.js: ^1.16.1
+    react-lifecycles-compat: ^3.0.4
+    react-popper: ^1.3.7
+    react-transition-group: ^2.9.0
+    resize-observer-polyfill: ^1.5.1
+    tslib: ~1.10.0
+  peerDependencies:
+    react: ^15.3.0 || 16
+    react-dom: ^15.3.0 || 16
+  bin:
+    upgrade-blueprint-2.0.0-rename: scripts/upgrade-blueprint-2.0.0-rename.sh
+    upgrade-blueprint-3.0.0-rename: scripts/upgrade-blueprint-3.0.0-rename.sh
+  checksum: 3390190d19125852e25473b21b8e048a929e1a3880f65d8b6f993136b56853deab133b644b659a6c1157a6f62d1716e245f92887d30afe57bf51509ab39c7ee5
+  languageName: node
+  linkType: hard
+
+"@blueprintjs/icons@npm:^3.18.1":
+  version: 3.18.1
+  resolution: "@blueprintjs/icons@npm:3.18.1"
+  dependencies:
+    classnames: ^2.2
+    tslib: ~1.10.0
+  checksum: 7e12c170d1deed32b6b4922bae6664aa61cf4d5c871adbd944651cac93cd4690a1bd582b6aaf9882f4f49cbc2bc56d1efae5c4b351150a787791264e01a172b0
+  languageName: node
+  linkType: hard
+
 "@cnakazawa/watch@npm:^1.0.3":
   version: 1.0.4
   resolution: "@cnakazawa/watch@npm:1.0.4"
@@ -3158,13 +3193,6 @@ __metadata:
   dependencies:
     mkdirp: ^1.0.4
   checksum: ed2cb75eefe218113794416fae43b5307f7c30476506942ed6c6c51f702713323842f81102ae1327f9134130bec0360312e6f858ddef143c21d9e269e90737ac
-  languageName: node
-  linkType: hard
-
-"@popperjs/core@npm:^2.4.0":
-  version: 2.4.2
-  resolution: "@popperjs/core@npm:2.4.2"
-  checksum: 70c26e8d97f927d98d26232c08571163c46f4174fbfe60c8e721dd9e878d54409a2a9c00f1527d3c287969b7460e08327993d60c10c89e35917d4ef26885041e
   languageName: node
   linkType: hard
 
@@ -4205,6 +4233,13 @@ __metadata:
   version: 1.1.1
   resolution: "@types/color-name@npm:1.1.1"
   checksum: 8311db94a9c4ecd247763b81e783ee49d87678b4ce6a7ee502e2bd5cea242b7357804a04855db009f713174bc654cc0c01c7303d40d757e5d710f5ac0368500f
+  languageName: node
+  linkType: hard
+
+"@types/dom4@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@types/dom4@npm:2.0.1"
+  checksum: 5406725a89a551b53461de4250bde406212605ab01e0327313f0ffaafa140cbd94b627b916555a528f41494a2b2f33fa6210b1cfbdaa15042330d414289fd772
   languageName: node
   linkType: hard
 
@@ -6471,13 +6506,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"body-scroll-lock@npm:^3.0.2":
-  version: 3.0.3
-  resolution: "body-scroll-lock@npm:3.0.3"
-  checksum: a870a48368c752c8660160c2eaabb7219f088e0738ab9a61b431c733d5e9c950401d4f7f7eaa3d974793d8de9c6c7e5bc5de195ef84501a705ca7d9d2097a23a
-  languageName: node
-  linkType: hard
-
 "bonjour@npm:^3.5.0":
   version: 3.5.0
   resolution: "bonjour@npm:3.5.0"
@@ -7210,7 +7238,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.2.5":
+"classnames@npm:^2.2, classnames@npm:^2.2.5":
   version: 2.2.6
   resolution: "classnames@npm:2.2.6"
   checksum: 490eaeca5931846737ffd33e472a701d268d5b8bc5717dd4cf108a127b06e86e05350e06799abbbe763a0e4c945b4217f6700b7ae00ddc703505682c370e5cf2
@@ -8731,6 +8759,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dom-helpers@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "dom-helpers@npm:3.4.0"
+  dependencies:
+    "@babel/runtime": ^7.1.2
+  checksum: 7625598dbfef65a50801e194b88f277ab398dd92c27398280fd8d69294326f05d9b0588922560ba50e10d9fe5ee8096f90995d679b7db2b776afd579d495b962
+  languageName: node
+  linkType: hard
+
 "dom-helpers@npm:^5.0.1":
   version: 5.1.4
   resolution: "dom-helpers@npm:5.1.4"
@@ -8755,6 +8792,13 @@ __metadata:
   version: 0.1.2
   resolution: "dom-walk@npm:0.1.2"
   checksum: 948c7527f3798cae9d7039cc0e5dc9f013ebd701d7d99478bac79d7d9eb8b81e7b6e836526e21ed9b156466b268e30ea0f2d5b72df955fabec3ce2aa7dc0086e
+  languageName: node
+  linkType: hard
+
+"dom4@npm:^2.1.5":
+  version: 2.1.5
+  resolution: "dom4@npm:2.1.5"
+  checksum: 268883ae1a88eb03300b54ac6dcd181cacbf8086891718c1d2ba39e449b5550b947f13f3a83ee9bebaf81e4009f4f085e5a3cd49cedb6c83def3495cf87a02d9
   languageName: node
   linkType: hard
 
@@ -11748,6 +11792,7 @@ fsevents@^1.2.7:
   version: 0.0.0-use.local
   resolution: "intermine-data-browser@workspace:."
   dependencies:
+    "@blueprintjs/core": ^3.28.2
     "@craco/craco": ^5.6.4
     "@storybook/addon-docs": next
     "@storybook/addon-knobs": next
@@ -11778,14 +11823,12 @@ fsevents@^1.2.7:
     jest-axe: ^3.4.0
     linaria: next
     lint-staged: ">=10"
-    modern-normalize: ^0.6.0
     prettier: ^2.0.5
     prettier-plugin-package: ^1.0.0
     prop-types: ^15.7.2
     react: ^16.13.1
     react-dom: ^16.13.1
     react-scripts: 3.4.1
-    reakit: ^1.0.4
     serve: ^11.3.2
     stylelint: ^13.6.0
     stylelint-8-point-grid: ^0.2.6
@@ -14651,13 +14694,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"modern-normalize@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "modern-normalize@npm:0.6.0"
-  checksum: 7a64657fe8e6d870c043cf255aaf90b15bfbbe44bf11d30813f8c6c3d814c1c6367d96c670b8859a837a1137eb53930eef8901374d39e044496c36f0468fd006
-  languageName: node
-  linkType: hard
-
 "move-concurrently@npm:^1.0.1":
   version: 1.0.1
   resolution: "move-concurrently@npm:1.0.1"
@@ -15012,6 +15048,13 @@ fsevents@^1.2.7:
   version: 3.3.0
   resolution: "normalize-url@npm:3.3.0"
   checksum: 5704115f74833cf157a5f104477d9c8e8b4e2c00275624159bcd3c65dbdac93db4f6f008f91364d0f20f93655bd2b643afa9e8875c67b4ab8673cd1dd0fb7a5c
+  languageName: node
+  linkType: hard
+
+"normalize.css@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "normalize.css@npm:8.0.1"
+  checksum: de6c137a14291c00fee60a1e9e9ab4b78f93d48dd7ab5baa2783dd62bf19b456403bf0585ad201bb84ed184348fd49b467ccfc707068bf342123d00d31801e98
   languageName: node
   linkType: hard
 
@@ -15980,7 +16023,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"popper.js@npm:^1.14.4, popper.js@npm:^1.14.7":
+"popper.js@npm:^1.14.4, popper.js@npm:^1.14.7, popper.js@npm:^1.16.1":
   version: 1.16.1
   resolution: "popper.js@npm:1.16.1"
   checksum: eb53806fb7680e31c7d1db096f95438a40a7cb869f7ee0e27100c0860f11583a0d322606c6073618e7fe8865f834ec36482901b547256d9a0cf2b22434bca75d
@@ -17892,6 +17935,21 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"react-transition-group@npm:^2.9.0":
+  version: 2.9.0
+  resolution: "react-transition-group@npm:2.9.0"
+  dependencies:
+    dom-helpers: ^3.4.0
+    loose-envify: ^1.4.0
+    prop-types: ^15.6.2
+    react-lifecycles-compat: ^3.0.4
+  peerDependencies:
+    react: ">=15.0.0"
+    react-dom: ">=15.0.0"
+  checksum: eefed08c48a0d377b5fac3ac7fac54ed986d5dcdd4494f36075954c9d2d257072a9d18cc02c6d8e6698034722b1ff9419ad0c24ef068dea742edcff9f8ea4ba9
+  languageName: node
+  linkType: hard
+
 "react-transition-group@npm:^4.3.0":
   version: 4.4.1
   resolution: "react-transition-group@npm:4.4.1"
@@ -18046,55 +18104,6 @@ fsevents@^1.2.7:
   dependencies:
     picomatch: ^2.0.7
   checksum: 97ad7dd846ab1a81850a7e934d0b20168d6737c7db2e28c682ab300fcbfd9549c6962788fde20cae11445756f1d8e63f4496a96d7be8e35c7c5c82cb192f0ce3
-  languageName: node
-  linkType: hard
-
-"reakit-system@npm:^0.12.2":
-  version: 0.12.2
-  resolution: "reakit-system@npm:0.12.2"
-  dependencies:
-    reakit-utils: ^0.12.1
-  peerDependencies:
-    react: ^16.8.0
-    react-dom: ^16.8.0
-  checksum: 71a6d2ff33810e3b1ab3ea59abe510c2631cffa4df5d60d1028a01d3b3c323b765274c94f69e9bcd0231550b5d09721ac6d41a80de2d81c937db5e3e8a316447
-  languageName: node
-  linkType: hard
-
-"reakit-utils@npm:^0.12.1":
-  version: 0.12.1
-  resolution: "reakit-utils@npm:0.12.1"
-  peerDependencies:
-    react: ^16.8.0
-    react-dom: ^16.8.0
-  checksum: 0370f9113727041a54417ce16d98ca35f5b8e39fe18dd8a5945ed099bc78712fdc98d59cd0c86020e6d13186f7df9883d075679b95304095be298139a6a6caf2
-  languageName: node
-  linkType: hard
-
-"reakit-warning@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "reakit-warning@npm:0.3.1"
-  dependencies:
-    reakit-utils: ^0.12.1
-  peerDependencies:
-    react: ^16.8.0
-  checksum: adfab80a46b61b940e1e3f2ecfd6899498ea00c270f659e1ab2a92631b236030b28882f0ef88a40c6da4a102fca632d15043b1746ca1ff6a9e5bfbd9eff367bf
-  languageName: node
-  linkType: hard
-
-"reakit@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "reakit@npm:1.0.4"
-  dependencies:
-    "@popperjs/core": ^2.4.0
-    body-scroll-lock: ^3.0.2
-    reakit-system: ^0.12.2
-    reakit-utils: ^0.12.1
-    reakit-warning: ^0.3.1
-  peerDependencies:
-    react: ^16.8.0
-    react-dom: ^16.8.0
-  checksum: 5e17f94fef4b42e52aead72b1050b5bf832f76911d97d28e21193f955270777478a01dcbef53782761cbef90dda1dff2eaf8e03b0abcaefcc5841efe9af452cb
   languageName: node
   linkType: hard
 
@@ -18552,6 +18561,13 @@ fsevents@^1.2.7:
   version: 1.0.0
   resolution: "requires-port@npm:1.0.0"
   checksum: 0db25fb2ac9b4f2345a350846b7ba99d1f25a6686b1728246d14f05450c8f2fc066bdfae4561b4be2627c184a030a27e17268cfefdf46836e271db13734bc49e
+  languageName: node
+  linkType: hard
+
+"resize-observer-polyfill@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "resize-observer-polyfill@npm:1.5.1"
+  checksum: ba14bfaf584eda299eafd6a06233a65c76586bc2bab3cdfdd1edd25fc6479f4270788ddd082e65390049b3ed542558f02bdf1f123bd912624de5b11d48857ac8
   languageName: node
   linkType: hard
 
@@ -20833,6 +20849,13 @@ resolve@1.15.0:
   version: 2.0.0
   resolution: "tslib@npm:2.0.0"
   checksum: a7369a224f12e223fb42f2a720389601a24a1e1c96c55bf0d8d4b60c131e574c175ae23578b8d1bd3f4ec790c7e0a82b43733f022f866d48a23aeadd3910755d
+  languageName: node
+  linkType: hard
+
+"tslib@npm:~1.10.0":
+  version: 1.10.0
+  resolution: "tslib@npm:1.10.0"
+  checksum: d03db5b8d205cd908421bd16c53c7912b857e4cbe4a54ea2b5f7c7a22cd86317462ea1783b093a36d78a1611fa10baf51696a94bb5c1e13c818145b8954a02c9
   languageName: node
   linkType: hard
 
