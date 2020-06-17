@@ -59,7 +59,7 @@ export const Constraint = ({ constraintName, labelBorderColor, constraintCount }
 		.value()
 
 	return (
-		<Button minimal={true} large={true}>
+		<Button minimal={true} large={true} fill={true} alignText="left">
 			<ConstraintLabelWrapper>
 				<ConstraintIcon labelBorderColor={labelBorderColor}>
 					<span>{label}</span>

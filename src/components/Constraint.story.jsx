@@ -9,7 +9,9 @@ export default {
 	title: 'Components/Constraint',
 	decorators: [
 		withKnobs,
-		(storyFn) => <div style={{ height: '200px', padding: '20px' }}>{storyFn()}</div>,
+		(storyFn) => (
+			<div style={{ height: '200px', padding: '20px', width: '500px' }}>{storyFn()}</div>
+		),
 	],
 }
 
