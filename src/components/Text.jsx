@@ -1,5 +1,5 @@
 import { Text as BText } from '@blueprintjs/core'
-import { css } from 'linaria'
+import { css, cx } from 'linaria'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -13,6 +13,7 @@ export const Text = ({
 	fontWeight,
 	children,
 	ellipsize,
+	className,
 }) => {
 	return (
 		<div
@@ -23,11 +24,14 @@ export const Text = ({
 			}}
 		>
 			<BText
-				className={css`
-					font-size: var(--fontSize);
-					line-height: var(--lineHeight);
-					font-weight: var(--fontWeight);
-				`}
+				className={cx(
+					className,
+					css`
+						font-size: var(--fontSize);
+						line-height: var(--lineHeight);
+						font-weight: var(--fontWeight);
+					`
+				)}
 				ellipsize={ellipsize}
 				tagName={tagName}
 			>
