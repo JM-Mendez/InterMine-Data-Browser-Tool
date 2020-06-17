@@ -4,20 +4,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import s from 'underscore.string'
 
-import { Text } from './Text'
+import { fontLineHeights, fontSizes, fontWeights } from '../theme'
 
-const textLabelWrapper = css`
-	display: flex;
-`
-
-const labelStyles = css`
-	margin-right: 10px;
-	border: 2px solid black;
-	border-radius: 30px;
-	padding: 5px;
-`
-
-export const Constraint = ({ constraintName }) => {
+export const Constraint = ({ constraintName, labelBorderColor }) => {
 	const label = s(constraintName)
 		.humanize()
 		.tap((val) => {
@@ -33,10 +22,8 @@ export const Constraint = ({ constraintName }) => {
 	return (
 		<Button minimal={true} large={true}>
 			<div className={textLabelWrapper}>
-				<div className={labelStyles}>
-					<Text fontSize="s1" fontWeight="medium">
-						{label}
-					</Text>
+				<div className={constraintIcon} style={{ '--labelBorderColor': labelBorderColor }}>
+					<span>{label}</span>
 				</div>
 				{constraintName}
 			</div>
@@ -44,13 +31,36 @@ export const Constraint = ({ constraintName }) => {
 	)
 }
 
+const textLabelWrapper = css`
+	display: flex;
+	align-items: center;
+`
+
+const constraintIcon = css`
+	border-radius: 30px;
+	border: 0.167em solid var(--labelBorderColor);
+	font-size: ${fontSizes.desktop.s1};
+	font-weight: ${fontWeights.medium};
+	height: 2.5em;
+	line-height: ${fontLineHeights.condensed};
+	margin-right: 0.833em;
+	padding: 0.417em 0;
+	width: 2.5em;
+	text-align: center;
+`
+
 Constraint.propTypes = {
 	/**
 	 * Name of the constraint
 	 */
 	constraintName: PropTypes.string,
+	/**
+	 * Label icon border color
+	 */
+	labelBorderColor: PropTypes.string,
 }
 
 Constraint.defaultProps = {
 	constraintName: 'ClinVar',
+	labelBorderColor: 'black',
 }
