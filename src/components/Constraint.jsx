@@ -1,4 +1,5 @@
-import { Button } from '@blueprintjs/core'
+import { Button, Icon } from '@blueprintjs/core'
+import { IconNames } from '@blueprintjs/icons'
 import { css } from 'linaria'
 import { styled } from 'linaria/react'
 import PropTypes from 'prop-types'
@@ -7,12 +8,22 @@ import s from 'underscore.string'
 
 import { colors, fontLineHeights, fontSizes, fontWeights } from '../theme'
 
-const constraintCount = css`
-	width: 16px;
-	height: 16px;
-	background-color: ${colors.greenPalette.green500};
-`
-const LabelTextWrapper = styled.div`
+const Tag = () => (
+	<Icon
+		className={css`
+			margin-left: 5px;
+			align-self: flex-start;
+		`}
+		icon={IconNames.TICK_CIRCLE}
+		color={colors.greenPalette.green500}
+	/>
+)
+
+const CountTag = ({ count }) => {
+	return <Tag />
+}
+
+const ConstraintLabelWrapper = styled.div`
 	display: flex;
 	align-items: center;
 `
@@ -24,7 +35,7 @@ const ConstraintIcon = styled.div`
 	font-weight: ${fontWeights.medium};
 	height: 2.5em;
 	line-height: ${fontLineHeights.condensedUltra};
-	margin-right: 0.833em;
+	margin-right: 0.625em;
 	width: 2.5em;
 	display: flex;
 	align-items: center;
@@ -43,12 +54,13 @@ export const Constraint = ({ constraintName, labelBorderColor, constraintCount }
 
 	return (
 		<Button minimal={true} large={true}>
-			<LabelTextWrapper>
+			<ConstraintLabelWrapper>
 				<ConstraintIcon labelBorderColor={labelBorderColor}>
 					<span>{label}</span>
 				</ConstraintIcon>
 				{constraintName}
-			</LabelTextWrapper>
+				{constraintCount > 0 && <CountTag count={constraintCount} />}
+			</ConstraintLabelWrapper>
 		</Button>
 	)
 }
@@ -69,7 +81,7 @@ Constraint.propTypes = {
 }
 
 Constraint.defaultProps = {
-	constraintName: 'ClinVar',
+	constraintName: 'Name',
 	labelBorderColor: 'black',
 	constraintCount: 1,
 }
