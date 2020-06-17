@@ -1,4 +1,4 @@
-import { number, select, withKnobs } from '@storybook/addon-knobs'
+import { number, select, text, withKnobs } from '@storybook/addon-knobs'
 import React from 'react'
 
 import { allColors } from '../theme/colorPalette'
@@ -20,5 +20,6 @@ export const Example = () => (
 		constraintName={select('Constraint Name', ['Name', 'Protein Domain Name', 'ClinVar'])}
 		constraintCount={number('Constraint Count', 0)}
 		labelBorderColor={select('Label Border Color', allColors, 'red')}
+		ariaLabel={text('Screen Reader Text', 'this is a constraint')}
 	/>
 )
