@@ -47,7 +47,7 @@ const ConstraintIcon = styled.div`
 	align-items: center;
 	justify-content: center;
 `
-export const Constraint = ({ constraintName, labelBorderColor, constraintCount }) => {
+export const Constraint = ({ constraintName, labelBorderColor, constraintCount, ariaLabel }) => {
 	const label = s(constraintName)
 		.humanize()
 		.tap((val) => {
@@ -59,7 +59,13 @@ export const Constraint = ({ constraintName, labelBorderColor, constraintCount }
 		.value()
 
 	return (
-		<Button minimal={true} large={true} fill={true} alignText="left">
+		<Button
+			minimal={true}
+			large={true}
+			fill={true}
+			alignText="left"
+			aria-label={ariaLabel ? ariaLabel : constraintName}
+		>
 			<ConstraintLabelWrapper>
 				<ConstraintIcon labelBorderColor={labelBorderColor}>
 					<span>{label}</span>
@@ -89,6 +95,10 @@ Constraint.propTypes = {
 	 * The number of constraints applied
 	 */
 	constraintCount: PropTypes.number,
+	/**
+	 * The text to be read by a screenreader
+	 */
+	ariaLabel: PropTypes.string,
 }
 
 Constraint.defaultProps = {
