@@ -21,8 +21,8 @@ module.exports = {
 		'a11y/no-obsolete-element': true,
 		'a11y/no-text-align-justify': true,
 		'plugin/8-point-grid': {
-			base: 4,
-			whitelist: ['1px'],
+			base: 10,
+			whitelist: ['5px'],
 		},
 		'plugin/declaration-block-no-ignored-properties': true,
 	},
