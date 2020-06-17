@@ -1,53 +1,57 @@
 import { Button } from '@blueprintjs/core'
 import { css } from 'linaria'
+import { styled } from 'linaria/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 import s from 'underscore.string'
 
-import { fontLineHeights, fontSizes, fontWeights } from '../theme'
+import { colors, fontLineHeights, fontSizes, fontWeights } from '../theme'
 
-export const Constraint = ({ constraintName, labelBorderColor }) => {
+const constraintCount = css`
+	width: 16px;
+	height: 16px;
+	background-color: ${colors.greenPalette.green500};
+`
+const LabelTextWrapper = styled.div`
+	display: flex;
+	align-items: center;
+`
+
+const ConstraintIcon = styled.div`
+	border-radius: 30px;
+	border: ${(props) => `0.167em solid ${props.labelBorderColor}`};
+	font-size: ${fontSizes.desktop.s1};
+	font-weight: ${fontWeights.medium};
+	height: 2.5em;
+	line-height: ${fontLineHeights.condensedUltra};
+	margin-right: 0.833em;
+	width: 2.5em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`
+export const Constraint = ({ constraintName, labelBorderColor, constraintCount }) => {
 	const label = s(constraintName)
 		.humanize()
 		.tap((val) => {
 			const words = val.split(' ')
-			if (words.length === 1) {
-				return `${val.charAt(0).toUpperCase()}${val.charAt(1).toLowerCase()}`
-			} else {
-				return `${words[0].charAt(0).toUpperCase()}${words[1].charAt(0).toUpperCase()}`
-			}
+			return words.length === 1
+				? `${val.charAt(0).toUpperCase()}${val.charAt(1).toLowerCase()}`
+				: `${words[0].charAt(0).toUpperCase()}${words[1].charAt(0).toUpperCase()}`
 		})
 		.value()
 
 	return (
 		<Button minimal={true} large={true}>
-			<div className={textLabelWrapper}>
-				<div className={constraintIcon} style={{ '--labelBorderColor': labelBorderColor }}>
+			<LabelTextWrapper>
+				<ConstraintIcon labelBorderColor={labelBorderColor}>
 					<span>{label}</span>
-				</div>
+				</ConstraintIcon>
 				{constraintName}
-			</div>
+			</LabelTextWrapper>
 		</Button>
 	)
 }
-
-const textLabelWrapper = css`
-	display: flex;
-	align-items: center;
-`
-
-const constraintIcon = css`
-	border-radius: 30px;
-	border: 0.167em solid var(--labelBorderColor);
-	font-size: ${fontSizes.desktop.s1};
-	font-weight: ${fontWeights.medium};
-	height: 2.5em;
-	line-height: ${fontLineHeights.condensed};
-	margin-right: 0.833em;
-	padding: 0.417em 0;
-	width: 2.5em;
-	text-align: center;
-`
 
 Constraint.propTypes = {
 	/**
@@ -58,9 +62,14 @@ Constraint.propTypes = {
 	 * Label icon border color
 	 */
 	labelBorderColor: PropTypes.string,
+	/**
+	 * The number of constraints applied
+	 */
+	constraintCount: PropTypes.number,
 }
 
 Constraint.defaultProps = {
 	constraintName: 'ClinVar',
 	labelBorderColor: 'black',
+	constraintCount: 1,
 }
