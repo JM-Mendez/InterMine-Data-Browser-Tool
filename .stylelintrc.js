@@ -8,6 +8,7 @@ module.exports = {
 		'linaria/stylelint-config',
 	],
 	rules: {
+		'no-duplicate-selectors': null,
 		'selector-pseudo-class-no-unknown': [
 			null,
 			{
