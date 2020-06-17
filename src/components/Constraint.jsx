@@ -1,6 +1,5 @@
 import { Button, Icon } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import { css } from 'linaria'
 import { styled } from 'linaria/react'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -8,20 +7,27 @@ import s from 'underscore.string'
 
 import { colors, fontLineHeights, fontSizes, fontWeights } from '../theme'
 
-const Tag = () => (
-	<Icon
-		className={css`
-			margin-left: 5px;
-			align-self: flex-start;
-		`}
-		icon={IconNames.TICK_CIRCLE}
-		color={colors.greenPalette.green500}
-	/>
-)
+const CountTagWrapper = styled.div`
+	display: flex;
+	align-self: flex-start;
+	margin-left: 5px;
+	font-size: ${fontSizes.desktop.s1};
+	font-weight: ${fontWeights.bold};
+	line-height: ${fontLineHeights.condensedUltra};
+	border: 2px solid ${colors.greenPalette.green500};
+	border-radius: 10px;
+	height: 1.333em;
 
-const CountTag = ({ count }) => {
-	return <Tag />
-}
+	& > div {
+		margin: 0 0.833em;
+	}
+`
+
+const StyledIcon = styled(Icon)`
+	/* We need to override Blueprint styling to create our pill */
+	margin: -0.167em -0.167em !important;
+	align-self: flex-start;
+`
 
 const ConstraintLabelWrapper = styled.div`
 	display: flex;
@@ -59,7 +65,12 @@ export const Constraint = ({ constraintName, labelBorderColor, constraintCount }
 					<span>{label}</span>
 				</ConstraintIcon>
 				{constraintName}
-				{constraintCount > 0 && <CountTag count={constraintCount} />}
+				{constraintCount > 0 && (
+					<CountTagWrapper>
+						{constraintCount > 1 && <div>{constraintCount}</div>}
+						<StyledIcon icon={IconNames.TICK_CIRCLE} color={colors.greenPalette.green500} />
+					</CountTagWrapper>
+				)}
 			</ConstraintLabelWrapper>
 		</Button>
 	)
@@ -83,5 +94,5 @@ Constraint.propTypes = {
 Constraint.defaultProps = {
 	constraintName: 'Name',
 	labelBorderColor: 'black',
-	constraintCount: 1,
+	constraintCount: 0,
 }
