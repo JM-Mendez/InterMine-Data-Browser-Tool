@@ -1,11 +1,10 @@
-import { Button, Icon } from '@blueprintjs/core'
+import { Button, Icon, Popover } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { styled } from 'linaria/react'
 import PropTypes from 'prop-types'
 import React from 'react'
-import s from 'underscore.string'
 
-import { useTheme, withTheme } from '../theme'
+import { useTheme, withTheme } from '../../theme'
 
 const CountTagWrapper = withTheme(
 	styled.div`
@@ -13,7 +12,7 @@ const CountTagWrapper = withTheme(
 		align-self: flex-start;
 		margin-left: 5px;
 		font-size: ${({ theme }) => theme.fontSizes.desktop.s1};
-		font-weight: ${({ theme }) => theme.fontWeights.bold};
+		font-weight: ${({ theme }) => theme.fontWeights.medium};
 		line-height: ${({ theme }) => theme.fontLineHeights.condensedUltra};
 		border: 2px solid ${({ theme }) => theme.colors.greenPalette.green500};
 		border-radius: 10px;
@@ -41,7 +40,7 @@ const ConstraintIcon = withTheme(
 		border-radius: 30px;
 		border: ${(props) => `0.167em solid ${props.labelBorderColor}`};
 		font-size: ${({ theme }) => theme.fontSizes.desktop.s1};
-		font-weight: ${({ theme }) => theme.fontLineHeights.condensedUltra};
+		font-weight: ${({ theme }) => theme.fontWeights.medium};
 		height: 2.5em;
 		line-height: ${({ theme }) => theme.fontLineHeights.condensedUltra};
 		margin-right: 0.625em;
@@ -52,18 +51,14 @@ const ConstraintIcon = withTheme(
 	`
 )
 
-export const Constraint = ({ constraintName, labelBorderColor, constraintCount, ariaLabel }) => {
+export const Constraint = ({
+	constraintName,
+	labelBorderColor,
+	constraintCount,
+	ariaLabel,
+	labelText,
+}) => {
 	const theme = useTheme()
-
-	const label = s(constraintName)
-		.humanize()
-		.tap((val) => {
-			const words = val.split(' ')
-			return words.length === 1
-				? `${val.charAt(0).toUpperCase()}${val.charAt(1).toLowerCase()}`
-				: `${words[0].charAt(0).toUpperCase()}${words[1].charAt(0).toUpperCase()}`
-		})
-		.value()
 
 	return (
 		<Button
@@ -75,7 +70,7 @@ export const Constraint = ({ constraintName, labelBorderColor, constraintCount, 
 		>
 			<ConstraintLabelWrapper>
 				<ConstraintIcon labelBorderColor={labelBorderColor}>
-					<span>{label}</span>
+					<span>{labelText}</span>
 				</ConstraintIcon>
 				{constraintName}
 				{constraintCount > 0 && (
@@ -89,11 +84,22 @@ export const Constraint = ({ constraintName, labelBorderColor, constraintCount, 
 	)
 }
 
-Constraint.propTypes = {
+export const ConstraintBase = ({ children, ...constraintProps }) => (
+	<Popover fill={true} usePortal={true} lazy={true} position="right">
+		<Constraint {...constraintProps} />
+		{children}
+	</Popover>
+)
+
+ConstraintBase.propTypes = {
 	/**
 	 * Name of the constraint
 	 */
 	constraintName: PropTypes.string,
+	/**
+	 * Text for the label icon
+	 */
+	labelText: PropTypes.string,
 	/**
 	 * Label icon border color
 	 */
@@ -106,10 +112,12 @@ Constraint.propTypes = {
 	 * The text to be read by a screenreader
 	 */
 	ariaLabel: PropTypes.string,
+	popoverContent: PropTypes.node,
 }
 
-Constraint.defaultProps = {
+ConstraintBase.defaultProps = {
 	constraintName: 'Name',
+	labelText: 'Na',
 	labelBorderColor: 'black',
 	constraintCount: 0,
 }

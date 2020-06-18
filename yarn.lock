@@ -12003,7 +12003,6 @@ fsevents@^1.2.7:
     stylelint-config-recommended: ^3.0.0
     stylelint-declaration-block-no-ignored-properties: ^2.3.0
     stylelint-webpack-plugin: ^2.0.0
-    underscore.string: ^3.3.5
     webpack-bundle-analyzer: ^3.8.0
   languageName: unknown
   linkType: soft
@@ -19873,13 +19872,6 @@ resolve@1.15.0:
   languageName: node
   linkType: hard
 
-"sprintf-js@npm:^1.0.3":
-  version: 1.1.2
-  resolution: "sprintf-js@npm:1.1.2"
-  checksum: 50d2008328a3cafac658a40de7fb7d3d899b8e12906b3784113a97199618531bc4237ef2779cc5a9cd6df06b58036fedf4578648a5bbfd01825ecb56546e3982
-  languageName: node
-  linkType: hard
-
 "sprintf-js@npm:~1.0.2":
   version: 1.0.3
   resolution: "sprintf-js@npm:1.0.3"
@@ -21254,16 +21246,6 @@ resolve@1.15.0:
   version: 1.0.2
   resolution: "uglify-to-browserify@npm:1.0.2"
   checksum: 3555c8f33929f1a866c412c04a84ebb03d87ed1ec07140a7fe7f678facb3b5e5740d4cb2458b2e094ccea87649e1964c84d014dd47aac6057b7d4986a021cfa7
-  languageName: node
-  linkType: hard
-
-"underscore.string@npm:^3.3.5":
-  version: 3.3.5
-  resolution: "underscore.string@npm:3.3.5"
-  dependencies:
-    sprintf-js: ^1.0.3
-    util-deprecate: ^1.0.2
-  checksum: a94f79d8a1c124da90a3d4812f7e8d35446b6b5dd85e8a51a015f7f05e67c77cc10d6f58f2f2aa83fe58ce1d1b708b8cd741191ed32b5dfa9e40a1e5beee80ce
   languageName: node
   linkType: hard
 
