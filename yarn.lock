@@ -2610,6 +2610,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@blueprintjs/select@npm:^3.13.3":
+  version: 3.13.3
+  resolution: "@blueprintjs/select@npm:3.13.3"
+  dependencies:
+    "@blueprintjs/core": ^3.28.2
+    classnames: ^2.2
+    tslib: ~1.10.0
+  peerDependencies:
+    react: ^15.3.0 || 16
+    react-dom: ^15.3.0 || 16
+  checksum: 127a847b7a24c9c13720e5618676a54d08ecdd102abb77b0f1580d902f864607e0d41226bbe9efd48cd9db72a24aa0c1658aa28892e4688dcbfc766b9ea53119
+  languageName: node
+  linkType: hard
+
 "@callstack/react-theme-provider@npm:^2.1.0":
   version: 2.1.0
   resolution: "@callstack/react-theme-provider@npm:2.1.0"
@@ -11958,6 +11972,7 @@ fsevents@^1.2.7:
   dependencies:
     "@blueprintjs/core": ^3.28.2
     "@blueprintjs/eslint-plugin": ^0.2.0
+    "@blueprintjs/select": ^3.13.3
     "@callstack/react-theme-provider": ^2.1.0
     "@craco/craco": ^5.6.4
     "@storybook/addon-docs": next
