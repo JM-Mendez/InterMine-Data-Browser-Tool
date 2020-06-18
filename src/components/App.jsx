@@ -3,7 +3,7 @@ import React from 'react'
 
 import logo from '../images/logo.svg'
 import { useTheme } from '../theme'
-import { Constraint } from './Constraint'
+import { Constraint } from './Constraints/ConstraintBase'
 import { Text } from './Text'
 
 export const App = () => {
