@@ -1,4 +1,4 @@
-import { Button, MenuItem, Navbar, NavbarHeading } from '@blueprintjs/core'
+import { Button, Colors, Icon, MenuItem, Navbar, NavbarHeading } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { Select } from '@blueprintjs/select'
 import { css } from 'linaria'
@@ -28,18 +28,30 @@ const MineRenderer = (mine, props) => {
 const StyledNavHeading = withTheme(
 	styled(NavbarHeading)`
 		font-size: 24px;
+		font-weight: 300;
 		color: ${({ theme }) => theme.colors.bluePalette.blue900};
 	`
 )
 
+const AuthenticatedIcon = (isAuthenticated) => (
+	<Icon
+		icon={isAuthenticated ? IconNames.UNLOCK : IconNames.LOCK}
+		color={isAuthenticated ? Colors.GREEN5 : Colors.RED3}
+	/>
+)
+
 export const NavigationBar = () => {
 	const [mine, setMine] = useState(mockMines[0])
+	const [isAuthenticated, setAuthentication] = useState(false)
 
 	return (
 		<StyledNav>
 			<Navbar.Group>
 				<StyledNavHeading>Mine</StyledNavHeading>
 				<Select
+					className={css`
+						margin-right: 30px;
+					`}
 					items={mockMines}
 					filterable={false}
 					itemRenderer={MineRenderer}
@@ -55,6 +67,13 @@ export const NavigationBar = () => {
 						rightIcon={IconNames.CARET_DOWN}
 					/>
 				</Select>
+				<StyledNavHeading>Api Key</StyledNavHeading>
+				<Button
+					aria-label="Press button to enter your api key"
+					small={true}
+					icon={AuthenticatedIcon(isAuthenticated)}
+					onClick={() => setAuthentication(!isAuthenticated)}
+				/>
 			</Navbar.Group>
 		</StyledNav>
 	)
