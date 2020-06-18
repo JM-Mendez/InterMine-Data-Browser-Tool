@@ -21,9 +21,14 @@ module.exports = {
 				],
 				[]
 			),
-			new NormalModuleReplacementPlugin(
-				/.*\/generated\/iconSvgPaths.js/,
-				path.resolve(__dirname, 'src/blueprintjsIcons.js')
+			...whenProd(
+				() => [
+					new NormalModuleReplacementPlugin(
+						/.*\/generated\/iconSvgPaths.js/,
+						path.resolve(__dirname, 'src/blueprintjsIcons.js')
+					),
+				],
+				[]
 			),
 		],
 	},
