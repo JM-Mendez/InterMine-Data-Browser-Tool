@@ -2,12 +2,12 @@ import { css, cx } from 'linaria'
 import React from 'react'
 
 import logo from '../images/logo.svg'
-import { useTheme } from '../theme'
-import { Constraint } from './Constraints/ConstraintBase'
+import { useStyles } from '../theme'
+import { Constraint } from './Constraint'
 import { Text } from './Text'
 
 export const App = () => {
-	const theme = useTheme()
+	const [theme] = useStyles()
 
 	return (
 		<div className={cx(app, theme.lightTheme)}>

@@ -3,7 +3,7 @@ import { css, cx } from 'linaria'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { useTheme } from '../theme'
+import { useStyles } from '../theme'
 
 export const Text = ({
 	isMobile,
@@ -15,7 +15,7 @@ export const Text = ({
 	ellipsize,
 	className,
 }) => {
-	const theme = useTheme()
+	const [theme] = useStyles()
 
 	return (
 		<div
