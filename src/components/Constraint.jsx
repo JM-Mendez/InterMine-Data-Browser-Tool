@@ -5,23 +5,25 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import s from 'underscore.string'
 
-import { useStyles } from '../theme'
+import { useTheme, withTheme } from '../theme'
 
-const CountTagWrapper = styled.div`
-	display: flex;
-	align-self: flex-start;
-	margin-left: 5px;
-	font-size: ${({ theme }) => theme.fontSizes.desktop.s1};
-	font-weight: ${({ theme }) => theme.fontWeights.bold};
-	line-height: ${({ theme }) => theme.fontLineHeights.condensedUltra};
-	border: 2px solid ${({ theme }) => theme.colors.greenPalette.green500};
-	border-radius: 10px;
-	height: 1.333em;
+const CountTagWrapper = withTheme(
+	styled.div`
+		display: flex;
+		align-self: flex-start;
+		margin-left: 5px;
+		font-size: ${({ theme }) => theme.fontSizes.desktop.s1};
+		font-weight: ${({ theme }) => theme.fontWeights.bold};
+		line-height: ${({ theme }) => theme.fontLineHeights.condensedUltra};
+		border: 2px solid ${({ theme }) => theme.colors.greenPalette.green500};
+		border-radius: 10px;
+		height: 1.333em;
 
-	& > div {
-		margin: 0 0.833em;
-	}
-`
+		& > div {
+			margin: 0 0.833em;
+		}
+	`
+)
 
 const StyledIcon = styled(Icon)`
 	/* We need to override Blueprint styling to create our pill */
@@ -34,21 +36,24 @@ const ConstraintLabelWrapper = styled.div`
 	align-items: center;
 `
 
-const ConstraintIcon = styled.div`
-	border-radius: 30px;
-	border: ${(props) => `0.167em solid ${props.labelBorderColor}`};
-	font-size: ${({ theme }) => theme.fontSizes.desktop.s1};
-	font-weight: ${({ theme }) => theme.fontLineHeights.condensedUltra};
-	height: 2.5em;
-	line-height: ${({ theme }) => theme.fontLineHeights.condensedUltra};
-	margin-right: 0.625em;
-	width: 2.5em;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-`
+const ConstraintIcon = withTheme(
+	styled.div`
+		border-radius: 30px;
+		border: ${(props) => `0.167em solid ${props.labelBorderColor}`};
+		font-size: ${({ theme }) => theme.fontSizes.desktop.s1};
+		font-weight: ${({ theme }) => theme.fontLineHeights.condensedUltra};
+		height: 2.5em;
+		line-height: ${({ theme }) => theme.fontLineHeights.condensedUltra};
+		margin-right: 0.625em;
+		width: 2.5em;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	`
+)
+
 export const Constraint = ({ constraintName, labelBorderColor, constraintCount, ariaLabel }) => {
-	const [theme] = useStyles()
+	const theme = useTheme()
 
 	const label = s(constraintName)
 		.humanize()
@@ -68,19 +73,15 @@ export const Constraint = ({ constraintName, labelBorderColor, constraintCount, 
 			alignText="left"
 			aria-label={ariaLabel ? ariaLabel : constraintName}
 		>
-			<ConstraintLabelWrapper theme={theme}>
-				<ConstraintIcon theme={theme} labelBorderColor={labelBorderColor}>
+			<ConstraintLabelWrapper>
+				<ConstraintIcon labelBorderColor={labelBorderColor}>
 					<span>{label}</span>
 				</ConstraintIcon>
 				{constraintName}
 				{constraintCount > 0 && (
-					<CountTagWrapper theme={theme}>
+					<CountTagWrapper>
 						{constraintCount > 1 && <div>{constraintCount}</div>}
-						<StyledIcon
-							theme={theme}
-							icon={IconNames.TICK_CIRCLE}
-							color={theme.colors.greenPalette.green500}
-						/>
+						<StyledIcon icon={IconNames.TICK_CIRCLE} color={theme.colors.greenPalette.green500} />
 					</CountTagWrapper>
 				)}
 			</ConstraintLabelWrapper>

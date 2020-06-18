@@ -11,8 +11,6 @@ import { ThemeProvider } from './theme'
 
 FocusStyleManager.onlyShowFocusOnTabs()
 
-FocusStyleManager.onlyShowFocusOnTabs()
-
 ReactDOM.render(
 	<React.StrictMode>
 		<ThemeProvider>
