@@ -2610,6 +2610,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@callstack/react-theme-provider@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@callstack/react-theme-provider@npm:2.1.0"
+  dependencies:
+    deepmerge: ^3.2.0
+    hoist-non-react-statics: ^3.3.0
+  peerDependencies:
+    react: ^16.3.0
+  checksum: cabf999b8a2fca56bfa8e7295a36ed80a79502b8900e1b38a7eb7cfb5976342655c33c50d3d6f12771af64843b480ea4a043fcf1ebdf5d0b53b6ffed47253902
+  languageName: node
+  linkType: hard
+
 "@cnakazawa/watch@npm:^1.0.3":
   version: 1.0.4
   resolution: "@cnakazawa/watch@npm:1.0.4"
@@ -8528,6 +8540,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"deepmerge@npm:^3.2.0":
+  version: 3.3.0
+  resolution: "deepmerge@npm:3.3.0"
+  checksum: a78cbc4a4855eef04d4cb61ef1b1c2c91b6763fb08a391ce9df4c370645fdde4cefee760a836b3af458568f79faffd55ab0403d723bff9307ba2aae6198456a0
+  languageName: node
+  linkType: hard
+
 "default-gateway@npm:^4.2.0":
   version: 4.2.0
   resolution: "default-gateway@npm:4.2.0"
@@ -11939,6 +11958,7 @@ fsevents@^1.2.7:
   dependencies:
     "@blueprintjs/core": ^3.28.2
     "@blueprintjs/eslint-plugin": ^0.2.0
+    "@callstack/react-theme-provider": ^2.1.0
     "@craco/craco": ^5.6.4
     "@storybook/addon-docs": next
     "@storybook/addon-knobs": next
