@@ -51,6 +51,14 @@ const ConstraintIcon = withTheme(
 	`
 )
 
+/**
+ * A constraint is styled as a button that takes the full width of its container. Each
+ * constraint manages its own internal state with a state machine, and syncs back to the
+ * history component using the event bus.
+ *
+ * ***NB***: The constraint stories are **not** styled to match their container's width, to
+ * allow viewing their respective popups.
+ */
 export const Constraint = ({
 	constraintName,
 	labelBorderColor,
@@ -91,7 +99,7 @@ export const ConstraintBase = ({ children, ...constraintProps }) => (
 	</Popover>
 )
 
-ConstraintBase.propTypes = {
+const propTypes = {
 	/**
 	 * Name of the constraint
 	 */
@@ -115,9 +123,13 @@ ConstraintBase.propTypes = {
 	popoverContent: PropTypes.node,
 }
 
-ConstraintBase.defaultProps = {
-	constraintName: 'Name',
-	labelText: 'Na',
+const defaultProps = {
 	labelBorderColor: 'black',
 	constraintCount: 0,
 }
+
+Constraint.propTypes = propTypes
+Constraint.defaultProps = defaultProps
+
+ConstraintBase.propTypes = propTypes
+ConstraintBase.defaultProps = defaultProps
