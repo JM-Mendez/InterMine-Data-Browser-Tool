@@ -2,12 +2,15 @@ import { css, cx } from 'linaria'
 import React from 'react'
 
 import logo from '../images/logo.svg'
-import { lightTheme } from '../theme'
+import { useStyles } from '../theme'
+import { Constraint } from './Constraint'
 import { Text } from './Text'
 
 export const App = () => {
+	const [theme] = useStyles()
+
 	return (
-		<div className={cx(app, lightTheme)}>
+		<div className={cx(app, theme.lightTheme)}>
 			<header className={appHeader}>
 				<img src={logo} className={appLogo} alt="logo" />
 				<Text fontSize={'m2'} tagName={'span'}>
@@ -16,6 +19,7 @@ export const App = () => {
 				<a className={appLink} href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
 					Learn React
 				</a>
+				<Constraint />
 			</header>
 		</div>
 	)

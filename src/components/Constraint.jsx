@@ -5,16 +5,16 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import s from 'underscore.string'
 
-import { colors, fontLineHeights, fontSizes, fontWeights } from '../theme'
+import { useStyles } from '../theme'
 
 const CountTagWrapper = styled.div`
 	display: flex;
 	align-self: flex-start;
 	margin-left: 5px;
-	font-size: ${fontSizes.desktop.s1};
-	font-weight: ${fontWeights.bold};
-	line-height: ${fontLineHeights.condensedUltra};
-	border: 2px solid ${colors.greenPalette.green500};
+	font-size: ${({ theme }) => theme.fontSizes.desktop.s1};
+	font-weight: ${({ theme }) => theme.fontWeights.bold};
+	line-height: ${({ theme }) => theme.fontLineHeights.condensedUltra};
+	border: 2px solid ${({ theme }) => theme.colors.greenPalette.green500};
 	border-radius: 10px;
 	height: 1.333em;
 
@@ -37,10 +37,10 @@ const ConstraintLabelWrapper = styled.div`
 const ConstraintIcon = styled.div`
 	border-radius: 30px;
 	border: ${(props) => `0.167em solid ${props.labelBorderColor}`};
-	font-size: ${fontSizes.desktop.s1};
-	font-weight: ${fontWeights.medium};
+	font-size: ${({ theme }) => theme.fontSizes.desktop.s1};
+	font-weight: ${({ theme }) => theme.fontLineHeights.condensedUltra};
 	height: 2.5em;
-	line-height: ${fontLineHeights.condensedUltra};
+	line-height: ${({ theme }) => theme.fontLineHeights.condensedUltra};
 	margin-right: 0.625em;
 	width: 2.5em;
 	display: flex;
@@ -48,6 +48,8 @@ const ConstraintIcon = styled.div`
 	justify-content: center;
 `
 export const Constraint = ({ constraintName, labelBorderColor, constraintCount, ariaLabel }) => {
+	const [theme] = useStyles()
+
 	const label = s(constraintName)
 		.humanize()
 		.tap((val) => {
@@ -66,15 +68,19 @@ export const Constraint = ({ constraintName, labelBorderColor, constraintCount, 
 			alignText="left"
 			aria-label={ariaLabel ? ariaLabel : constraintName}
 		>
-			<ConstraintLabelWrapper>
-				<ConstraintIcon labelBorderColor={labelBorderColor}>
+			<ConstraintLabelWrapper theme={theme}>
+				<ConstraintIcon theme={theme} labelBorderColor={labelBorderColor}>
 					<span>{label}</span>
 				</ConstraintIcon>
 				{constraintName}
 				{constraintCount > 0 && (
-					<CountTagWrapper>
+					<CountTagWrapper theme={theme}>
 						{constraintCount > 1 && <div>{constraintCount}</div>}
-						<StyledIcon icon={IconNames.TICK_CIRCLE} color={colors.greenPalette.green500} />
+						<StyledIcon
+							theme={theme}
+							icon={IconNames.TICK_CIRCLE}
+							color={theme.colors.greenPalette.green500}
+						/>
 					</CountTagWrapper>
 				)}
 			</ConstraintLabelWrapper>

@@ -3,7 +3,7 @@ import { css, cx } from 'linaria'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { fontLineHeights, fontWeights, getFontSize } from '../theme'
+import { useStyles } from '../theme'
 
 export const Text = ({
 	isMobile,
@@ -15,12 +15,14 @@ export const Text = ({
 	ellipsize,
 	className,
 }) => {
+	const [theme] = useStyles()
+
 	return (
 		<div
 			style={{
-				'--fontSize': getFontSize(fontSize, isMobile),
-				'--lineHeight': fontLineHeights[lineHeight],
-				'--fontWeight': fontWeights[fontWeight],
+				'--fontSize': theme.getFontSize(fontSize, isMobile),
+				'--lineHeight': theme.fontLineHeights[lineHeight],
+				'--fontWeight': theme.fontWeights[fontWeight],
 			}}
 		>
 			<BText
