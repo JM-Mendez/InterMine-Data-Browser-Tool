@@ -7,6 +7,11 @@ const usedIcons = [
 	IconNames.LOCK,
 	IconNames.FLASH,
 	IconNames.MOON,
+	IconNames.EYE_OPEN,
+	IconNames.PLAY,
+	IconNames.ERROR,
+	IconNames.FLASH,
+	IconNames.MOON,
 ]
 
 const IconSvgPaths16 = {}
