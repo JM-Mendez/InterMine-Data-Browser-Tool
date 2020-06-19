@@ -3,7 +3,7 @@ import { styled } from 'linaria/react'
 import React from 'react'
 
 const StyledChart = styled(Card)`
-	height: 520px;
+	height: 500px;
 	margin-bottom: 20px;
 `
 
