@@ -1,5 +1,5 @@
 import 'normalize.css'
-import '@blueprintjs/core/lib/css/blueprint.css'
+import './theme/theme.scss'
 
 import { FocusStyleManager } from '@blueprintjs/core'
 import React from 'react'
