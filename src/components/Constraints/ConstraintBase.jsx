@@ -1,5 +1,6 @@
 import { Button, Icon, Popover } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
+import { css } from 'linaria'
 import { styled } from 'linaria/react'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -93,7 +94,7 @@ export const Constraint = ({
 }
 
 export const ConstraintBase = ({ children, ...constraintProps }) => (
-	<Popover fill={true} usePortal={true} lazy={true} position="right">
+	<Popover fill={true} usePortal={false} lazy={true} position="right" boundary="viewport">
 		<Constraint {...constraintProps} />
 		{children}
 	</Popover>

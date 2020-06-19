@@ -8,6 +8,7 @@ import { withTheme } from '../theme'
 
 const StyledQueryController = styled.div`
 	padding-top: 10px;
+	margin: 0 20px;
 `
 
 const ViewAll = () => (

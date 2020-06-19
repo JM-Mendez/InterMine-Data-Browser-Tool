@@ -34,6 +34,37 @@ const StyledTableChartsSection = withTheme(
 	`
 )
 
+const mainStyles = css`
+	display: grid;
+	grid-template-columns: 230px 1fr;
+`
+
+const headerStyles = css`
+	display: inline-flex;
+	width: 100%;
+`
+
+const ConstraintContainer = styled.ul`
+	overflow: auto;
+	list-style: none;
+	padding: 0;
+	height: 77vh;
+`
+
+const ConstraintWrapper = styled.li`
+	margin: 0.875em 0;
+`
+
+const Chart = styled(Card)`
+	height: 380px;
+	margin-bottom: 20px;
+`
+
+const Table = styled(Card)`
+	height: 500px;
+	margin-bottom: 20px;
+`
+
 const constraintMocks = [
 	Constraints.INTERMINE_LIST,
 	Constraints.SYMBOL_CONSTRAINT,
@@ -57,68 +88,28 @@ export const App = () => {
 
 	return (
 		<div className={theme.lightTheme}>
-			<header
-				className={css`
-					display: inline-flex;
-					width: 100%;
-				`}
-			>
+			<header className={headerStyles}>
 				<StyledLogoContainer>
 					<img width="120px" src={logo} alt="Logo" />
 				</StyledLogoContainer>
 				<NavigationBar />
 			</header>
-			<main
-				className={css`
-					display: grid;
-					grid-template-columns: 230px 1fr;
-				`}
-			>
+			<main className={mainStyles}>
 				<ConstraintsContainer>
-					<div
-						className={css`
-							margin: 0 20px;
-						`}
-					>
-						<QueryController />
-					</div>
-					<ul
-						className={css`
-							overflow: auto;
-							list-style: none;
-							padding: 0;
-							height: 77vh;
-						`}
-					>
+					<QueryController />
+					<ConstraintContainer>
 						{constraintMocks.map((c, idx) => (
-							<li
-								key={idx}
-								className={css`
-									margin: 0.875em 0;
-								`}
-							>
-								{Constraints.renderConstraint(c)}
-							</li>
+							<ConstraintWrapper key={idx}>{Constraints.renderConstraint(c)}</ConstraintWrapper>
 						))}
-					</ul>
+					</ConstraintContainer>
 				</ConstraintsContainer>
 				<StyledTableChartsSection>
-					<Card
-						className={css`
-							height: 380px;
-							margin-bottom: 20px;
-						`}
-					>
+					<Chart>
 						<H1>Chart goes here</H1>
-					</Card>
-					<Card
-						className={css`
-							height: 500px;
-							margin-bottom: 20px;
-						`}
-					>
+					</Chart>
+					<Table>
 						<H1>Table goes here</H1>
-					</Card>
+					</Table>
 				</StyledTableChartsSection>
 			</main>
 		</div>
