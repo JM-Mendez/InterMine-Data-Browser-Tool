@@ -90,8 +90,9 @@ export const App = () => {
 							height: 77vh;
 						`}
 					>
-						{constraintMocks.map((c) => (
+						{constraintMocks.map((c, idx) => (
 							<li
+								key={idx}
 								className={css`
 									margin: 0.875em 0;
 								`}

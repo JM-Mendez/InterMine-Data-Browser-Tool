@@ -74,7 +74,7 @@ export const renderConstraint = (constraint) => {
 		case NAME:
 			return <Name />
 		case ORGANISM:
-			return <ORGANISM />
+			return <Organism />
 		case PATHWAY_NAME:
 			return <PathwayName />
 		case PHENOTYPE:
