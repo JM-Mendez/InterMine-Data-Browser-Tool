@@ -2,16 +2,21 @@ import { Button, Classes, Tab, Tabs } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { Select } from '@blueprintjs/select'
 import { css } from 'linaria'
-import React from 'react'
+import React, { useState } from 'react'
 
 import { NumberedSelectMenuItems } from '../Selects'
 
-let visibleClasses = [{ name: 'Gene' }, { name: 'Protein' }]
-let hiddenClasses = [{ name: 'Enhancer' }, { name: 'Chromosomal Duplication' }, { name: 'GWAS' }]
-export const ClassSelector = ({ classes }) => {
+export const ClassSelector = () => {
+	const [visibleClasses, setVisibleClasses] = useState([{ name: 'Gene' }, { name: 'Protein' }])
+	const [hiddenClasses, setHiddenClasses] = useState([
+		{ name: 'Enhancer' },
+		{ name: 'Chromosomal Duplication' },
+		{ name: 'GWAS' },
+	])
+
 	const handleClassSelect = (newClass) => {
-		visibleClasses = [...visibleClasses, newClass]
-		hiddenClasses = hiddenClasses.filter((c) => c.name !== newClass.name)
+		setVisibleClasses([...visibleClasses, newClass])
+		setHiddenClasses(hiddenClasses.filter((c) => c.name !== newClass.name))
 	}
 
 	return (
@@ -26,18 +31,9 @@ export const ClassSelector = ({ classes }) => {
 				id="Classes-tab"
 				large={true}
 			>
-				<Tab
-					key={visibleClasses[0].name}
-					style={{ fontSize: 24, fontWeight: 300 }}
-					id={visibleClasses[0].name}
-					title={visibleClasses[0].name}
-				/>
-				<Tab
-					key={visibleClasses[1].name}
-					style={{ fontSize: 24, fontWeight: 300 }}
-					id={visibleClasses[1].name}
-					title={visibleClasses[1].name}
-				/>
+				{visibleClasses.map((c) => (
+					<Tab key={c.name} style={{ fontSize: 24, fontWeight: 300 }} id={c.name} title={c.name} />
+				))}
 			</Tabs>
 			<Select
 				className={css`
