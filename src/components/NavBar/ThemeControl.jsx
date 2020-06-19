@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Colors } from '@blueprintjs/core'
+import { Button, ButtonGroup } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { css } from 'linaria'
 import React, { useState } from 'react'

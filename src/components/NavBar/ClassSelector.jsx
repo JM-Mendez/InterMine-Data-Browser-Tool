@@ -33,7 +33,7 @@ export const ClassSelector = () => {
 			>
 				{visibleClasses.map((c) => (
 					// use `style` prop to override `Blueprintjs` styling
-					<Tab style={{ fontSize: 24, fontWeight: 300 }} id={c.name} title={c.name} />
+					<Tab key={c.name} style={{ fontSize: 24, fontWeight: 300 }} id={c.name} title={c.name} />
 				))}
 			</Tabs>
 			<Select
