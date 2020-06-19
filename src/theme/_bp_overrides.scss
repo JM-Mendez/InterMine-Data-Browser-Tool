@@ -1,0 +1,35 @@
+@import 'palette';
+
+$pt-text-color: $blue900;
+$pt-heading-color: $blue900;
+$pt-intent-primary: $blue500;
+$pt-intent-success: $green500;
+$pt-intent-warning: $orange500;
+$pt-intent-danger: $red500;
+$pt-navbar-height: 42px;
+
+// $pt-app-background-color: red;
+
+// "intent": (default, hover, active colors)
+$button-intents: (
+	'primary': (
+		$pt-intent-primary,
+		$blue600,
+		$blue700,
+	),
+	'success': (
+		$pt-intent-success,
+		$green600,
+		$green700,
+	),
+	'warning': (
+		$pt-intent-warning,
+		$orange600,
+		$orange700,
+	),
+	'danger': (
+		$pt-intent-danger,
+		$red600,
+		$red700,
+	),
+);
