@@ -35,6 +35,7 @@ export const NavigationBar = () => {
 				<Button
 					className={css`
 						margin-left: auto;
+						min-width: 80px;
 					`}
 					text="Reset"
 					intent="danger"

@@ -10,7 +10,7 @@ export const ThemeControl = () => {
 	return (
 		<ButtonGroup
 			className={css`
-				margin-left: 23%;
+				margin-left: auto;
 			`}
 		>
 			<Button

@@ -23,7 +23,7 @@ export const ClassSelector = () => {
 		<>
 			<Tabs
 				className={css`
-					margin-left: 15%;
+					margin-left: auto;
 					& .${Classes.TAB_INDICATOR} {
 						bottom: -0.357em;
 					}
