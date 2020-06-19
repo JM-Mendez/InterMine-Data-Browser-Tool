@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { NavigationBar } from '.'
+import { NavigationBar } from './NavBar'
 
 export default {
 	component: NavigationBar,
