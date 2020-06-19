@@ -1,4 +1,5 @@
-import { Navbar } from '@blueprintjs/core'
+import { Button, Navbar } from '@blueprintjs/core'
+import { IconNames } from '@blueprintjs/icons'
 import { css } from 'linaria'
 import { styled } from 'linaria/react'
 import React, { useState } from 'react'
@@ -31,6 +32,14 @@ export const NavigationBar = () => {
 				<ApiStatus />
 				<ClassSelector />
 				<ThemeControl />
+				<Button
+					className={css`
+						margin-left: auto;
+					`}
+					text="Reset"
+					intent="danger"
+					icon={IconNames.ERROR}
+				/>
 			</Navbar.Group>
 		</StyledNav>
 	)
