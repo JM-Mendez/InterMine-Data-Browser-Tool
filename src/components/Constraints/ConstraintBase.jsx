@@ -1,6 +1,5 @@
 import { Button, Icon, Popover } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import { css } from 'linaria'
 import { styled } from 'linaria/react'
 import PropTypes from 'prop-types'
 import React from 'react'

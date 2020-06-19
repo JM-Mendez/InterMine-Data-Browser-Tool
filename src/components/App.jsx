@@ -1,5 +1,4 @@
 import { Card, Colors, H1 } from '@blueprintjs/core'
-import { css } from 'linaria'
 import { styled } from 'linaria/react'
 import React from 'react'
 
@@ -12,7 +11,7 @@ import { QueryController } from './QueryController'
 const StyledLogoContainer = withTheme(
 	styled.div`
 		min-width: 230px;
-		height: 50px;
+		height: 3.643em;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -31,15 +30,17 @@ const StyledTableChartsSection = withTheme(
 	styled.section`
 		background-color: ${({ theme }) => theme.colors.bluePalette.blue000};
 		padding: 10px 30px 0;
+		overflow: auto;
+		height: calc(100vh - 3.643em);
 	`
 )
 
-const mainStyles = css`
+const StyledMain = styled.main`
 	display: grid;
 	grid-template-columns: 230px 1fr;
 `
 
-const headerStyles = css`
+const StyledHeader = styled.header`
 	display: inline-flex;
 	width: 100%;
 `
@@ -88,13 +89,13 @@ export const App = () => {
 
 	return (
 		<div className={theme.lightTheme}>
-			<header className={headerStyles}>
+			<StyledHeader>
 				<StyledLogoContainer>
 					<img width="120px" src={logo} alt="Logo" />
 				</StyledLogoContainer>
 				<NavigationBar />
-			</header>
-			<main className={mainStyles}>
+			</StyledHeader>
+			<StyledMain>
 				<ConstraintsContainer>
 					<QueryController />
 					<ConstraintContainer>
@@ -111,7 +112,7 @@ export const App = () => {
 						<H1>Table goes here</H1>
 					</Table>
 				</StyledTableChartsSection>
-			</main>
+			</StyledMain>
 		</div>
 	)
 }
