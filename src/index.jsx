@@ -1,11 +1,11 @@
 import 'normalize.css'
-import './theme/theme.scss'
+import './theme/main.scss'
 
 import { FocusStyleManager } from '@blueprintjs/core'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { App } from './components/App/App'
+import { App } from './layout/App'
 import * as serviceWorker from './serviceWorker'
 import { ThemeProvider } from './theme'
 

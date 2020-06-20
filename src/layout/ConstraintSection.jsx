@@ -1,19 +1,24 @@
-import { Colors } from '@blueprintjs/core'
-import { css } from 'linaria'
 import { styled } from 'linaria/react'
 import React from 'react'
 
-import * as Constraints from '../Constraints'
-import { QueryController } from '../QueryController'
+import * as Constraints from '../components/Constraints'
+import { QueryController } from '../components/QueryController'
 
-const ConstraintWrapper = styled.li`
+const S = {}
+
+S.Constraint = styled.li`
 	margin: 0.875em 0;
 `
-const ConstraintList = styled.ul`
+S.ConstraintList = styled.ul`
 	overflow: auto;
 	list-style: none;
 	padding: 0;
 	height: 77vh;
+`
+
+S.ConstraintSection = styled.section`
+	min-width: 230px;
+	border-right: 2px solid var(--blue5);
 `
 
 const constraintMocks = [
@@ -36,18 +41,13 @@ const constraintMocks = [
 
 export const ConstraintSection = () => {
 	return (
-		<section
-			className={css`
-				min-width: 230px;
-				border-right: ${`2px solid ${Colors.COBALT1}`};
-			`}
-		>
+		<S.ConstraintSection>
 			<QueryController />
-			<ConstraintList>
+			<S.ConstraintList>
 				{constraintMocks.map((c, idx) => (
-					<ConstraintWrapper key={idx}>{Constraints.renderConstraint(c)}</ConstraintWrapper>
+					<S.Constraint key={idx}>{Constraints.renderConstraint(c)}</S.Constraint>
 				))}
-			</ConstraintList>
-		</section>
+			</S.ConstraintList>
+		</S.ConstraintSection>
 	)
 }

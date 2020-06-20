@@ -1,7 +1,7 @@
 import { styled } from 'linaria/react'
 import React from 'react'
 
-import { useTheme, withTheme } from '../../theme'
+import { withTheme } from '../theme'
 import { ChartSection } from './ChartSection'
 import { ConstraintSection } from './ConstraintSection'
 import { Header } from './Header'
@@ -22,10 +22,8 @@ const StyledMain = styled.main`
 `
 
 export const App = () => {
-	const theme = useTheme()
-
 	return (
-		<div className={theme.lightTheme}>
+		<div className="light-theme">
 			<Header />
 			<StyledMain>
 				<ConstraintSection />

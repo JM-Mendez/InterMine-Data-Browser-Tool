@@ -18,7 +18,7 @@ const CountTagWrapper = withTheme(
 		border-radius: 10px;
 		height: 1.333em;
 
-		& > div {
+		& > small {
 			margin: 0 0.833em;
 		}
 	`
@@ -83,7 +83,7 @@ export const Constraint = ({
 				{constraintName}
 				{constraintCount > 0 && (
 					<CountTagWrapper>
-						{constraintCount > 1 && <div>{constraintCount}</div>}
+						{constraintCount > 1 && <small>{constraintCount}</small>}
 						<StyledIcon icon={IconNames.TICK_CIRCLE} color={theme.colors.greenPalette.green500} />
 					</CountTagWrapper>
 				)}

@@ -2,34 +2,44 @@
 
 $pt-text-color: $blue900;
 $pt-heading-color: $blue900;
-$pt-intent-primary: $blue500;
-$pt-intent-success: $green500;
+$pt-intent-primary: $blue600;
+$pt-intent-success: $green600;
 $pt-intent-warning: $orange500;
-$pt-intent-danger: $red500;
+$pt-intent-danger: $red600;
 $pt-navbar-height: 42px;
-
-// $pt-app-background-color: red;
 
 // "intent": (default, hover, active colors)
 $button-intents: (
 	'primary': (
-		$pt-intent-primary,
-		$blue600,
-		$blue700,
+		// default
+			$pt-intent-primary,
+		// hover
+			$blue700,
+		// active
+			$blue800,
 	),
 	'success': (
-		$pt-intent-success,
-		$green600,
-		$green700,
+		// default
+			$pt-intent-success,
+		// hover
+			$green700,
+		// active
+			$green800,
 	),
 	'warning': (
-		$pt-intent-warning,
-		$orange600,
-		$orange700,
+		// default
+			$pt-intent-warning,
+		// hover
+			$orange600,
+		// active
+			$orange700,
 	),
 	'danger': (
-		$pt-intent-danger,
-		$red600,
-		$red700,
+		// default
+			$pt-intent-danger,
+		// hover
+			$red700,
+		// active
+			$red800,
 	),
 );
