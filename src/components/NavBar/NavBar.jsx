@@ -13,6 +13,10 @@ const StyledNav = styled(Navbar)`
 	padding: 0 30px 30px 40px;
 `
 
+const S = {
+	Navbar: StyledNav,
+}
+
 export const NavigationBar = () => {
 	const [mockMines] = useState([
 		{ name: 'Human Mine' },
@@ -22,7 +26,7 @@ export const NavigationBar = () => {
 	const [mine, setMine] = useState(mockMines[0])
 
 	return (
-		<StyledNav>
+		<S.Navbar>
 			<Navbar.Group
 				className={css`
 					width: 100%;
@@ -42,6 +46,6 @@ export const NavigationBar = () => {
 					icon={IconNames.ERROR}
 				/>
 			</Navbar.Group>
-		</StyledNav>
+		</S.Navbar>
 	)
 }

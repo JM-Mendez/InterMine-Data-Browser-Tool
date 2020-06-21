@@ -1,25 +1,30 @@
 import { styled } from 'linaria/react'
 import React from 'react'
 
-import * as Constraints from '../components/Constraints'
-import { QueryController } from '../components/QueryController'
+import * as Constraints from '../Constraints'
+import { QueryController } from '../QueryController'
 
-const S = {}
-
-S.Constraint = styled.li`
+const ConstraintWrapper = styled.li`
 	margin: 0.875em 0;
 `
-S.ConstraintList = styled.ul`
+
+const ConstraintList = styled.ul`
 	overflow: auto;
 	list-style: none;
 	padding: 0;
 	height: 77vh;
 `
 
-S.ConstraintSection = styled.section`
+const ConstraintSectionWrapper = styled.section`
 	min-width: 230px;
 	border-right: 2px solid var(--blue5);
 `
+
+const S = {
+	Constraint: ConstraintWrapper,
+	ConstraintSection: ConstraintSectionWrapper,
+	ConstraintList,
+}
 
 const constraintMocks = [
 	Constraints.INTERMINE_LIST,

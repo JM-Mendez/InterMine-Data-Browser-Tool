@@ -2,17 +2,21 @@ import { Card, H1 } from '@blueprintjs/core'
 import { styled } from 'linaria/react'
 import React from 'react'
 
-const Chart = styled(Card)`
-	height: 380px;
+const Table = styled(Card)`
+	height: 500px;
 	margin-bottom: 20px;
 `
 
-export const ChartSection = () => {
+const S = {
+	Table,
+}
+
+export const TableSection = () => {
 	return (
 		<section>
-			<Chart>
-				<H1>Chart goes here</H1>
-			</Chart>
+			<S.Table>
+				<H1>Table goes here</H1>
+			</S.Table>
 		</section>
 	)
 }

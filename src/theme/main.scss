@@ -1,6 +1,4 @@
-@import 'palette';
-@import 'root';
-@import 'bp_overrides';
-@import 'themes';
+@import 'partials/*';
+@import 'css_variables/*';
 
 @import '@blueprintjs/core/src/blueprint.scss';
