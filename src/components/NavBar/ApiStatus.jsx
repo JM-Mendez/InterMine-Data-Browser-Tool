@@ -2,7 +2,8 @@ import { Button, Colors, Icon } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import React, { useState } from 'react'
 
-import { StyledNavHeading } from './StyledNavHeading'
+import * as S from '../../shared/FormGroups'
+
 const AuthenticatedIcon = (isAuthenticated) => (
 	<Icon
 		icon={isAuthenticated ? IconNames.UNLOCK : IconNames.LOCK}
@@ -13,14 +14,13 @@ const AuthenticatedIcon = (isAuthenticated) => (
 export const ApiStatus = () => {
 	const [isAuthenticated, setAuthentication] = useState(false)
 	return (
-		<>
-			<StyledNavHeading>Api Key</StyledNavHeading>
+		<S.NavFormGroup label="Api" inline={true} labelFor="api-status">
 			<Button
-				aria-label="Press button to enter your api key"
+				aria-label="api-status"
 				small={true}
 				icon={AuthenticatedIcon(isAuthenticated)}
 				onClick={() => setAuthentication(!isAuthenticated)}
 			/>
-		</>
+		</S.NavFormGroup>
 	)
 }

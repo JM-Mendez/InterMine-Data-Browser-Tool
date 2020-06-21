@@ -4,13 +4,12 @@ import { Select } from '@blueprintjs/select'
 import { css } from 'linaria'
 import React from 'react'
 
+import * as S from '../../shared/FormGroups'
 import { NumberedSelectMenuItems } from '../Selects'
-import { StyledNavHeading } from './StyledNavHeading'
 
 export const Mine = ({ mine, mockMines, setMine }) => {
 	return (
-		<>
-			<StyledNavHeading>Mine</StyledNavHeading>
+		<S.NavFormGroup label="Mine" inline={true} labelFor="mine-select-button">
 			<Select
 				className={css`
 					margin-right: 30px;
@@ -21,7 +20,8 @@ export const Mine = ({ mine, mockMines, setMine }) => {
 				onItemSelect={setMine}
 			>
 				<Button
-					aria-label="select the mine you'd like to query"
+					aria-label="Select Mine"
+					id="mine-select-button"
 					// used to override `Blueprintjs` styles for a small button
 					style={{ minWidth: 166 }}
 					small={true}
@@ -30,6 +30,6 @@ export const Mine = ({ mine, mockMines, setMine }) => {
 					rightIcon={IconNames.CARET_DOWN}
 				/>
 			</Select>
-		</>
+		</S.NavFormGroup>
 	)
 }
