@@ -32,6 +32,7 @@
 	"dependencies": {
 		"@blueprintjs/core": "^3.28.2",
 		"@blueprintjs/select": "^3.13.3",
+		"im-tables": "patch:im-tables@2.1.0#./patches/im-tables.patch",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1"
 	},
