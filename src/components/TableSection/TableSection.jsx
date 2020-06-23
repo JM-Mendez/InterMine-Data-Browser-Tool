@@ -22,9 +22,15 @@ const StyledRowCount = styled.span`
 	display: inline-block;
 `
 
+const StyledPagingRow = styled.div`
+	display: flex;
+	justify-content: space-between;
+`
+
 const S = {
 	TableCard,
 	RowCount: StyledRowCount,
+	PagingRow: StyledPagingRow,
 }
 
 export const TableSection = () => {
@@ -32,8 +38,10 @@ export const TableSection = () => {
 		<section>
 			<S.TableCard>
 				<TableActionButtons />
-				<S.RowCount>{`Showing ${rows.length} of ${rows.length} rows`}</S.RowCount>
-				<TablePagingButtons />
+				<S.PagingRow>
+					<S.RowCount>{`Showing ${rows.length} of ${rows.length} rows`}</S.RowCount>
+					<TablePagingButtons />
+				</S.PagingRow>
 				<Table mineUrl={mineUrl} rows={rows} />
 			</S.TableCard>
 		</section>

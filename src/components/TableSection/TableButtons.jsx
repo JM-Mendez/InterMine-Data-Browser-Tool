@@ -50,7 +50,7 @@ export const TableActionButtons = () => {
 const PageButtons = () => (
 	<ButtonGroup>
 		<Tooltip content="Previous Page" position={Position.TOP}>
-			<Button icon={IconNames.CHEVRON_BACKWARD} />
+			<Button icon={IconNames.CHEVRON_BACKWARD} disabled={true} />
 		</Tooltip>
 		<S.PageInput value={1} round={false} />
 		<Tooltip content="Next Page" position={Position.TOP}>
@@ -60,5 +60,9 @@ const PageButtons = () => (
 )
 
 export const TablePagingButtons = () => {
-	return <PageButtons />
+	return (
+		<div>
+			<PageButtons />
+		</div>
+	)
 }
