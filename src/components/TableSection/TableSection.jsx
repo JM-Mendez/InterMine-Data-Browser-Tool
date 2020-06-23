@@ -4,7 +4,7 @@ import React from 'react'
 
 import { humanMine25 as rows } from '../../stubs/humanMine25'
 import { Table } from './Table'
-import { TableActionButtons } from './TableButtons'
+import { TableActionButtons, TablePagingButtons } from './TableButtons'
 
 const mineUrl = 'https://www.humanmine.org/humanmine'
 
@@ -33,6 +33,7 @@ export const TableSection = () => {
 			<S.TableCard>
 				<TableActionButtons />
 				<S.RowCount>{`Showing ${rows.length} of ${rows.length} rows`}</S.RowCount>
+				<TablePagingButtons />
 				<Table mineUrl={mineUrl} rows={rows} />
 			</S.TableCard>
 		</section>

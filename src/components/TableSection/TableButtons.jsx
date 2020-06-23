@@ -1,4 +1,4 @@
-import { Button, ButtonGroup } from '@blueprintjs/core'
+import { Button, ButtonGroup, InputGroup } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { styled } from 'linaria/react'
 import React from 'react'
@@ -12,9 +12,14 @@ const StyledCodeSnippet = styled(ButtonGroup)`
 	margin: 0px 16px;
 `
 
+const StyledInputGroup = styled(InputGroup)`
+	width: 30px;
+`
+
 const S = {
 	ButtonRow,
 	CodeSnippet: StyledCodeSnippet,
+	PageInput: StyledInputGroup,
 }
 
 const SaveAsList = () => (
@@ -40,4 +45,16 @@ export const TableActionButtons = () => {
 			<Export />
 		</S.ButtonRow>
 	)
+}
+
+const PageButtons = () => (
+	<ButtonGroup>
+		<Button icon={IconNames.CHEVRON_BACKWARD} />
+		<S.PageInput value={1} round={false} />
+		<Button icon={IconNames.CHEVRON_FORWARD} />
+	</ButtonGroup>
+)
+
+export const TablePagingButtons = () => {
+	return <PageButtons />
 }
