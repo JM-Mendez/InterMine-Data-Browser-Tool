@@ -62,9 +62,7 @@ const Cell = ({ cell }) => {
 		<S.Cell scope="row">
 			{cellValue ? (
 				<div title={cellValue}>
-					{/* disable this rule since we do want to know who the referrer is */}
-					{/* eslint-disable-next-line react/jsx-no-target-blank */}
-					<a href={`${mineUrl}${cell.url}`} target="_blank">
+					<a href={`${mineUrl}${cell.url}`} target="_blank" rel="noopener noreferrer">
 						<Icon icon={IconNames.GLOBE_NETWORK} />
 						{cellValue}
 					</a>
