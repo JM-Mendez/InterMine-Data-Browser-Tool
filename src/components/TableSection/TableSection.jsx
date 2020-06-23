@@ -4,7 +4,7 @@ import React from 'react'
 
 import { humanMine25 as rows } from '../../stubs/humanMine25'
 import { Table } from './Table'
-import { TableButtons } from './TableButtons'
+import { TableActionButtons } from './TableButtons'
 
 const mineUrl = 'https://www.humanmine.org/humanmine'
 
@@ -14,15 +14,25 @@ const TableCard = styled(Card)`
 	padding-bottom: unset;
 `
 
+const StyledRowCount = styled.span`
+	font-size: var(--fs-desktopM1);
+	font-weight: var(--fw-semibold);
+	margin-bottom: 20px;
+	margin-left: 10px;
+	display: inline-block;
+`
+
 const S = {
 	TableCard,
+	RowCount: StyledRowCount,
 }
 
 export const TableSection = () => {
 	return (
 		<section>
 			<S.TableCard>
-				<TableButtons />
+				<TableActionButtons />
+				<S.RowCount>{`Showing ${rows.length} of ${rows.length} rows`}</S.RowCount>
 				<Table mineUrl={mineUrl} rows={rows} />
 			</S.TableCard>
 		</section>

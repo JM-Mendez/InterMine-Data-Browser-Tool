@@ -32,7 +32,7 @@ const Export = () => (
 	<Button intent="primary" outlined={true} icon={IconNames.ARCHIVE} text="Export" />
 )
 
-export const TableButtons = () => {
+export const TableActionButtons = () => {
 	return (
 		<S.ButtonRow>
 			<SaveAsList />
