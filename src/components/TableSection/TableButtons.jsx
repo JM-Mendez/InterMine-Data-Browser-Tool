@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, InputGroup } from '@blueprintjs/core'
+import { Button, ButtonGroup, InputGroup, Position, Tooltip } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { styled } from 'linaria/react'
 import React from 'react'
@@ -49,9 +49,13 @@ export const TableActionButtons = () => {
 
 const PageButtons = () => (
 	<ButtonGroup>
-		<Button icon={IconNames.CHEVRON_BACKWARD} />
+		<Tooltip content="Previous Page" position={Position.TOP}>
+			<Button icon={IconNames.CHEVRON_BACKWARD} />
+		</Tooltip>
 		<S.PageInput value={1} round={false} />
-		<Button icon={IconNames.CHEVRON_FORWARD} />
+		<Tooltip content="Next Page" position={Position.TOP}>
+			<Button icon={IconNames.CHEVRON_FORWARD} />
+		</Tooltip>
 	</ButtonGroup>
 )
 
