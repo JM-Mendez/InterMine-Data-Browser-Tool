@@ -1,7 +1,8 @@
-import { Button, ButtonGroup, InputGroup, Position, Tooltip } from '@blueprintjs/core'
+import { Button, ButtonGroup, InputGroup, MenuItem, Position, Tooltip } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
+import { Select } from '@blueprintjs/select'
 import { styled } from 'linaria/react'
-import React from 'react'
+import React, { useState } from 'react'
 
 const ButtonRow = styled.div`
 	display: flex;
@@ -26,12 +27,32 @@ const SaveAsList = () => (
 	<Button outlined={true} intent="primary" icon={IconNames.CLOUD_UPLOAD} text="Save As List" />
 )
 
-const CodeSnippet = () => (
-	<S.CodeSnippet>
-		<Button outlined={true} intent="primary" icon={IconNames.CODE} text="code snippet" />
-		<Button outlined={true} intent="primary" icon={IconNames.CARET_DOWN} />
-	</S.CodeSnippet>
+const renderLanguage = (lang, { handleClick }) => (
+	<MenuItem key={lang} text={lang} onClick={handleClick} />
 )
+
+const CodeSnippet = () => {
+	const [selectedLanguage, setLanguage] = useState('Python')
+
+	return (
+		<S.CodeSnippet>
+			<Button
+				outlined={true}
+				intent="primary"
+				icon={IconNames.CODE}
+				text={`Generate ${selectedLanguage} code`}
+			/>
+			<Select
+				filterable={false}
+				items={['Python', 'Perl', 'Java', 'Ruby', 'Javascript', 'XML']}
+				itemRenderer={renderLanguage}
+				onItemSelect={setLanguage}
+			>
+				<Button outlined={true} intent="primary" icon={IconNames.CARET_DOWN} />
+			</Select>
+		</S.CodeSnippet>
+	)
+}
 
 const Export = () => (
 	<Button intent="primary" outlined={true} icon={IconNames.ARCHIVE} text="Export" />

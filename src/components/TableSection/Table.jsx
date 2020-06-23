@@ -2,7 +2,7 @@ import { Classes, HTMLTable, Icon } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { css } from 'linaria'
 import { styled } from 'linaria/react'
-import React, { useLayoutEffect, useRef } from 'react'
+import React from 'react'
 import { humanize, titleize } from 'underscore.string'
 
 const StyledTable = styled(HTMLTable)`
@@ -64,14 +64,8 @@ const Cell = ({ cell, mineUrl }) => {
 }
 
 export const Table = ({ rows, mineUrl }) => {
-	const headRef = useRef()
-
-	useLayoutEffect(() => {
-		console.log({ headRef })
-	})
-
 	return (
-		<S.Table interactive={true} striped={true} elementRef={headRef}>
+		<S.Table interactive={true} striped={true}>
 			<thead>
 				<tr>
 					{rows[0].map((r) => {
