@@ -73,7 +73,7 @@ const PageButtons = () => (
 		<Tooltip content="Previous Page" position={Position.TOP}>
 			<Button icon={IconNames.CHEVRON_BACKWARD} disabled={true} />
 		</Tooltip>
-		<S.PageInput value={1} round={false} />
+		<S.PageInput defaultValue={1} round={false} />
 		<Tooltip content="Next Page" position={Position.TOP}>
 			<Button icon={IconNames.CHEVRON_FORWARD} />
 		</Tooltip>

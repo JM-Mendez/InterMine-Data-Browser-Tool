@@ -74,11 +74,11 @@ export const Table = ({ rows, mineUrl }) => {
 				</tr>
 			</thead>
 			<tbody>
-				{rows.map((row) => {
+				{rows.map((row, colIdx) => {
 					return (
-						<tr>
-							{row.map((cell) => (
-								<Cell cell={cell} mineUrl={mineUrl} />
+						<tr key={colIdx}>
+							{row.map((cell, rowIdx) => (
+								<Cell key={`${colIdx}-${rowIdx}`} cell={cell} mineUrl={mineUrl} />
 							))}
 						</tr>
 					)
