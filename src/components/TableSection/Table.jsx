@@ -2,9 +2,9 @@ import { Classes, HTMLTable, Icon } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { css } from 'linaria'
 import { styled } from 'linaria/react'
+import PropTypes from 'prop-types'
 import React from 'react'
 import { humanize, titleize } from 'underscore.string'
-
 const StyledTable = styled(HTMLTable)`
 	width: 100%;
 `
@@ -86,4 +86,15 @@ export const Table = ({ rows, mineUrl }) => {
 			</tbody>
 		</S.Table>
 	)
+}
+
+Table.propTypes = {
+	/**
+	 * The result from calling `imjs.tableRows()`
+	 */
+	rows: PropTypes.array.isRequired,
+	/**
+	 * The base mine url
+	 */
+	mineUrl: PropTypes.string,
 }
