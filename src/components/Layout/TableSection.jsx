@@ -1,4 +1,4 @@
-import { Card, Classes, Icon } from '@blueprintjs/core'
+import { Card, Classes, HTMLTable, Icon } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { Cell, Column, Table } from '@blueprintjs/table'
 import { css } from 'linaria'
@@ -23,6 +23,8 @@ const StyledCell = styled(Cell)`
 	}
 `
 
+const StyledTable = styled(Table)``
+
 const S = {
 	TableCard,
 	Cell: StyledCell,
@@ -35,7 +37,7 @@ const cellRenderer = (rowIndex, columnIndex) => {
 	const cellValue = cell.value
 
 	return (
-		<S.Cell key={`${rowIndex}${columnIndex}`}>
+		<S.Cell key={`${rowIndex}${columnIndex}`} wrapText={true}>
 			{cellValue ? (
 				// disable this rule since we do want to know who the referrer is
 				// eslint-disable-next-line react/jsx-no-target-blank
@@ -50,26 +52,23 @@ const cellRenderer = (rowIndex, columnIndex) => {
 	)
 }
 
-const headerTitle = (name) => {
-	const sanitizedName = titleize(humanize(name.replace(/\./g, ' ')))
-	return sanitizedName
-}
-
-const headerNameRenderer = (name) => {
+const ColumnHeader = ({ columnName }) => {
+	const name = titleize(humanize(columnName.replace(/\./g, ' ')))
 	const words = name.split(' ')
 	const className = words.shift()
 	const specifier = words.join(' ')
 
 	return (
-		<div
-			className={css`
-				display: flex;
-				flex-direction: column;
-			`}
-		>
-			<span>{className}</span>
+		<th scope="col" title={`${className} ${specifier}`}>
+			<span
+				className={css`
+					display: block;
+				`}
+			>
+				{className}
+			</span>
 			<span>{specifier}</span>
-		</div>
+		</th>
 	)
 }
 
@@ -77,25 +76,19 @@ export const TableSection = () => {
 	return (
 		<section>
 			<S.TableCard>
-				<Table
-					numRows={rows.length}
-					enableMultipleSelection={false}
-					enableRowResizing={false}
-					rowHeaderCellRenderer={() => null}
-					renderMode="RenderMode.NONE"
-					defaultRowHeight={40}
+				<HTMLTable
+					className={css`
+						width: 100%;
+					`}
 				>
-					{rows[0].map((r) => {
-						return (
-							<Column
-								key={r.column}
-								name={headerTitle(r.column)}
-								nameRenderer={headerNameRenderer}
-								cellRenderer={cellRenderer}
-							/>
-						)
-					})}
-				</Table>
+					<thead>
+						<tr>
+							{rows[0].map((r) => {
+								return <ColumnHeader key={r.column} columnName={r.column} />
+							})}
+						</tr>
+					</thead>
+				</HTMLTable>
 			</S.TableCard>
 		</section>
 	)
