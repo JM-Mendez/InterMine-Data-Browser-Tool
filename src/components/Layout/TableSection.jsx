@@ -1,4 +1,4 @@
-import { Card, Icon } from '@blueprintjs/core'
+import { Card, Classes, Icon } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { Cell, Column, Table } from '@blueprintjs/table'
 import { css } from 'linaria'
@@ -13,8 +13,19 @@ const TableCard = styled(Card)`
 	margin-bottom: 20px;
 `
 
+const StyledCell = styled(Cell)`
+	font-size: var(--fs-desktopS2);
+	display: flex;
+	align-items: center;
+
+	& .${Classes.ICON} {
+		padding-right: 5px;
+	}
+`
+
 const S = {
 	TableCard,
+	Cell: StyledCell,
 }
 
 const mineUrl = 'https://www.humanmine.org/humanmine'
@@ -22,8 +33,9 @@ const mineUrl = 'https://www.humanmine.org/humanmine'
 const cellRenderer = (rowIndex, columnIndex) => {
 	const cell = rows[rowIndex][columnIndex]
 	const cellValue = cell.value
+
 	return (
-		<Cell>
+		<S.Cell key={`${rowIndex}${columnIndex}`}>
 			{cellValue ? (
 				// disable this rule since we do want to know who the referrer is
 				// eslint-disable-next-line react/jsx-no-target-blank
@@ -32,9 +44,9 @@ const cellRenderer = (rowIndex, columnIndex) => {
 					{cellValue}
 				</a>
 			) : (
-				'No Value'
+				<span className={Classes.TEXT_DISABLED}>No Value</span>
 			)}
-		</Cell>
+		</S.Cell>
 	)
 }
 
@@ -62,7 +74,6 @@ const headerNameRenderer = (name) => {
 }
 
 export const TableSection = () => {
-	console.log(rows)
 	return (
 		<section>
 			<S.TableCard>
@@ -72,6 +83,7 @@ export const TableSection = () => {
 					enableRowResizing={false}
 					rowHeaderCellRenderer={() => null}
 					renderMode="RenderMode.NONE"
+					defaultRowHeight={40}
 				>
 					{rows[0].map((r) => {
 						return (
