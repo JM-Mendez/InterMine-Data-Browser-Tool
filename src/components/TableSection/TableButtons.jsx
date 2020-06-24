@@ -68,17 +68,29 @@ export const TableActionButtons = () => {
 	)
 }
 
-const PageButtons = () => (
-	<ButtonGroup>
-		<Tooltip content="Previous Page" position={Position.TOP}>
-			<Button icon={IconNames.CHEVRON_BACKWARD} disabled={true} />
-		</Tooltip>
-		<S.PageInput defaultValue={1} round={false} />
-		<Tooltip content="Next Page" position={Position.TOP}>
-			<Button icon={IconNames.CHEVRON_FORWARD} />
-		</Tooltip>
-	</ButtonGroup>
-)
+const PageButtons = () => {
+	const [pageNumber, setPageNumber] = useState(1)
+
+	return (
+		<ButtonGroup>
+			<Tooltip content="Previous Page" position={Position.TOP}>
+				<Button
+					icon={IconNames.CHEVRON_BACKWARD}
+					disabled={pageNumber === 1}
+					onClick={() => setPageNumber(pageNumber - 1)}
+				/>
+			</Tooltip>
+			<S.PageInput value={pageNumber} round={false} />
+			<Tooltip content="Next Page" position={Position.TOP}>
+				<Button
+					icon={IconNames.CHEVRON_FORWARD}
+					disabled={pageNumber === 3}
+					onClick={() => setPageNumber(pageNumber + 1)}
+				/>
+			</Tooltip>
+		</ButtonGroup>
+	)
+}
 
 export const TablePagingButtons = () => {
 	return (
