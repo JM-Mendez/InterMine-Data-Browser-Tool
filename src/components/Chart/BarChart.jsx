@@ -1,4 +1,5 @@
 import imjs from 'imjs'
+import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import {
 	Bar,
@@ -7,6 +8,7 @@ import {
 	CartesianGrid,
 	Cell,
 	Label,
+	ResponsiveContainer,
 	Tooltip,
 	XAxis,
 } from 'recharts'
@@ -38,9 +40,10 @@ const colorizeBars = (data) =>
 		<Cell key={entry} fill={DATA_VIZ_COLORS[index % DATA_VIZ_COLORS.length]} />
 	))
 
-export const BarChart = () => {
+export const BarChart = ({ width, height }) => {
 	const [chartData, setChartData] = useState([])
 	const [titles, setTitles] = useState({ title: '', subtitle: '' })
+
 	const service = new imjs.Service({ root: mineUrl })
 	const query = new imjs.Query(geneLengthQueryStub, service)
 
@@ -58,15 +61,15 @@ export const BarChart = () => {
 				const title = `Distribution of ${uniqueValues} Gene Lengths`
 				const subtitle = `Min: ${min} ⚬ Max: ${max} ⚬ Avg: ${avgFixed} ⚬ Stdev: ${stdevFixed}`
 
-				const data = summary.results.flatMap((item, i) => {
-					if (i === summary.results.length - 1) return []
+				const data = summary.results.flatMap((item, idx) => {
+					if (idx === summary.results.length - 1) return []
 
-					const lowerLimit = Math.round(min + elementsPerBucket * i)
-					const upperLimit = Math.round(min + elementsPerBucket * (i + 1))
+					const lowerLimit = Math.round(min + elementsPerBucket * idx)
+					const upperLimit = Math.round(min + elementsPerBucket * (idx + 1))
 
-					const data = Math.log2(summary.results[i].count + 1)
+					const data = Math.log2(item.count + 1)
 					const distribution = `${lowerLimit} — ${upperLimit}`
-					const count = summary.results[i].count
+					const count = item.count
 
 					return [
 						{
@@ -90,46 +93,64 @@ export const BarChart = () => {
 	}, [])
 
 	return (
-		<RBarChart
-			width={600}
-			height={336}
-			data={chartData}
-			barCategoryGap="20%"
-			margin={{ left: 100, bottom: 200 }}
-		>
-			<Bar dataKey="data">{colorizeBars(chartData)}</Bar>
-			<Tooltip
-				itemStyle={{
-					color: 'var(--blue9)',
-				}}
-				wrapperStyle={{
-					border: '2px solid var(--blue9)',
-					borderRadius: '3px',
-				}}
-				formatter={(_, __, props) => [props.payload.count, 'Total Values']}
-			/>
-			<CartesianGrid strokeDasharray="3 3" vertical={false} />
-			<XAxis dataKey="distribution" interval={0} tick={renderCustomTick}>
-				<Label
-					fill="var(--blue9)"
-					fontWeight={500}
-					value={titles.title}
-					offset={120}
-					position="bottom"
+		<ResponsiveContainer width={width} height={height}>
+			<RBarChart data={chartData} barCategoryGap="20%" margin={{ left: 100, bottom: 200 }}>
+				<Bar dataKey="data">{colorizeBars(chartData)}</Bar>
+				<Tooltip
+					itemStyle={{
+						color: 'var(--blue9)',
+					}}
+					wrapperStyle={{
+						border: '2px solid var(--blue9)',
+						borderRadius: '3px',
+					}}
+					formatter={(_, __, props) => [props.payload.count, 'Total Values']}
 				/>
-				<Label
-					fill="var(--blue9)"
-					fontWeight={500}
-					value={titles.subtitle}
-					position="bottom"
-					offset={150}
-				/>
-			</XAxis>
-			<Brush dataKey="distribution" y={270}>
-				<RBarChart>
-					<Bar dataKey="data">{colorizeBars(chartData)}</Bar>
-				</RBarChart>
-			</Brush>
-		</RBarChart>
+				<CartesianGrid strokeDasharray="3 3" vertical={false} />
+				<XAxis dataKey="distribution" interval={0} tick={renderCustomTick}>
+					<Label
+						fill="var(--blue9)"
+						fontWeight={500}
+						value={titles.title}
+						offset={120}
+						position="bottom"
+					/>
+					<Label
+						fill="var(--blue9)"
+						fontWeight={500}
+						value={titles.subtitle}
+						position="bottom"
+						offset={150}
+					/>
+				</XAxis>
+				<Brush dataKey="distribution" y={290}>
+					<RBarChart>
+						<Bar dataKey="data">{colorizeBars(chartData)}</Bar>
+					</RBarChart>
+				</Brush>
+			</RBarChart>
+		</ResponsiveContainer>
 	)
+}
+
+BarChart.propTypes = {
+	/**
+	 * The width to set for the responsive container. Can be a percentage string,
+	 * or number.
+	 *
+	 * *NB:* __Either__ width or height __must__ be set as a percentage
+	 */
+	width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	/**
+	 * The height to set for the responsive container. Can be a percentage string,
+	 * or number.
+	 *
+	 * *NB:* __Either__ width or height __must__ be set as a percentage
+	 */
+	height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+}
+
+BarChart.defaultProps = {
+	width: '100%',
+	height: '100%',
 }
