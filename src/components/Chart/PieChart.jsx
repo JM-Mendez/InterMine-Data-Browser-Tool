@@ -13,22 +13,7 @@ import {
 } from 'recharts'
 
 import { geneQueryStub, mineUrl } from '../../stubs/utils'
-
-const colorPalette = [
-	'#898cff ',
-	'#90d4f7',
-	'#71e096',
-	'#fcdc89',
-	'#f5a26e',
-	'#f589b6',
-	'#668de5',
-	'#ed6d79',
-	'#5ad0e5',
-	'#cff381',
-	'#f696e3',
-	'#bb96ff',
-	'#67eebd',
-]
+import { DATA_VIZ_COLORS } from './dataVizColors'
 
 const renderLabelContent = (props) => {
 	const {
@@ -87,7 +72,7 @@ export const PieChart = ({ width, height }) => {
 					paddingAngle={1}
 				>
 					{chartData.map((entry, index) => (
-						<Cell key={entry} fill={colorPalette[index % colorPalette.length]} />
+						<Cell key={entry} fill={DATA_VIZ_COLORS[index % DATA_VIZ_COLORS.length]} />
 					))}
 					<Label content={renderLabelContent} />
 				</Pie>
