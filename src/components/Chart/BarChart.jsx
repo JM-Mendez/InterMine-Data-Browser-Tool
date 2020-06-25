@@ -1,6 +1,15 @@
 import imjs from 'imjs'
 import React, { useEffect, useState } from 'react'
-import { Bar, BarChart as RBarChart, CartesianGrid, Cell, Label, Tooltip, XAxis } from 'recharts'
+import {
+	Bar,
+	BarChart as RBarChart,
+	Brush,
+	CartesianGrid,
+	Cell,
+	Label,
+	Tooltip,
+	XAxis,
+} from 'recharts'
 
 import { geneLengthQueryStub, mineUrl } from '../../stubs/utils'
 import { DATA_VIZ_COLORS } from './dataVizColors'
@@ -23,6 +32,11 @@ const renderCustomTick = ({ x, y, payload }) => {
 		</g>
 	)
 }
+
+const colorizeBars = (data) =>
+	data.map((entry, index) => (
+		<Cell key={entry} fill={DATA_VIZ_COLORS[index % DATA_VIZ_COLORS.length]} />
+	))
 
 export const BarChart = () => {
 	const [chartData, setChartData] = useState([])
@@ -83,11 +97,7 @@ export const BarChart = () => {
 			barCategoryGap="20%"
 			margin={{ left: 100, bottom: 200 }}
 		>
-			<Bar dataKey="data">
-				{chartData.map((entry, index) => (
-					<Cell key={entry} fill={DATA_VIZ_COLORS[index % DATA_VIZ_COLORS.length]} />
-				))}
-			</Bar>
+			<Bar dataKey="data">{colorizeBars(chartData)}</Bar>
 			<Tooltip
 				itemStyle={{
 					color: 'var(--blue9)',
@@ -115,6 +125,11 @@ export const BarChart = () => {
 					offset={150}
 				/>
 			</XAxis>
+			<Brush dataKey="distribution" y={270}>
+				<RBarChart>
+					<Bar dataKey="data">{colorizeBars(chartData)}</Bar>
+				</RBarChart>
+			</Brush>
 		</RBarChart>
 	)
 }
