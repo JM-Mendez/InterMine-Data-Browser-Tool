@@ -1,8 +1,26 @@
 import imjs from 'imjs'
 import React, { useEffect, useState } from 'react'
-import { Bar, BarChart as RBarChart, CartesianGrid } from 'recharts'
+import { Bar, BarChart as RBarChart, CartesianGrid, XAxis } from 'recharts'
 
 import { geneLengthQueryStub, mineUrl } from '../../stubs/utils'
+
+const renderCustomTick = ({ x, y, stroke, payload }) => {
+	return (
+		<g transform={`translate(${x},${y})`}>
+			<text
+				x={0}
+				y={0}
+				dy={10}
+				fontSize="var(--fs-desktopS1)"
+				textAnchor="end"
+				fill="var(--blue9)"
+				transform="rotate(-55)"
+			>
+				{payload.value}
+			</text>
+		</g>
+	)
+}
 
 export const BarChart = () => {
 	const [chartData, setChartData] = useState([])
@@ -50,12 +68,12 @@ export const BarChart = () => {
 					const upperLimit = Math.round(min + elementsPerBucket * (i + 1))
 
 					const count = Math.log2(summary.results[i].count + 1)
-					const name = `${lowerLimit} — ${upperLimit}`
+					const distribution = `${lowerLimit} — ${upperLimit}`
 					// const onHoverLabel = `${lowerLimit} to ${upperLimit}: ${summary.results[i].count} values`
 
 					return [
 						{
-							name,
+							distribution,
 							count,
 						},
 					]
@@ -73,9 +91,16 @@ export const BarChart = () => {
 	}, [])
 
 	return (
-		<RBarChart width={600} height={350} data={chartData}>
+		<RBarChart
+			width={600}
+			height={376}
+			data={chartData}
+			barCategoryGap="20%"
+			margin={{ left: 100, bottom: 200 }}
+		>
 			<Bar dataKey="count" />
 			<CartesianGrid strokeDasharray="3 3" vertical={false} />
+			<XAxis dataKey="distribution" interval={0} tick={renderCustomTick} />
 		</RBarChart>
 	)
 }
