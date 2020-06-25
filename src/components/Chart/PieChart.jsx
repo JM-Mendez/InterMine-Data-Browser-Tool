@@ -68,7 +68,14 @@ export const PieChart = () => {
 
 	return (
 		<RPieChart width={600} height={350}>
-			<Pie data={chartData} dataKey="value" nameKey="name" innerRadius={60} paddingAngle={1}>
+			<Pie
+				data={chartData}
+				dataKey="value"
+				nameKey="name"
+				cy={160}
+				innerRadius={60}
+				paddingAngle={1}
+			>
 				{chartData.map((entry, index) => (
 					<Cell key={entry} fill={colorPalette[index % colorPalette.length]} />
 				))}
