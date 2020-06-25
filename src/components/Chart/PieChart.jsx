@@ -92,6 +92,8 @@ export const PieChart = () => {
 					border: '2px solid var(--blue9)',
 					borderRadius: '30px',
 				}}
+				separator=""
+				formatter={(value, name) => [value, `${name}: `]}
 			/>
 			<Legend
 				iconType="circle"
