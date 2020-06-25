@@ -1,7 +1,16 @@
 import imjs from 'imjs'
-import { css } from 'linaria'
+import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
-import { Cell, Label, Legend, Pie, PieChart as RPieChart, Text, Tooltip } from 'recharts'
+import {
+	Cell,
+	Label,
+	Legend,
+	Pie,
+	PieChart as RPieChart,
+	ResponsiveContainer,
+	Text,
+	Tooltip,
+} from 'recharts'
 
 import { geneQueryStub, mineUrl } from '../../stubs/utils'
 
@@ -27,7 +36,7 @@ const renderLabelContent = (props) => {
 	} = props
 	const positioningProps = {
 		x: cx,
-		y: cy - 135,
+		y: cy - cy * 0.9,
 		textAnchor: 'middle',
 		verticalAnchor: 'middle',
 	}
@@ -39,7 +48,7 @@ const renderLabelContent = (props) => {
 	)
 }
 
-export const PieChart = () => {
+export const PieChart = ({ width, height }) => {
 	const [chartData, setChartData] = useState([])
 
 	const service = new imjs.Service({ root: mineUrl })
@@ -67,38 +76,62 @@ export const PieChart = () => {
 	}, [])
 
 	return (
-		<RPieChart width={600} height={350}>
-			<Pie
-				data={chartData}
-				dataKey="value"
-				nameKey="name"
-				cy={160}
-				innerRadius={60}
-				paddingAngle={1}
-			>
-				{chartData.map((entry, index) => (
-					<Cell key={entry} fill={colorPalette[index % colorPalette.length]} />
-				))}
-				<Label content={renderLabelContent} />
-			</Pie>
-			<Tooltip
-				labelStyle={{
-					color: 'var(--blue9)',
-				}}
-				contentStyle={{
-					borderRadius: '30px',
-				}}
-				wrapperStyle={{
-					border: '2px solid var(--blue9)',
-					borderRadius: '30px',
-				}}
-				separator=""
-				formatter={(value, name) => [value, `${name}: `]}
-			/>
-			<Legend
-				iconType="circle"
-				formatter={(value, _, index) => <span>{`${value} (${chartData[index].value})`}</span>}
-			/>
-		</RPieChart>
+		<ResponsiveContainer width={width} height={height}>
+			<RPieChart>
+				<Pie
+					data={chartData}
+					dataKey="value"
+					nameKey="name"
+					cy="53%"
+					innerRadius={60}
+					paddingAngle={1}
+				>
+					{chartData.map((entry, index) => (
+						<Cell key={entry} fill={colorPalette[index % colorPalette.length]} />
+					))}
+					<Label content={renderLabelContent} />
+				</Pie>
+				<Tooltip
+					labelStyle={{
+						color: 'var(--blue9)',
+					}}
+					contentStyle={{
+						borderRadius: '30px',
+					}}
+					wrapperStyle={{
+						border: '2px solid var(--blue9)',
+						borderRadius: '30px',
+					}}
+					separator=""
+					formatter={(value, name) => [value, `${name}: `]}
+				/>
+				<Legend
+					iconType="circle"
+					formatter={(value, _, index) => <span>{`${value} (${chartData[index].value})`}</span>}
+				/>
+			</RPieChart>
+		</ResponsiveContainer>
 	)
+}
+
+PieChart.propTypes = {
+	/**
+	 * The width to set for the responsive container. Can be a percentage string,
+	 * or number.
+	 *
+	 * *NB:* __Either__ width or height __must__ be set as a percentage
+	 */
+	width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	/**
+	 * The height to set for the responsive container. Can be a percentage string,
+	 * or number.
+	 *
+	 * *NB:* __Either__ width or height __must__ be set as a percentage
+	 */
+	height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+}
+
+PieChart.defaultProps = {
+	width: '100%',
+	height: '100%',
 }
