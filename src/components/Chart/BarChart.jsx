@@ -1,6 +1,6 @@
 import imjs from 'imjs'
 import React, { useEffect, useState } from 'react'
-import { Bar, BarChart as RBarChart, CartesianGrid, Cell, XAxis } from 'recharts'
+import { Bar, BarChart as RBarChart, CartesianGrid, Cell, Label, Text, XAxis } from 'recharts'
 
 import { geneLengthQueryStub, mineUrl } from '../../stubs/utils'
 import { DATA_VIZ_COLORS } from './dataVizColors'
@@ -26,6 +26,7 @@ const renderCustomTick = ({ x, y, payload }) => {
 
 export const BarChart = () => {
 	const [chartData, setChartData] = useState([])
+	const [titles, setTitles] = useState({ title: '', subtitle: '' })
 	const service = new imjs.Service({ root: mineUrl })
 	const query = new imjs.Query(geneLengthQueryStub, service)
 
@@ -40,29 +41,9 @@ export const BarChart = () => {
 				const stdevFixed = parseFloat(stdev).toFixed(3)
 				const avgFixed = parseFloat(average).toFixed(3)
 
-				// const countData = []
-				// const labelsData = []
-				// const onHoverLabel = []
-				// summary.results.forEach((_, i) => {
-				// 	if (i < summary.results.length - 1) {
-				// 		const lowerLimit = Math.round(min + elementsPerBucket * i)
-				// 		const upperLimit = Math.round(min + elementsPerBucket * (i + 1))
+				const title = `Distribution of ${uniqueValues} Gene Lengths`
+				const subtitle = `Min: ${min} ⚬ Max: ${max} ⚬ Avg: ${avgFixed} ⚬ Stdev: ${stdevFixed}`
 
-				// 		countData.push(Math.log2(summary.results[i].count + 1))
-				// 		labelsData.push(`${lowerLimit} — ${upperLimit}`)
-				// 		onHoverLabel.push(`${lowerLimit} to ${upperLimit}: ${summary.results[i].count} values`)
-				// 	}
-				// })
-
-				// setChartData({ countData, labelsData, onHoverLabel })
-
-				// const chartTitle = `Distribution of ${uniqueValues} Gene Lengths`
-				// const chartSubtitle = `Min: ${min}
-				// Max: ${max}
-				// Avg: ${avgFixed}
-				// Stdev: ${stdevFixed}`
-
-				// setTitles([chartTitle, chartSubtitle])
 				const data = summary.results.flatMap((item, i) => {
 					if (i === summary.results.length - 1) return []
 
@@ -81,6 +62,7 @@ export const BarChart = () => {
 					]
 				})
 
+				setTitles({ title, subtitle })
 				setChartData(data)
 			} catch (e) {
 				console.error(e.message)
@@ -95,7 +77,7 @@ export const BarChart = () => {
 	return (
 		<RBarChart
 			width={600}
-			height={376}
+			height={336}
 			data={chartData}
 			barCategoryGap="20%"
 			margin={{ left: 100, bottom: 200 }}
@@ -106,7 +88,22 @@ export const BarChart = () => {
 				))}
 			</Bar>
 			<CartesianGrid strokeDasharray="3 3" vertical={false} />
-			<XAxis dataKey="distribution" interval={0} tick={renderCustomTick} />
+			<XAxis dataKey="distribution" interval={0} tick={renderCustomTick}>
+				<Label
+					fill="var(--blue9)"
+					fontWeight={500}
+					value={titles.title}
+					offset={120}
+					position="bottom"
+				/>
+				<Label
+					fill="var(--blue9)"
+					fontWeight={500}
+					value={titles.subtitle}
+					position="bottom"
+					offset={150}
+				/>
+			</XAxis>
 		</RBarChart>
 	)
 }
