@@ -1,4 +1,5 @@
 import imjs from 'imjs'
+import { css } from 'linaria'
 import React, { useEffect, useState } from 'react'
 import { Cell, Label, Legend, Pie, PieChart as RPieChart, Text, Tooltip } from 'recharts'
 
@@ -19,6 +20,24 @@ const colorPalette = [
 	'#bb96ff',
 	'#67eebd',
 ]
+
+const renderLabelContent = (props) => {
+	const {
+		viewBox: { cx, cy },
+	} = props
+	const positioningProps = {
+		x: cx,
+		y: cy - 135,
+		textAnchor: 'middle',
+		verticalAnchor: 'middle',
+	}
+
+	return (
+		<Text fill="var(--blue9)" fontSize="var(--fs-desktopS2)" {...positioningProps}>
+			{'Number of results for Genes by organism '}
+		</Text>
+	)
+}
 
 export const PieChart = () => {
 	const [chartData, setChartData] = useState([])
@@ -48,30 +67,12 @@ export const PieChart = () => {
 	}, [])
 
 	return (
-		<RPieChart width={600} height={340}>
-			<Pie data={chartData} dataKey="value" nameKey="name" cy={115} innerRadius={60}>
+		<RPieChart width={600} height={350}>
+			<Pie data={chartData} dataKey="value" nameKey="name" innerRadius={60} paddingAngle={1}>
 				{chartData.map((entry, index) => (
 					<Cell key={entry} fill={colorPalette[index % colorPalette.length]} />
 				))}
-				<Label
-					content={(props) => {
-						const {
-							viewBox: { cx, cy },
-						} = props
-						const positioningProps = {
-							x: cx,
-							y: cy + 150,
-							textAnchor: 'middle',
-							verticalAnchor: 'middle',
-						}
-
-						return (
-							<Text fill="var(--blue9)" fontSize="var(--fs-desktopS2)" {...positioningProps}>
-								{'Number of results for Genes by organism '}
-							</Text>
-						)
-					}}
-				/>
+				<Label content={renderLabelContent} />
 			</Pie>
 			<Tooltip
 				labelStyle={{
@@ -85,7 +86,10 @@ export const PieChart = () => {
 					borderRadius: '30px',
 				}}
 			/>
-			<Legend iconType="circle" />
+			<Legend
+				iconType="circle"
+				formatter={(value, _, index) => <span>{`${value} (${chartData[index].value})`}</span>}
+			/>
 		</RPieChart>
 	)
 }

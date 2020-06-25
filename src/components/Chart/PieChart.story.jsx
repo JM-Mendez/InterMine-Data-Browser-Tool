@@ -11,6 +11,7 @@ export default {
 
 const S_Card = styled(Card)`
 	height: 376px;
+	padding-top: 0;
 `
 
 export const PieChart = () => (
