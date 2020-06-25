@@ -1,7 +1,7 @@
 import imjs from 'imjs'
 import pattern from 'patternomaly'
 import React, { useEffect, useState } from 'react'
-import { Doughnut } from 'react-chartjs-2'
+import { Pie, PieChart as RPieChart } from 'recharts'
 
 import { geneQueryStub, mineUrl } from '../../stubs/utils'
 
@@ -22,7 +22,7 @@ const colorPalette = [
 ]
 
 export const PieChart = () => {
-	const [chartData, setChartData] = useState({ data: [], labels: [] })
+	const [chartData, setChartData] = useState([])
 
 	const service = new imjs.Service({ root: mineUrl })
 	const query = new imjs.Query(geneQueryStub, service)
@@ -31,15 +31,15 @@ export const PieChart = () => {
 		const runQuery = async () => {
 			try {
 				const summary = await query.summarize('Gene.organism.shortName', 50)
-				const data = []
-				const labels = []
 
-				summary.results.forEach((item) => {
-					data.push(item.count)
-					labels.push(`${item.item} (${item.count})`)
-				})
+				const data = summary.results.map((item) => ({
+					name: `${item.item} ${item.count}`,
+					value: item.count,
+				}))
+				// data.push(item.count)
+				// labels.push(`${item.item} (${item.count})`)
 
-				setChartData({ data, labels })
+				setChartData(data)
 			} catch (e) {
 				console.error(e.message)
 			}
@@ -51,37 +51,8 @@ export const PieChart = () => {
 	}, [])
 
 	return (
-		<>
-			<Doughnut
-				data={{
-					datasets: [
-						{
-							data: chartData.data,
-							backgroundColor: colorPalette,
-						},
-					],
-					labels: chartData.labels,
-				}}
-				legend={{
-					position: 'left',
-					labels: {
-						fontStyle: 'var(--fw-medium)',
-						// canvas font color won't accept css variables for some reason
-						fontColor: '#05264c',
-						padding: 16,
-					},
-				}}
-				options={{
-					title: {
-						display: true,
-						text: 'Number of results for Gene by organism',
-						fontSize: 18,
-						fontStyle: 'var(--fw-medium)',
-						fontColor: '#05264c',
-						padding: 16,
-					},
-				}}
-			/>
-		</>
+		<RPieChart width={600} height={340}>
+			<Pie data={chartData} dataKey="value" nameKey="name" fill="#8884d8" innerRadius={60} />
+		</RPieChart>
 	)
 }
