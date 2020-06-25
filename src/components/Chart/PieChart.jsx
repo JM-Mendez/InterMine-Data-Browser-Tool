@@ -1,6 +1,6 @@
 import imjs from 'imjs'
 import React, { useEffect, useState } from 'react'
-import { Cell, Pie, PieChart as RPieChart, Tooltip } from 'recharts'
+import { Cell, Label, Legend, Pie, PieChart as RPieChart, Text, Tooltip } from 'recharts'
 
 import { geneQueryStub, mineUrl } from '../../stubs/utils'
 
@@ -49,10 +49,29 @@ export const PieChart = () => {
 
 	return (
 		<RPieChart width={600} height={340}>
-			<Pie data={chartData} dataKey="value" nameKey="name" fill="#8884d8" innerRadius={60}>
+			<Pie data={chartData} dataKey="value" nameKey="name" cy={115} innerRadius={60}>
 				{chartData.map((entry, index) => (
 					<Cell key={entry} fill={colorPalette[index % colorPalette.length]} />
 				))}
+				<Label
+					content={(props) => {
+						const {
+							viewBox: { cx, cy },
+						} = props
+						const positioningProps = {
+							x: cx,
+							y: cy + 150,
+							textAnchor: 'middle',
+							verticalAnchor: 'middle',
+						}
+
+						return (
+							<Text fill="var(--blue9)" fontSize="var(--fs-desktopS2)" {...positioningProps}>
+								{'Number of results for Genes by organism '}
+							</Text>
+						)
+					}}
+				/>
 			</Pie>
 			<Tooltip
 				labelStyle={{
@@ -66,6 +85,7 @@ export const PieChart = () => {
 					borderRadius: '30px',
 				}}
 			/>
+			<Legend iconType="circle" />
 		</RPieChart>
 	)
 }
