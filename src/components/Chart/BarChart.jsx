@@ -1,8 +1,9 @@
 import imjs from 'imjs'
 import React, { useEffect, useState } from 'react'
-import { Bar, BarChart as RBarChart, CartesianGrid, XAxis } from 'recharts'
+import { Bar, BarChart as RBarChart, CartesianGrid, Cell, XAxis } from 'recharts'
 
 import { geneLengthQueryStub, mineUrl } from '../../stubs/utils'
+import { DATA_VIZ_COLORS } from './dataVizColors'
 
 const renderCustomTick = ({ x, y, stroke, payload }) => {
 	return (
@@ -98,7 +99,11 @@ export const BarChart = () => {
 			barCategoryGap="20%"
 			margin={{ left: 100, bottom: 200 }}
 		>
-			<Bar dataKey="count" />
+			<Bar dataKey="count">
+				{chartData.map((entry, index) => (
+					<Cell key={entry} fill={DATA_VIZ_COLORS[index % DATA_VIZ_COLORS.length]} />
+				))}
+			</Bar>
 			<CartesianGrid strokeDasharray="3 3" vertical={false} />
 			<XAxis dataKey="distribution" interval={0} tick={renderCustomTick} />
 		</RBarChart>
