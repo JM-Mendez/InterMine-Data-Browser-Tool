@@ -1,6 +1,6 @@
 import imjs from 'imjs'
 import React, { useEffect, useState } from 'react'
-import { Bar, BarChart as RBarChart, CartesianGrid, Cell, Label, Text, XAxis } from 'recharts'
+import { Bar, BarChart as RBarChart, CartesianGrid, Cell, Label, Tooltip, XAxis } from 'recharts'
 
 import { geneLengthQueryStub, mineUrl } from '../../stubs/utils'
 import { DATA_VIZ_COLORS } from './dataVizColors'
@@ -50,12 +50,13 @@ export const BarChart = () => {
 					const lowerLimit = Math.round(min + elementsPerBucket * i)
 					const upperLimit = Math.round(min + elementsPerBucket * (i + 1))
 
-					const count = Math.log2(summary.results[i].count + 1)
+					const data = Math.log2(summary.results[i].count + 1)
 					const distribution = `${lowerLimit} — ${upperLimit}`
-					// const onHoverLabel = `${lowerLimit} to ${upperLimit}: ${summary.results[i].count} values`
+					const count = summary.results[i].count
 
 					return [
 						{
+							data,
 							distribution,
 							count,
 						},
@@ -82,11 +83,21 @@ export const BarChart = () => {
 			barCategoryGap="20%"
 			margin={{ left: 100, bottom: 200 }}
 		>
-			<Bar dataKey="count">
+			<Bar dataKey="data">
 				{chartData.map((entry, index) => (
 					<Cell key={entry} fill={DATA_VIZ_COLORS[index % DATA_VIZ_COLORS.length]} />
 				))}
 			</Bar>
+			<Tooltip
+				itemStyle={{
+					color: 'var(--blue9)',
+				}}
+				wrapperStyle={{
+					border: '2px solid var(--blue9)',
+					borderRadius: '3px',
+				}}
+				formatter={(_, __, props) => [props.payload.count, 'Total Values']}
+			/>
 			<CartesianGrid strokeDasharray="3 3" vertical={false} />
 			<XAxis dataKey="distribution" interval={0} tick={renderCustomTick}>
 				<Label
