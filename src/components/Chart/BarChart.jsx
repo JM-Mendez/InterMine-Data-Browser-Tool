@@ -5,7 +5,7 @@ import { Bar, BarChart as RBarChart, CartesianGrid, Cell, XAxis } from 'recharts
 import { geneLengthQueryStub, mineUrl } from '../../stubs/utils'
 import { DATA_VIZ_COLORS } from './dataVizColors'
 
-const renderCustomTick = ({ x, y, stroke, payload }) => {
+const renderCustomTick = ({ x, y, payload }) => {
 	return (
 		<g transform={`translate(${x},${y})`}>
 			<text
@@ -13,8 +13,9 @@ const renderCustomTick = ({ x, y, stroke, payload }) => {
 				y={0}
 				dy={10}
 				fontSize="var(--fs-desktopS1)"
+				fontStyle="var(--fw-medium)"
 				textAnchor="end"
-				fill="var(--blue9)"
+				fill="var(--grey5)"
 				transform="rotate(-55)"
 			>
 				{payload.value}
