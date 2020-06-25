@@ -1,6 +1,6 @@
 import imjs from 'imjs'
 import React, { useEffect, useState } from 'react'
-import { Bar, BarChart as RBarChart } from 'recharts'
+import { Bar, BarChart as RBarChart, CartesianGrid } from 'recharts'
 
 import { geneLengthQueryStub, mineUrl } from '../../stubs/utils'
 
@@ -75,6 +75,7 @@ export const BarChart = () => {
 	return (
 		<RBarChart width={600} height={350} data={chartData}>
 			<Bar dataKey="count" />
+			<CartesianGrid strokeDasharray="3 3" vertical={false} />
 		</RBarChart>
 	)
 }
