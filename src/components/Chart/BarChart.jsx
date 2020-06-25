@@ -1,29 +1,11 @@
 import imjs from 'imjs'
-import pattern from 'patternomaly'
 import React, { useEffect, useState } from 'react'
-import { Bar } from 'react-chartjs-2'
+import { Bar, BarChart as RBarChart } from 'recharts'
 
 import { geneLengthQueryStub, mineUrl } from '../../stubs/utils'
 
-const colorPalette = [
-	pattern.draw('dot', '#898cff '),
-	'#90d4f7',
-	pattern.draw('dot-dash', '#71e096'),
-	'#fcdc89',
-	'#f5a26e',
-	pattern.draw('diagonal', '#f589b6'),
-	'#668de5',
-	'#ed6d79',
-	'#5ad0e5',
-	'#cff381',
-	'#f696e3',
-	'#bb96ff',
-	'#67eebd',
-]
-
 export const BarChart = () => {
-	const [chartData, setChartData] = useState({ countData: [], labelsData: [], onHoverLabel: [] })
-	const [titles, setTitles] = useState([])
+	const [chartData, setChartData] = useState([])
 	const service = new imjs.Service({ root: mineUrl })
 	const query = new imjs.Query(geneLengthQueryStub, service)
 
@@ -38,29 +20,48 @@ export const BarChart = () => {
 				const stdevFixed = parseFloat(stdev).toFixed(3)
 				const avgFixed = parseFloat(average).toFixed(3)
 
-				const countData = []
-				const labelsData = []
-				const onHoverLabel = []
-				summary.results.forEach((_, i) => {
-					if (i < summary.results.length - 1) {
-						const lowerLimit = Math.round(min + elementsPerBucket * i)
-						const upperLimit = Math.round(min + elementsPerBucket * (i + 1))
+				// const countData = []
+				// const labelsData = []
+				// const onHoverLabel = []
+				// summary.results.forEach((_, i) => {
+				// 	if (i < summary.results.length - 1) {
+				// 		const lowerLimit = Math.round(min + elementsPerBucket * i)
+				// 		const upperLimit = Math.round(min + elementsPerBucket * (i + 1))
 
-						countData.push(Math.log2(summary.results[i].count + 1))
-						labelsData.push(`${lowerLimit} — ${upperLimit}`)
-						onHoverLabel.push(`${lowerLimit} to ${upperLimit}: ${summary.results[i].count} values`)
-					}
+				// 		countData.push(Math.log2(summary.results[i].count + 1))
+				// 		labelsData.push(`${lowerLimit} — ${upperLimit}`)
+				// 		onHoverLabel.push(`${lowerLimit} to ${upperLimit}: ${summary.results[i].count} values`)
+				// 	}
+				// })
+
+				// setChartData({ countData, labelsData, onHoverLabel })
+
+				// const chartTitle = `Distribution of ${uniqueValues} Gene Lengths`
+				// const chartSubtitle = `Min: ${min}
+				// Max: ${max}
+				// Avg: ${avgFixed}
+				// Stdev: ${stdevFixed}`
+
+				// setTitles([chartTitle, chartSubtitle])
+				const data = summary.results.flatMap((item, i) => {
+					if (i === summary.results.length - 1) return []
+
+					const lowerLimit = Math.round(min + elementsPerBucket * i)
+					const upperLimit = Math.round(min + elementsPerBucket * (i + 1))
+
+					const count = Math.log2(summary.results[i].count + 1)
+					const name = `${lowerLimit} — ${upperLimit}`
+					// const onHoverLabel = `${lowerLimit} to ${upperLimit}: ${summary.results[i].count} values`
+
+					return [
+						{
+							name,
+							count,
+						},
+					]
 				})
 
-				setChartData({ countData, labelsData, onHoverLabel })
-
-				const chartTitle = `Distribution of ${uniqueValues} Gene Lengths`
-				const chartSubtitle = `Min: ${min} 
-				Max: ${max} 
-				Avg: ${avgFixed} 
-				Stdev: ${stdevFixed}`
-
-				setTitles([chartTitle, chartSubtitle])
+				setChartData(data)
 			} catch (e) {
 				console.error(e.message)
 			}
@@ -71,62 +72,9 @@ export const BarChart = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	let moreColors = colorPalette
-
-	while (moreColors.length < chartData.countData.length) {
-		moreColors = [...moreColors, ...colorPalette]
-	}
-
 	return (
-		<Bar
-			data={{
-				labels: chartData.labelsData,
-				datasets: [
-					{
-						data: chartData.countData,
-						backgroundColor: moreColors,
-					},
-				],
-			}}
-			options={{
-				legend: {
-					display: false,
-				},
-				title: {
-					display: true,
-					text: titles,
-					position: 'bottom',
-					fontColor: '#05264c',
-					fontStyle: 'var(--fw-medium)',
-					lineHeight: 2,
-					padding: 32,
-				},
-				scales: {
-					xAxes: [
-						{
-							gridLines: {
-								display: false,
-							},
-							ticks: {
-								display: true,
-								// font color doesn't take css vars
-								fontColor: '#05264c',
-								fontStyle: 'var(--fw-medium)',
-							},
-						},
-					],
-					yAxes: [
-						{
-							gridLines: {
-								drawTicks: false,
-							},
-							ticks: {
-								display: false,
-							},
-						},
-					],
-				},
-			}}
-		/>
+		<RBarChart width={600} height={350} data={chartData}>
+			<Bar dataKey="count" />
+		</RBarChart>
 	)
 }
