@@ -17,16 +17,16 @@
 	},
 	"scripts": {
 		"analyze": "cross-env ANALYZE=true npm run build",
-		"build": "craco build",
+		"build": "cross-env EXTEND_ESLINT=true craco build",
 		"eject": "craco eject",
 		"lint": "concurrently \"yarn:lint:*\"",
 		"lint:css": "cross-env NODE_ENV=development stylelint src/**/*.js{x}",
 		"lint:js": "cross-env NODE_ENV=development eslint src/**/*.{js,jsx}",
 		"serve": "serve build",
 		"serve:orig": "serve orig_app",
-		"start": "craco start",
-		"storybook": "start-storybook -p 9000",
-		"storybook:build": "build-storybook -c .storybook -o .storybook-dist",
+		"start": "cross-env EXTEND_ESLINT=true craco start",
+		"storybook": "cross-env EXTEND_ESLINT=true start-storybook -p 9000",
+		"storybook:build": "cross-env EXTEND_ESLINT=true build-storybook -c .storybook -o .storybook-dist",
 		"test": "craco test"
 	},
 	"dependencies": {
