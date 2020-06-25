@@ -1,5 +1,4 @@
 import imjs from 'imjs'
-import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import {
 	Bar,
@@ -40,7 +39,7 @@ const colorizeBars = (data) =>
 		<Cell key={entry} fill={DATA_VIZ_COLORS[index % DATA_VIZ_COLORS.length]} />
 	))
 
-export const BarChart = ({ width, height }) => {
+export const BarChart = () => {
 	const [chartData, setChartData] = useState([])
 	const [titles, setTitles] = useState({ title: '', subtitle: '' })
 
@@ -93,7 +92,7 @@ export const BarChart = ({ width, height }) => {
 	}, [])
 
 	return (
-		<ResponsiveContainer width={width} height={height}>
+		<ResponsiveContainer width="100%" height="100%">
 			<RBarChart data={chartData} barCategoryGap="20%" margin={{ left: 100, bottom: 200 }}>
 				<Bar dataKey="data">{colorizeBars(chartData)}</Bar>
 				<Tooltip
@@ -131,26 +130,4 @@ export const BarChart = ({ width, height }) => {
 			</RBarChart>
 		</ResponsiveContainer>
 	)
-}
-
-BarChart.propTypes = {
-	/**
-	 * The width to set for the responsive container. Can be a percentage string,
-	 * or number.
-	 *
-	 * *NB:* __Either__ width or height __must__ be set as a percentage
-	 */
-	width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	/**
-	 * The height to set for the responsive container. Can be a percentage string,
-	 * or number.
-	 *
-	 * *NB:* __Either__ width or height __must__ be set as a percentage
-	 */
-	height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-}
-
-BarChart.defaultProps = {
-	width: '100%',
-	height: '100%',
 }
