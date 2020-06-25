@@ -1,7 +1,7 @@
 import imjs from 'imjs'
 import pattern from 'patternomaly'
 import React, { useEffect, useState } from 'react'
-import { Pie, PieChart as RPieChart } from 'recharts'
+import { Pie, PieChart as RPieChart, Tooltip } from 'recharts'
 
 import { geneQueryStub, mineUrl } from '../../stubs/utils'
 
@@ -32,12 +32,10 @@ export const PieChart = () => {
 			try {
 				const summary = await query.summarize('Gene.organism.shortName', 50)
 
-				const data = summary.results.map((item) => ({
-					name: `${item.item} ${item.count}`,
-					value: item.count,
+				const data = summary.results.map(({ item, count }) => ({
+					name: item,
+					value: count,
 				}))
-				// data.push(item.count)
-				// labels.push(`${item.item} (${item.count})`)
 
 				setChartData(data)
 			} catch (e) {
@@ -53,6 +51,18 @@ export const PieChart = () => {
 	return (
 		<RPieChart width={600} height={340}>
 			<Pie data={chartData} dataKey="value" nameKey="name" fill="#8884d8" innerRadius={60} />
+			<Tooltip
+				labelStyle={{
+					color: 'var(--blue9)',
+				}}
+				contentStyle={{
+					borderRadius: '30px',
+				}}
+				wrapperStyle={{
+					border: '2px solid var(--blue9)',
+					borderRadius: '30px',
+				}}
+			/>
 		</RPieChart>
 	)
 }
