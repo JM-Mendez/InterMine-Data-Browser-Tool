@@ -1,17 +1,16 @@
 import imjs from 'imjs'
-import pattern from 'patternomaly'
 import React, { useEffect, useState } from 'react'
-import { Pie, PieChart as RPieChart, Tooltip } from 'recharts'
+import { Cell, Pie, PieChart as RPieChart, Tooltip } from 'recharts'
 
 import { geneQueryStub, mineUrl } from '../../stubs/utils'
 
 const colorPalette = [
-	pattern.draw('dot', '#898cff '),
+	'#898cff ',
 	'#90d4f7',
-	pattern.draw('dot-dash', '#71e096'),
+	'#71e096',
 	'#fcdc89',
 	'#f5a26e',
-	pattern.draw('diagonal', '#f589b6'),
+	'#f589b6',
 	'#668de5',
 	'#ed6d79',
 	'#5ad0e5',
@@ -50,7 +49,11 @@ export const PieChart = () => {
 
 	return (
 		<RPieChart width={600} height={340}>
-			<Pie data={chartData} dataKey="value" nameKey="name" fill="#8884d8" innerRadius={60} />
+			<Pie data={chartData} dataKey="value" nameKey="name" fill="#8884d8" innerRadius={60}>
+				{chartData.map((entry, index) => (
+					<Cell key={entry} fill={colorPalette[index % colorPalette.length]} />
+				))}
+			</Pie>
 			<Tooltip
 				labelStyle={{
 					color: 'var(--blue9)',
