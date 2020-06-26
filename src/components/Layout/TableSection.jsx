@@ -4,8 +4,7 @@ import React from 'react'
 
 import { humanMine25 as rows } from '../../stubs/humanMine25'
 import { mineUrl } from '../../stubs/utils'
-import { Table } from '../Table/Table'
-import { TableActionButtons, TablePagingButtons } from '../Table/TableButtons'
+import { Table, TableActionButtons, TablePagingButtons } from '../DataViz'
 
 const TableCard = styled(Card)`
 	margin-bottom: 20px;
