@@ -2,8 +2,7 @@ import { Card } from '@blueprintjs/core'
 import { styled } from 'linaria/react'
 import React from 'react'
 
-import { BarChart } from '../Chart/BarChart'
-import { PieChart } from '../Chart/PieChart'
+import { BarChart, PieChart } from '../DataViz'
 
 const S_Card = styled(Card)`
 	height: 376px;
