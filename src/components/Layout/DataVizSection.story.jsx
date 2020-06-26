@@ -1,11 +1,21 @@
+import { styled } from 'linaria/react'
 import React from 'react'
 
-import * as Charts from './DataVizSection'
+import { ConstraintSection as Constraints } from './ConstraintSection'
+import { TableChartSection } from './DataVizSection'
 
 export default {
-	title: 'Components/Data Visualization',
+	title: 'Components/Layout Sections',
 }
 
-export const ChartSection = () => <Charts.ChartSection />
+const S_ConstraintSection = styled.div`
+	max-width: 200px;
+`
 
-export const TableSection = () => <Charts.TableSection />
+export const DataVizSection = () => <TableChartSection />
+
+export const ConstraintSection = () => (
+	<S_ConstraintSection>
+		<Constraints />
+	</S_ConstraintSection>
+)
