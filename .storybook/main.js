@@ -1,6 +1,3 @@
-const globImporter = require('node-sass-glob-importer')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-
 module.exports = {
 	addons: [
 		'@storybook/addon-knobs',
@@ -14,7 +11,7 @@ module.exports = {
 		},
 	],
 	stories: ['../README.story.mdx', '../docs/**/*.story.mdx', '../src/**/*.story.jsx'],
-	webpackFinal: async (config, { configType }) => {
+	webpackFinal: async (config) => {
 		config.module.rules.push({
 			test: /\.jsx?$/,
 			loader: 'linaria/loader',
@@ -22,20 +19,6 @@ module.exports = {
 				sourceMap: false,
 				cacheDirectory: 'src/.linaria_cache/storybook',
 			},
-		})
-
-		config.module.rules.push({
-			test: /\.scss$/,
-			use: [
-				{
-					loader: 'sass-loader',
-					options: {
-						sassOptions: {
-							importer: globImporter(),
-						},
-					},
-				},
-			],
 		})
 
 		return config
