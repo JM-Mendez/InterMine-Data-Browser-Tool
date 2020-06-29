@@ -5,11 +5,23 @@ import { css } from 'linaria'
 import React from 'react'
 
 import { NumberedSelectMenuItems } from '../Selects'
-import { S_NavFormGroup } from './FormGroups'
+
+const label = css`
+	font-size: var(--fs-desktopM2);
+	font-weight: var(--fw-regular);
+	margin-right: 8px;
+	margin-bottom: 0;
+`
+
+const navSelectContainer = css`
+	display: flex;
+	align-items: center;
+`
 
 export const Mine = ({ mine, mockMines, setMine }) => {
 	return (
-		<S_NavFormGroup label="Mine" inline={true} labelFor="mine-select-button">
+		<div className={navSelectContainer}>
+			<span className={label}>Mine</span>
 			<Select
 				className={css`
 					margin-right: 30px;
@@ -30,6 +42,6 @@ export const Mine = ({ mine, mockMines, setMine }) => {
 					rightIcon={IconNames.CARET_DOWN}
 				/>
 			</Select>
-		</S_NavFormGroup>
+		</div>
 	)
 }
