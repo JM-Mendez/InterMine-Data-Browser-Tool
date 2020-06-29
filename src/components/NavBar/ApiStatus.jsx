@@ -1,15 +1,15 @@
 import { Button, Colors, Icon } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import { css } from 'linaria'
+import { styled } from 'linaria/react'
 import React, { useState } from 'react'
 
-const label = css`
+const S_ApiLabel = styled.span`
 	font-size: var(--fs-desktopM2);
 	font-weight: var(--fw-regular);
 	margin-right: 8px;
 	margin-bottom: 0;
 `
-const apiStatusContainer = css`
+const S_ApiContainer = styled.div`
 	display: flex;
 	align-items: center;
 `
@@ -25,14 +25,14 @@ export const ApiStatus = () => {
 	const [isAuthenticated, setAuthentication] = useState(false)
 
 	return (
-		<div className={apiStatusContainer}>
-			<span className={label}>Api</span>
+		<S_ApiContainer>
+			<S_ApiLabel>Api</S_ApiLabel>
 			<Button
 				aria-label="api-status"
 				small={true}
 				icon={AuthenticatedIcon(isAuthenticated)}
 				onClick={() => setAuthentication(!isAuthenticated)}
 			/>
-		</div>
+		</S_ApiContainer>
 	)
 }
