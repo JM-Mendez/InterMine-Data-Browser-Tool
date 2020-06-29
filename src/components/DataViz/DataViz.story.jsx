@@ -2,10 +2,11 @@ import { Card } from '@blueprintjs/core'
 import { styled } from 'linaria/react'
 import React from 'react'
 
+import { MockMachineContext } from '../../machineBus'
 import { humanMine25 as rows } from '../../stubs/humanMine25'
 import { mineUrl } from '../../stubs/utils'
 import { BarChart as Bar } from './BarChart'
-import { PieChart as Pie } from './PieChart'
+import { PieChart as Pie, PieChartMachine } from './PieChart'
 import { Table as TableComp } from './Table'
 
 export default {
@@ -34,10 +35,14 @@ BarChart.parameters = {
 	},
 }
 
+const mockPieMachine = PieChartMachine.withContext({ classItems: [] })
+
 export const PieChart = () => (
-	<S_Card>
-		<Pie />
-	</S_Card>
+	<MockMachineContext.Provider value={mockPieMachine}>
+		<S_Card>
+			<Pie />
+		</S_Card>
+	</MockMachineContext.Provider>
 )
 
 PieChart.parameters = {

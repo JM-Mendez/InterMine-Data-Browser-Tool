@@ -10,7 +10,9 @@ import {
 	Text,
 	Tooltip,
 } from 'recharts'
+import { Machine } from 'xstate'
 
+import { useMachineBus } from '../../machineBus'
 import { geneQueryStub, mineUrl } from '../../stubs/utils'
 import { DATA_VIZ_COLORS } from './dataVizColors'
 
@@ -33,11 +35,22 @@ const renderLabelContent = (props) => {
 	)
 }
 
+export const PieChartMachine = Machine({
+	id: 'PieChart',
+	initial: 'idle',
+	context: {},
+	states: {
+		idle: {},
+	},
+})
+
 export const PieChart = () => {
 	const [chartData, setChartData] = useState([])
+	const [state, send, service] = useMachineBus(PieChartMachine)
 
-	const service = new imjs.Service({ root: mineUrl })
-	const query = new imjs.Query(geneQueryStub, service)
+	console.log({ state, service })
+	const imjsService = new imjs.Service({ root: mineUrl })
+	const query = new imjs.Query(geneQueryStub, imjsService)
 
 	useEffect(() => {
 		const runQuery = async () => {
