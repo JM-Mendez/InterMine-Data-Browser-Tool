@@ -33,7 +33,6 @@ export const Mine = ({ mine, mockMines, setMine }) => {
 			>
 				<Button
 					aria-label="Select Mine"
-					id="mine-select-button"
 					// used to override `Blueprintjs` styles for a small button
 					style={{ minWidth: 166 }}
 					small={true}
