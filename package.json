@@ -33,11 +33,13 @@
 	"dependencies": {
 		"@blueprintjs/core": "^3.28.2",
 		"@blueprintjs/select": "^3.13.3",
+		"@xstate/react": "^0.8.1",
 		"imjs": "^4.0.0",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"recharts": "^1.8.5",
-		"underscore.string": "^3.3.5"
+		"underscore.string": "^3.3.5",
+		"xstate": "^4.10.0"
 	},
 	"devDependencies": {
 		"@blueprintjs/eslint-plugin": "^0.2.0",
