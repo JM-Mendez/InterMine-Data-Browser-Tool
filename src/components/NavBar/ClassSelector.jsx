@@ -31,7 +31,7 @@ export const ClassSelector = () => {
 
 	return (
 		<>
-			<S_ViewTabs id="classes-tab" large={true}>
+			<S_ViewTabs id="classes-tab">
 				{visibleClasses.map((c) => (
 					<Tab key={c.name} id={c.name} title={c.name} />
 				))}
