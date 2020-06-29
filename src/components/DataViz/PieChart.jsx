@@ -18,15 +18,16 @@ const renderLabelContent = (props) => {
 	const {
 		viewBox: { cx, cy },
 	} = props
-	const positioningProps = {
-		x: cx,
-		y: cy - cy * 0.95,
-		textAnchor: 'middle',
-		verticalAnchor: 'middle',
-	}
 
 	return (
-		<Text fill="var(--blue9)" fontSize="var(--fs-desktopS2)" {...positioningProps}>
+		<Text
+			fill="var(--blue9)"
+			fontSize="var(--fs-desktopS2)"
+			x={cx}
+			y={cy - cy * 0.95}
+			textAnchor="middle"
+			verticalAnchor="middle"
+		>
 			{'Number of results for Genes by organism '}
 		</Text>
 	)
@@ -42,6 +43,8 @@ export const PieChart = () => {
 		const runQuery = async () => {
 			try {
 				const summary = await query.summarize('Gene.organism.shortName', 50)
+
+				console.log({ summary })
 
 				const data = summary.results.map(({ item, count }) => ({
 					name: item,
