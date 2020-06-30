@@ -13,6 +13,7 @@ import {
 import { Machine } from 'xstate'
 
 import { useMachineBus } from '../../machineBus'
+import { orrganismSummary } from '../../stubs/geneSummaries'
 import { geneQueryStub, mineUrl } from '../../stubs/utils'
 import { DATA_VIZ_COLORS } from './dataVizColors'
 
@@ -38,42 +39,21 @@ const renderLabelContent = (props) => {
 export const PieChartMachine = Machine({
 	id: 'PieChart',
 	initial: 'idle',
-	context: {},
+	context: {
+		classItems: orrganismSummary.results,
+	},
 	states: {
 		idle: {},
 	},
 })
 
 export const PieChart = () => {
-	const [chartData, setChartData] = useState([])
-	const [state, send, service] = useMachineBus(PieChartMachine)
+	const [state] = useMachineBus(PieChartMachine)
 
-	console.log({ state, service })
-	const imjsService = new imjs.Service({ root: mineUrl })
-	const query = new imjs.Query(geneQueryStub, imjsService)
-
-	useEffect(() => {
-		const runQuery = async () => {
-			try {
-				const summary = await query.summarize('Gene.organism.shortName', 50)
-
-				console.log({ summary })
-
-				const data = summary.results.map(({ item, count }) => ({
-					name: item,
-					value: count,
-				}))
-
-				setChartData(data)
-			} catch (e) {
-				console.error(e.message)
-			}
-		}
-
-		runQuery()
-		// we want to only run this once until we attach state
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	const chartData = state.context.classItems.map(({ item, count }) => ({
+		name: item,
+		value: count,
+	}))
 
 	return (
 		<ResponsiveContainer width="100%" height="100%">

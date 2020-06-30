@@ -3,6 +3,7 @@ import { styled } from 'linaria/react'
 import React from 'react'
 
 import { MockMachineContext } from '../../machineBus'
+import { orrganismSummary } from '../../stubs/geneSummaries'
 import { humanMine25 as rows } from '../../stubs/humanMine25'
 import { mineUrl } from '../../stubs/utils'
 import { BarChart as Bar } from './BarChart'
@@ -35,10 +36,10 @@ BarChart.parameters = {
 	},
 }
 
-const mockPieMachine = PieChartMachine.withContext({ classItems: [] })
+const mockMachine = PieChartMachine.withContext({ classItems: orrganismSummary.results })
 
 export const PieChart = () => (
-	<MockMachineContext.Provider value={mockPieMachine}>
+	<MockMachineContext.Provider value={mockMachine}>
 		<S_Card>
 			<Pie />
 		</S_Card>

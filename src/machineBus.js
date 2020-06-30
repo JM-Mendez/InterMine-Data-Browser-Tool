@@ -8,11 +8,24 @@ const enableMocks =
 export const MockMachineContext = createContext(null)
 
 const interpretedMachines = new Set()
-const sendToBus = () => {}
 
 /**
+ * Sends a message to the service bus. Only the active services
+ * who are registered for the event will act.
  *
- * @param machine { import('xstate').StateMachine}
+ * @param {?} event - a string or event object (see https://xstate.js.org/docs/guides/events.html#events)
+ * @param {import('xstate').EventData} [payload] - the payload for the event
+ */
+const sendToBus = (event, payload) => {}
+
+/**
+ * Interprets a machine and registers it on the service bus.
+ * If a machine is provided through the MockMachineContext, it will
+ * use that machine instead.
+ *
+ *
+ * @param { import('xstate').StateMachine} machine
+ * @returns {[import('xstate').State, typeof sendToBus, import('xstate').Interpreter]}
  */
 export const useMachineBus = (machine) => {
 	let machineToInterpret = machine
