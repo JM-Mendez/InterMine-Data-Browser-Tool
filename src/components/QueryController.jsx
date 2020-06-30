@@ -1,4 +1,13 @@
-import { Button, Classes, Colors, H5, Popover, PopoverInteractionKind } from '@blueprintjs/core'
+import {
+	Button,
+	Classes,
+	Colors,
+	H4,
+	H5,
+	NonIdealState,
+	Popover,
+	PopoverInteractionKind,
+} from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import React from 'react'
 
@@ -15,10 +24,50 @@ const S_Heading = styled.span`
 
 const S_PopupContainer = styled.div`
 	min-width: 200px;
-	height: 455px;
 `
 
-const ViewAll = () => {
+const CurrentConstraints = ({ currentConstraints }) => {
+	if (currentConstraints.length === 0) {
+		return (
+			<NonIdealState
+				title="No Constraints applied"
+				description="Displaying default results for the current mine"
+				icon={IconNames.WARNING_SIGN}
+				className={css`
+					padding-bottom: 32px;
+					border-radius: 3px;
+					& .${Classes.NON_IDEAL_STATE_VISUAL} {
+						color: var(--yellow5);
+					}
+				`}
+			/>
+		)
+	}
+
+	return (
+		<div
+			className={css`
+				padding: 32px;
+			`}
+		>
+			<div>constriants</div>
+		</div>
+	)
+}
+
+CurrentConstraints.propTypes = {
+	currentConstraints: PropTypes.array,
+}
+
+CurrentConstraints.defaultProps = {
+	currentConstraints: [
+		'Gene.organism.shortName = M. musculus',
+		'Gene.organism.shortName = M. musculus',
+		'Gene.organism.shortName = M. musculus',
+	],
+}
+
+const ViewAll = ({ currentConstraints = [] }) => {
 	return (
 		<Popover
 			fill={true}
@@ -27,10 +76,13 @@ const ViewAll = () => {
 			position="right"
 			popoverClassName={Classes.POPOVER_CONTENT_SIZING}
 			interactionKind={PopoverInteractionKind.CLICK}
+			isOpen={true}
 		>
 			<Button text="view all" intent="primary" fill={true} icon={IconNames.EYE_OPEN} />
 			<S_PopupContainer>
 				<CloseButton />
+				<H4>Current</H4>
+				<CurrentConstraints />
 			</S_PopupContainer>
 		</Popover>
 	)
