@@ -5,6 +5,11 @@ import { styled } from 'linaria/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { humanize, titleize } from 'underscore.string'
+import { Machine } from 'xstate'
+
+import { useMachineBus } from '../../machineBus'
+import { humanMine25 } from '../../stubs/humanMine25'
+import { mineUrl } from '../../stubs/utils'
 const StyledTable = styled(HTMLTable)`
 	width: 100%;
 `
@@ -63,7 +68,25 @@ const Cell = ({ cell, mineUrl }) => {
 	)
 }
 
-export const Table = ({ rows, mineUrl }) => {
+export const TableChartMachine = Machine({
+	id: 'TableChart',
+	initial: 'idle',
+	context: {
+		rows: humanMine25,
+		mineUrl,
+	},
+	states: {
+		idle: {},
+	},
+})
+
+export const Table = () => {
+	const [
+		{
+			context: { rows, mineUrl },
+		},
+	] = useMachineBus(TableChartMachine)
+
 	return (
 		<S.Table interactive={true} striped={true}>
 			<thead>

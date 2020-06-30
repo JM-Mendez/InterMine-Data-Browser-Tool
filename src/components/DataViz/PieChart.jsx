@@ -1,5 +1,4 @@
-import imjs from 'imjs'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
 	Cell,
 	Label,
@@ -14,7 +13,6 @@ import { Machine } from 'xstate'
 
 import { useMachineBus } from '../../machineBus'
 import { orrganismSummary } from '../../stubs/geneSummaries'
-import { geneQueryStub, mineUrl } from '../../stubs/utils'
 import { DATA_VIZ_COLORS } from './dataVizColors'
 
 const renderLabelContent = (props) => {
@@ -48,9 +46,13 @@ export const PieChartMachine = Machine({
 })
 
 export const PieChart = () => {
-	const [state] = useMachineBus(PieChartMachine)
+	const [
+		{
+			context: { classItems },
+		},
+	] = useMachineBus(PieChartMachine)
 
-	const chartData = state.context.classItems.map(({ item, count }) => ({
+	const chartData = classItems.map(({ item, count }) => ({
 		name: item,
 		value: count,
 	}))
