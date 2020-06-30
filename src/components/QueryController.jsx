@@ -22,9 +22,7 @@ const ViewAll = () => (
 
 const RunQuery = () => (
 	<Popover
-		className={css`
-			margin-top: 40px;
-		`}
+		css={{ marginTop: 40 }}
 		wrapperTagName="div"
 		usePortal={true}
 		lazy={true}
@@ -37,19 +35,13 @@ const RunQuery = () => (
 
 export const QueryController = () => {
 	return (
-		<S_QueryController>
+		<div css={{ paddingTop: 10, margin: '0 20px' }}>
 			<H5>
-				<span
-					className={css`
-						color: ${Colors.BLUE5};
-					`}
-				>
-					4{' '}
-				</span>
-				<S_Heading>Constraints applied</S_Heading>
+				<span css={{ color: 'var(--red6' }}>4 </span>
+				<span css={{ color: 'var(--yellow8)' }}>Constraints applied</span>
 			</H5>
 			<ViewAll />
 			<RunQuery />
-		</S_QueryController>
+		</div>
 	)
 }
