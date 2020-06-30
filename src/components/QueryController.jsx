@@ -1,17 +1,6 @@
-import { Button, Colors, H5, Popover } from '@blueprintjs/core'
+import { Button, H5, Popover } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import { css } from 'linaria'
-import { styled } from 'linaria/react'
 import React from 'react'
-
-const S_QueryController = styled.div`
-	padding-top: 10px;
-	margin: 0 20px;
-`
-
-const S_Heading = styled.span`
-	color: var(--blue9);
-`
 
 const ViewAll = () => (
 	<Popover fill={true} usePortal={true} lazy={true} position="right">

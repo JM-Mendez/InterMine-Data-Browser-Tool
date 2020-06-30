@@ -1,4 +1,3 @@
-const CracoLinariaPlugin = require('craco-linaria')
 const { when, whenDev, whenProd } = require('@craco/craco')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const StyleLintPlugin = require('stylelint-webpack-plugin')
@@ -45,9 +44,4 @@ module.exports = {
 			),
 		],
 	},
-	plugins: [
-		{
-			plugin: CracoLinariaPlugin,
-		},
-	],
 }
