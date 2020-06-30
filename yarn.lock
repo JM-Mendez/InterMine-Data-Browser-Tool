@@ -518,6 +518,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/helper-plugin-utils@npm:^7.10.4":
+  version: 7.10.4
+  resolution: "@babel/helper-plugin-utils@npm:7.10.4"
+  checksum: 9f617e619a3557cb5fae8885e91cd94ba4ee16fb345e0360de0d7dc037efb10cc604939ecc1038ccdb71aa37e7e78f20133d7bbbebecb8f6dcdb557650366d92
+  languageName: node
+  linkType: hard
+
 "@babel/helper-regex@npm:^7.10.1":
   version: 7.10.1
   resolution: "@babel/helper-regex@npm:7.10.1"
@@ -1147,6 +1154,17 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0-0
   checksum: a81308c2d93f5e5eacc9c94b8ad1d54ec3296614bd155fdeb5c76ba3d8bc72b5e2ce4db05e35668ec6a210ab15c355cf737d83f7a48d507f0d7bf8b159a81cb0
+  languageName: node
+  linkType: hard
+
+"@babel/plugin-syntax-jsx@npm:^7.2.0":
+  version: 7.10.4
+  resolution: "@babel/plugin-syntax-jsx@npm:7.10.4"
+  dependencies:
+    "@babel/helper-plugin-utils": ^7.10.4
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 7c9a5c56e559e696ae6f36404a58c8bddd3bb4276f24f89606192f6e3f72f38cce65bfd5fd83e9b691aa0265312db79bab514e64486d178ca0c710b8a5924074
   languageName: node
   linkType: hard
 
@@ -2675,6 +2693,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emotion/babel-plugin-jsx-pragmatic@npm:^0.1.5":
+  version: 0.1.5
+  resolution: "@emotion/babel-plugin-jsx-pragmatic@npm:0.1.5"
+  dependencies:
+    "@babel/plugin-syntax-jsx": ^7.2.0
+  peerDependencies:
+    "@babel/core": ^7.0.0
+  checksum: 3957a41cac694c3c57d663f224b3484462002ab9665a5560f263e52b5f77b5b00cddf6588f24bff9efd26084ae6b2bf0a89fcb4ae093c4a1e19c22f46ce24a15
+  languageName: node
+  linkType: hard
+
+"@emotion/babel-preset-css-prop@npm:^10.0.27":
+  version: 10.0.27
+  resolution: "@emotion/babel-preset-css-prop@npm:10.0.27"
+  dependencies:
+    "@babel/plugin-transform-react-jsx": ^7.3.0
+    "@babel/runtime": ^7.5.5
+    "@emotion/babel-plugin-jsx-pragmatic": ^0.1.5
+    babel-plugin-emotion: ^10.0.27
+  peerDependencies:
+    "@babel/core": ^7.0.0
+  checksum: 2e29dd5581031fa06134f7e03b3de2c6fbdce672db339bffecadc37e3be95df1f1551d1f0dd48fdec3fcfe2e17a224b3d6ee5e4d100dfbc2a2a9545e96fcc024
+  languageName: node
+  linkType: hard
+
 "@emotion/cache@npm:^10.0.27, @emotion/cache@npm:^10.0.9":
   version: 10.0.29
   resolution: "@emotion/cache@npm:10.0.29"
@@ -2687,7 +2730,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/core@npm:^10.0.20, @emotion/core@npm:^10.0.9":
+"@emotion/core@npm:^10.0.20, @emotion/core@npm:^10.0.28, @emotion/core@npm:^10.0.9":
   version: 10.0.28
   resolution: "@emotion/core@npm:10.0.28"
   dependencies:
@@ -2788,7 +2831,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/styled@npm:^10.0.17":
+"@emotion/styled@npm:^10.0.17, @emotion/styled@npm:^10.0.27":
   version: 10.0.27
   resolution: "@emotion/styled@npm:10.0.27"
   dependencies:
@@ -4266,6 +4309,15 @@ __metadata:
   version: 2.0.1
   resolution: "@types/dom4@npm:2.0.1"
   checksum: 5406725a89a551b53461de4250bde406212605ab01e0327313f0ffaafa140cbd94b627b916555a528f41494a2b2f33fa6210b1cfbdaa15042330d414289fd772
+  languageName: node
+  linkType: hard
+
+"@types/dotenv@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "@types/dotenv@npm:8.2.0"
+  dependencies:
+    dotenv: "*"
+  checksum: 8b4d00f8849c550a6888b8f426f85f14171bf1bab53f6b2683bd71a25869a93cb4b960f4fa8de592f2b4c43366240fc9c50d89e6cc1cffffafbb843879c6fdd6
   languageName: node
   linkType: hard
 
@@ -6085,7 +6137,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-plugin-emotion@npm:^10.0.20, babel-plugin-emotion@npm:^10.0.27":
+"babel-plugin-emotion@npm:^10.0.20, babel-plugin-emotion@npm:^10.0.27, babel-plugin-emotion@npm:^10.0.33":
   version: 10.0.33
   resolution: "babel-plugin-emotion@npm:10.0.33"
   dependencies:
@@ -9273,7 +9325,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:8.2.0, dotenv@npm:^8.0.0":
+"dotenv@npm:*, dotenv@npm:8.2.0, dotenv@npm:^8.0.0":
   version: 8.2.0
   resolution: "dotenv@npm:8.2.0"
   checksum: 16cb89cbd7b98b053899b8aba8c5044c8fb61a2db8a81fe70360b75035fce5fed53bd7a34d772be717d0880c0321122a4c09423f518025e1b52d96791521b1a7
@@ -12435,6 +12487,9 @@ fsevents@^1.2.7:
     "@blueprintjs/eslint-plugin": ^0.2.0
     "@blueprintjs/select": ^3.13.3
     "@craco/craco": ^5.6.4
+    "@emotion/babel-preset-css-prop": ^10.0.27
+    "@emotion/core": ^10.0.28
+    "@emotion/styled": ^10.0.27
     "@storybook/addon-docs": next
     "@storybook/addon-knobs": next
     "@storybook/addon-links": next
@@ -12444,10 +12499,12 @@ fsevents@^1.2.7:
     "@testing-library/jest-dom": ^4.2.4
     "@testing-library/react": ^9.3.2
     "@testing-library/user-event": ^7.1.2
+    "@types/dotenv": ^8.2.0
     "@typescript-eslint/eslint-plugin": 2.x
     "@typescript-eslint/parser": 2.x
     "@xstate/react": ^0.8.1
     babel-eslint: 10.x
+    babel-plugin-emotion: ^10.0.33
     babel-preset-react-app: ^9.1.2
     concurrently: ^5.2.0
     craco-linaria: ^1.1.2
