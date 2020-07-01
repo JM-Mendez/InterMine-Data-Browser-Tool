@@ -3,13 +3,11 @@ import {
 	Classes,
 	H4,
 	H5,
-	Icon,
 	NonIdealState,
 	Popover,
 	PopoverInteractionKind,
 } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import { css } from '@emotion/core'
 import { ClassNames } from '@emotion/core'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -68,6 +66,17 @@ CurrentConstraints.defaultProps = {
 	],
 }
 
+const History = () => (
+	<NonIdealState
+		title="You have no historical queries"
+		icon={IconNames.INFO_SIGN}
+		css={{
+			paddingBottom: 32,
+			borderRadius: 3,
+		}}
+	/>
+)
+
 const ViewAll = ({ currentConstraints = [] }) => {
 	return (
 		<ClassNames>
@@ -86,6 +95,8 @@ const ViewAll = ({ currentConstraints = [] }) => {
 						<CloseButton />
 						<H4>Current</H4>
 						<CurrentConstraints />
+						<H4>History</H4>
+						<History />
 					</div>
 				</Popover>
 			)}
