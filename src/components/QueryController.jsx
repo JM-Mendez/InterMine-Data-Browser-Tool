@@ -1,6 +1,7 @@
 import {
 	Button,
 	Classes,
+	Divider,
 	H4,
 	H5,
 	NonIdealState,
@@ -10,11 +11,19 @@ import {
 import { IconNames } from '@blueprintjs/icons'
 import { ClassNames } from '@emotion/core'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { CloseButton } from './Shared/Buttons'
 
 const CurrentConstraints = ({ currentConstraints }) => {
+	const [constraints, setConstraints] = useState(currentConstraints)
+
+	useEffect(() => {
+		if (currentConstraints !== constraints) {
+			setConstraints(currentConstraints)
+		}
+	}, [currentConstraints, constraints])
+
 	if (currentConstraints.length === 0) {
 		return (
 			<NonIdealState
@@ -33,8 +42,8 @@ const CurrentConstraints = ({ currentConstraints }) => {
 	}
 
 	return (
-		<ul css={{ padding: 16, listStyle: 'none' }}>
-			{currentConstraints.map((constraint) => {
+		<ul css={{ padding: '16px 16px 0', listStyle: 'none' }}>
+			{constraints.map((constraint) => {
 				return (
 					<li css={{ display: 'flex', alignItems: 'center', paddingBottom: 12 }}>
 						<Button
@@ -66,18 +75,7 @@ CurrentConstraints.defaultProps = {
 	],
 }
 
-const History = () => (
-	<NonIdealState
-		title="You have no historical queries"
-		icon={IconNames.INFO_SIGN}
-		css={{
-			paddingBottom: 32,
-			borderRadius: 3,
-		}}
-	/>
-)
-
-const ViewAll = ({ currentConstraints = [] }) => {
+const ViewAll = ({ currentConstraints }) => {
 	return (
 		<ClassNames>
 			{({ css }) => (
@@ -94,9 +92,17 @@ const ViewAll = ({ currentConstraints = [] }) => {
 					<div>
 						<CloseButton />
 						<H4>Current</H4>
-						<CurrentConstraints />
+						<CurrentConstraints currentConstraints={currentConstraints} />
+						<Divider css={{ width: '75%', marginBottom: 16 }} />
 						<H4>History</H4>
-						<History />
+						<NonIdealState
+							title="You have no historical queries"
+							icon={IconNames.INFO_SIGN}
+							css={{
+								paddingBottom: 32,
+								borderRadius: 3,
+							}}
+						/>
 					</div>
 				</Popover>
 			)}
@@ -104,18 +110,20 @@ const ViewAll = ({ currentConstraints = [] }) => {
 	)
 }
 
-const RunQuery = () => (
-	<Popover
-		css={{ marginTop: 40 }}
-		wrapperTagName="div"
-		usePortal={true}
-		lazy={true}
-		position="right"
-	>
-		<Button text="Run Query" intent="success" rightIcon={IconNames.PLAY} />
-		<div style={{ height: 100 }}>Hey ma, Look! A popup!</div>
-	</Popover>
-)
+const RunQuery = () => {
+	return (
+		<Popover
+			css={{ marginTop: 40 }}
+			wrapperTagName="div"
+			usePortal={true}
+			lazy={true}
+			position="right"
+		>
+			<Button text="Run Query" intent="success" rightIcon={IconNames.PLAY} />
+			<div style={{ height: 100 }}>Hey ma, Look! A popup!</div>
+		</Popover>
+	)
+}
 
 export const QueryController = () => {
 	return (
@@ -124,7 +132,7 @@ export const QueryController = () => {
 				<span css={{ color: 'var(--green5)' }}>4 </span>
 				<span css={{ color: 'var(--blue9)' }}>Constraints applied</span>
 			</H5>
-			<ViewAll />
+			<ViewAll currentConstraints={undefined} />
 			<RunQuery />
 		</div>
 	)
