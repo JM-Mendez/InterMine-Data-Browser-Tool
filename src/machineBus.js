@@ -2,7 +2,9 @@ import { useMachine } from '@xstate/react'
 import { createContext, useContext } from 'react'
 
 const enableMocks =
+	// istanbul ignore
 	process.env.NODE_ENV?.toLowerCase() === 'development' ||
+	process.env.NODE_ENV?.toLowerCase() === 'test' ||
 	process.env.STORYBOOK_USEMOCK?.toLowerCase() === 'true'
 
 export const MockMachineContext = createContext(null)
@@ -17,6 +19,7 @@ const interpretedMachines = new Set()
  * @param {import('xstate').EventData} [payload] - the payload for the event
  */
 const sendToBus = (event, payload) => {
+	// istanbul ignore
 	interpretedMachines.forEach((m) => {
 		if (m.machine.handles(event)) {
 			m.send(event, payload)
@@ -37,12 +40,13 @@ export const useMachineBus = (machine) => {
 	let machineToInterpret = machine
 
 	if (enableMocks) {
-		// We only use this during development or storybook configs, so it's
-		// safe to use inside the conditional here. It will either always be
-		// called, or not called at all.
+		// We only use this for storybook configs, so it's
+		// safe to use inside the conditional here. It will
+		// either always be called, or not called at all.
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const machineMock = useContext(MockMachineContext)
 
+		// istanbul ignore
 		if (machineMock?.id === machine.id) {
 			machineToInterpret = machineMock
 		}

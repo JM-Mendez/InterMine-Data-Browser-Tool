@@ -2,12 +2,12 @@ import { Button, Classes, Divider, H4, H5, NonIdealState, Popover } from '@bluep
 import { IconNames } from '@blueprintjs/icons'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
-import { assign, Machine } from 'xstate'
 
-import { ADD_CONSTRAINT, DELETE_CONSTRAINT } from '../../actionConstants'
+import { DELETE_CONSTRAINT } from '../../actionConstants'
 import { useMachineBus } from '../../machineBus'
 import { CloseButton } from '../Shared/Buttons'
 import { PopupCard } from '../Shared/PopupCard'
+import { queryControllerMachine } from './queryControllerMachine'
 
 const CurrentConstraints = ({ currentConstraints, sendMsg }) => {
 	const [constraints, setConstraints] = useState(currentConstraints)
@@ -39,14 +39,22 @@ const CurrentConstraints = ({ currentConstraints, sendMsg }) => {
 		<ul css={{ padding: '16px 16px 0', listStyle: 'none' }}>
 			{constraints.map((constraint) => {
 				return (
-					<li key={constraint} css={{ display: 'flex', alignItems: 'center', paddingBottom: 12 }}>
+					<li
+						key={constraint}
+						css={{
+							display: 'flex',
+							alignItems: 'center',
+							padding: '6px 0',
+						}}
+					>
 						<Button
 							intent="danger"
 							icon={IconNames.REMOVE}
 							small={true}
 							minimal={true}
-							css={{ marginRight: 4 }}
 							onClick={() => sendMsg({ type: DELETE_CONSTRAINT, constraint })}
+							aria-label={`remove constraint ${constraint.replace(/\./g, ' ')}`}
+							css={{ marginRight: 4 }}
 						/>
 						<span css={{ fontSize: 'var(--fs-desktopM1)', display: 'inline-block' }}>
 							{constraint}
@@ -113,56 +121,13 @@ const RunQuery = () => {
 	)
 }
 
-export const QueryControllerMachine = Machine(
-	{
-		id: 'QueryController',
-		initial: 'idle',
-		context: {
-			currentConstraints: [
-				'Gene.organism.shortName = M. musculus',
-				'Gene.organism.shortName = H. sapiens',
-				'Gene LOOKUP MGI:1918911',
-			],
-		},
-		states: {
-			idle: {
-				on: {
-					[DELETE_CONSTRAINT]: {
-						actions: 'removeConstraint',
-					},
-					[ADD_CONSTRAINT]: {
-						actions: 'addConstraint',
-					},
-				},
-			},
-		},
-	},
-	{
-		actions: {
-			removeConstraint: assign({
-				currentConstraints: (context, event) => {
-					// @ts-ignore
-					return context.currentConstraints.filter((c) => c !== event.constraint)
-				},
-			}),
-			addConstraint: assign({
-				currentConstraints: (context, event) => {
-					// @ts-ignore
-					context.currentConstraints.push(event.constraint)
-					return context.currentConstraints
-				},
-			}),
-		},
-	}
-)
-
 export const QueryController = () => {
 	const [
 		{
 			context: { currentConstraints },
 		},
 		send,
-	] = useMachineBus(QueryControllerMachine)
+	] = useMachineBus(queryControllerMachine)
 
 	return (
 		<div css={{ paddingTop: 10, margin: '0 20px' }}>

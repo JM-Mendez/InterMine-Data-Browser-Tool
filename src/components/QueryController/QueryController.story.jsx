@@ -1,7 +1,9 @@
 import React from 'react'
 
+import { MockMachineContext } from '../../machineBus'
 import { popupDecorator } from '../../utils/storybook'
 import { QueryController as QCont, ViewAllPopup } from './QueryController'
+import { queryControllerMachine } from './queryControllerMachine'
 
 export default {
 	title: 'Components/QueryController',
@@ -10,8 +12,20 @@ export default {
 	},
 }
 
+const machine = queryControllerMachine.withContext({
+	currentConstraints: [
+		'Gene.organism.shortName = M. musculus',
+		'Gene.organism.shortName = H. sapiens',
+		'Gene LOOKUP MGI:1918911',
+	],
+})
+
 export const QueryController = () => {
-	return <QCont />
+	return (
+		<MockMachineContext.Provider value={machine}>
+			<QCont />
+		</MockMachineContext.Provider>
+	)
 }
 
 QueryController.decorators = [
