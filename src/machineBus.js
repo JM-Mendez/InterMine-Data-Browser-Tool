@@ -48,7 +48,7 @@ export const useMachineBus = (machine) => {
 		}
 	}
 
-	const [state, send, service] = useMachine(machineToInterpret)
+	const [state, , service] = useMachine(machineToInterpret)
 	interpretedMachines.add(service)
 
 	return [state, sendToBus, service]

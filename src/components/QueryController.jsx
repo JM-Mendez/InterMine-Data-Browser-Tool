@@ -14,6 +14,7 @@ import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import { assign, Machine } from 'xstate'
 
+import { ADD_CONSTRAINT, DELETE_CONSTRAINT } from '../actionConstants'
 import { useMachineBus } from '../machineBus'
 import { CloseButton } from './Shared/Buttons'
 
@@ -54,7 +55,7 @@ const CurrentConstraints = ({ currentConstraints, sendMsg }) => {
 							small={true}
 							minimal={true}
 							css={{ marginRight: 4 }}
-							onClick={() => sendMsg({ type: 'DELETE_CONSTRAINT', constraint })}
+							onClick={() => sendMsg({ type: DELETE_CONSTRAINT, constraint })}
 						/>
 						<span css={{ fontSize: 'var(--fs-desktopM1)', display: 'inline-block' }}>
 							{constraint}
@@ -89,7 +90,6 @@ const ViewAll = ({ currentConstraints, sendMsg }) => {
 						[`&& .${Classes.POPOVER_CONTENT}`]: { maxWidth: 500 },
 					})} `}
 					interactionKind={PopoverInteractionKind.CLICK}
-					isOpen={true}
 				>
 					<Button text="view all" intent="primary" fill={true} icon={IconNames.EYE_OPEN} />
 					<div>
@@ -151,8 +151,11 @@ export const QueryControllerMachine = Machine(
 		states: {
 			idle: {
 				on: {
-					DELETE_CONSTRAINT: {
+					[DELETE_CONSTRAINT]: {
 						actions: 'removeConstraint',
+					},
+					[ADD_CONSTRAINT]: {
+						actions: 'addConstraint',
 					},
 				},
 			},
@@ -162,7 +165,15 @@ export const QueryControllerMachine = Machine(
 		actions: {
 			removeConstraint: assign({
 				currentConstraints: (context, event) => {
+					// @ts-ignore
 					return context.currentConstraints.filter((c) => c !== event.constraint)
+				},
+			}),
+			addConstraint: assign({
+				currentConstraints: (context, event) => {
+					// @ts-ignore
+					context.currentConstraints.push(event.constraint)
+					return context.currentConstraints
 				},
 			}),
 		},
