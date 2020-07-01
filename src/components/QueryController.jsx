@@ -1,30 +1,20 @@
 import {
 	Button,
 	Classes,
-	Colors,
 	H4,
 	H5,
+	Icon,
 	NonIdealState,
 	Popover,
 	PopoverInteractionKind,
 } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
+import { css } from '@emotion/core'
+import { ClassNames } from '@emotion/core'
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import { CloseButton } from './Shared/Buttons'
-
-const S_QueryController = styled.div`
-	padding-top: 10px;
-	margin: 0 20px;
-`
-
-const S_Heading = styled.span`
-	color: var(--blue9);
-`
-
-const S_PopupContainer = styled.div`
-	min-width: 200px;
-`
 
 const CurrentConstraints = ({ currentConstraints }) => {
 	if (currentConstraints.length === 0) {
@@ -33,25 +23,36 @@ const CurrentConstraints = ({ currentConstraints }) => {
 				title="No Constraints applied"
 				description="Displaying default results for the current mine"
 				icon={IconNames.WARNING_SIGN}
-				className={css`
-					padding-bottom: 32px;
-					border-radius: 3px;
-					& .${Classes.NON_IDEAL_STATE_VISUAL} {
-						color: var(--yellow5);
-					}
-				`}
+				css={{
+					paddingBottom: 32,
+					borderRadius: 3,
+					[`& .${Classes.NON_IDEAL_STATE_VISUAL}`]: {
+						color: 'var(--yellow5)',
+					},
+				}}
 			/>
 		)
 	}
 
 	return (
-		<div
-			className={css`
-				padding: 32px;
-			`}
-		>
-			<div>constriants</div>
-		</div>
+		<ul css={{ padding: 16, listStyle: 'none' }}>
+			{currentConstraints.map((constraint) => {
+				return (
+					<li css={{ display: 'flex', alignItems: 'center', paddingBottom: 12 }}>
+						<Button
+							intent="danger"
+							icon={IconNames.REMOVE}
+							small={true}
+							minimal={true}
+							css={{ marginRight: 4 }}
+						/>
+						<span css={{ fontSize: 'var(--fs-desktopM1)', display: 'inline-block' }}>
+							{constraint}
+						</span>
+					</li>
+				)
+			})}
+		</ul>
 	)
 }
 
@@ -62,29 +63,33 @@ CurrentConstraints.propTypes = {
 CurrentConstraints.defaultProps = {
 	currentConstraints: [
 		'Gene.organism.shortName = M. musculus',
-		'Gene.organism.shortName = M. musculus',
-		'Gene.organism.shortName = M. musculus',
+		'Gene.organism.shortName = H. sapiens',
+		'Gene LOOKUP MGI:1918911',
 	],
 }
 
 const ViewAll = ({ currentConstraints = [] }) => {
 	return (
-		<Popover
-			fill={true}
-			usePortal={true}
-			lazy={true}
-			position="right"
-			popoverClassName={Classes.POPOVER_CONTENT_SIZING}
-			interactionKind={PopoverInteractionKind.CLICK}
-			isOpen={true}
-		>
-			<Button text="view all" intent="primary" fill={true} icon={IconNames.EYE_OPEN} />
-			<S_PopupContainer>
-				<CloseButton />
-				<H4>Current</H4>
-				<CurrentConstraints />
-			</S_PopupContainer>
-		</Popover>
+		<ClassNames>
+			{({ css }) => (
+				<Popover
+					fill={true}
+					usePortal={true}
+					lazy={true}
+					position="right"
+					popoverClassName={`${css({ maxWidth: 500 })} ${Classes.POPOVER_CONTENT_SIZING}`}
+					interactionKind={PopoverInteractionKind.CLICK}
+					isOpen={true}
+				>
+					<Button text="view all" intent="primary" fill={true} icon={IconNames.EYE_OPEN} />
+					<div>
+						<CloseButton />
+						<H4>Current</H4>
+						<CurrentConstraints />
+					</div>
+				</Popover>
+			)}
+		</ClassNames>
 	)
 }
 
@@ -105,8 +110,8 @@ export const QueryController = () => {
 	return (
 		<div css={{ paddingTop: 10, margin: '0 20px' }}>
 			<H5>
-				<span css={{ color: 'var(--red6' }}>4 </span>
-				<span css={{ color: 'var(--yellow8)' }}>Constraints applied</span>
+				<span css={{ color: 'var(--green5)' }}>4 </span>
+				<span css={{ color: 'var(--blue9)' }}>Constraints applied</span>
 			</H5>
 			<ViewAll />
 			<RunQuery />
