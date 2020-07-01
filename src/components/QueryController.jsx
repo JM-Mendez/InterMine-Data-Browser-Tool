@@ -12,10 +12,12 @@ import { IconNames } from '@blueprintjs/icons'
 import { ClassNames } from '@emotion/core'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
+import { assign, Machine } from 'xstate'
 
+import { useMachineBus } from '../machineBus'
 import { CloseButton } from './Shared/Buttons'
 
-const CurrentConstraints = ({ currentConstraints }) => {
+const CurrentConstraints = ({ currentConstraints, sendMsg }) => {
 	const [constraints, setConstraints] = useState(currentConstraints)
 
 	useEffect(() => {
@@ -45,13 +47,14 @@ const CurrentConstraints = ({ currentConstraints }) => {
 		<ul css={{ padding: '16px 16px 0', listStyle: 'none' }}>
 			{constraints.map((constraint) => {
 				return (
-					<li css={{ display: 'flex', alignItems: 'center', paddingBottom: 12 }}>
+					<li key={constraint} css={{ display: 'flex', alignItems: 'center', paddingBottom: 12 }}>
 						<Button
 							intent="danger"
 							icon={IconNames.REMOVE}
 							small={true}
 							minimal={true}
 							css={{ marginRight: 4 }}
+							onClick={() => sendMsg({ type: 'DELETE_CONSTRAINT', constraint })}
 						/>
 						<span css={{ fontSize: 'var(--fs-desktopM1)', display: 'inline-block' }}>
 							{constraint}
@@ -65,17 +68,14 @@ const CurrentConstraints = ({ currentConstraints }) => {
 
 CurrentConstraints.propTypes = {
 	currentConstraints: PropTypes.array,
+	sendMsg: PropTypes.func,
 }
 
 CurrentConstraints.defaultProps = {
-	currentConstraints: [
-		'Gene.organism.shortName = M. musculus',
-		'Gene.organism.shortName = H. sapiens',
-		'Gene LOOKUP MGI:1918911',
-	],
+	currentConstraints: [],
 }
 
-const ViewAll = ({ currentConstraints }) => {
+const ViewAll = ({ currentConstraints, sendMsg }) => {
 	return (
 		<ClassNames>
 			{({ css }) => (
@@ -84,7 +84,10 @@ const ViewAll = ({ currentConstraints }) => {
 					usePortal={true}
 					lazy={true}
 					position="right"
-					popoverClassName={`${css({ maxWidth: 500 })} ${Classes.POPOVER_CONTENT_SIZING}`}
+					popoverClassName={`${Classes.POPOVER_CONTENT_SIZING} ${css({
+						maxWidth: 500,
+						[`&& .${Classes.POPOVER_CONTENT}`]: { maxWidth: 500 },
+					})} `}
 					interactionKind={PopoverInteractionKind.CLICK}
 					isOpen={true}
 				>
@@ -92,7 +95,7 @@ const ViewAll = ({ currentConstraints }) => {
 					<div>
 						<CloseButton />
 						<H4>Current</H4>
-						<CurrentConstraints currentConstraints={currentConstraints} />
+						<CurrentConstraints currentConstraints={currentConstraints} sendMsg={sendMsg} />
 						<Divider css={{ width: '75%', marginBottom: 16 }} />
 						<H4>History</H4>
 						<NonIdealState
@@ -110,6 +113,15 @@ const ViewAll = ({ currentConstraints }) => {
 	)
 }
 
+ViewAll.propTypes = {
+	currentConstraints: PropTypes.array,
+	sendMsg: PropTypes.func,
+}
+
+ViewAll.defaultProps = {
+	currentConstraints: [],
+}
+
 const RunQuery = () => {
 	return (
 		<Popover
@@ -125,14 +137,53 @@ const RunQuery = () => {
 	)
 }
 
+export const QueryControllerMachine = Machine(
+	{
+		id: 'QueryController',
+		initial: 'idle',
+		context: {
+			currentConstraints: [
+				'Gene.organism.shortName = M. musculus',
+				'Gene.organism.shortName = H. sapiens',
+				'Gene LOOKUP MGI:1918911',
+			],
+		},
+		states: {
+			idle: {
+				on: {
+					DELETE_CONSTRAINT: {
+						actions: 'removeConstraint',
+					},
+				},
+			},
+		},
+	},
+	{
+		actions: {
+			removeConstraint: assign({
+				currentConstraints: (context, event) => {
+					return context.currentConstraints.filter((c) => c !== event.constraint)
+				},
+			}),
+		},
+	}
+)
+
 export const QueryController = () => {
+	const [
+		{
+			context: { currentConstraints },
+		},
+		send,
+	] = useMachineBus(QueryControllerMachine)
+
 	return (
 		<div css={{ paddingTop: 10, margin: '0 20px' }}>
 			<H5>
 				<span css={{ color: 'var(--green5)' }}>4 </span>
 				<span css={{ color: 'var(--blue9)' }}>Constraints applied</span>
 			</H5>
-			<ViewAll currentConstraints={undefined} />
+			<ViewAll currentConstraints={currentConstraints} sendMsg={send} />
 			<RunQuery />
 		</div>
 	)

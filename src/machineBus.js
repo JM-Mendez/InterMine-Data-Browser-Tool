@@ -16,7 +16,13 @@ const interpretedMachines = new Set()
  * @param {?} event - a string or event object (see https://xstate.js.org/docs/guides/events.html#events)
  * @param {import('xstate').EventData} [payload] - the payload for the event
  */
-const sendToBus = (event, payload) => {}
+const sendToBus = (event, payload) => {
+	interpretedMachines.forEach((m) => {
+		if (m.machine.handles(event)) {
+			m.send(event, payload)
+		}
+	})
+}
 
 /**
  * Interprets a machine and registers it on the service bus.
@@ -42,7 +48,7 @@ export const useMachineBus = (machine) => {
 		}
 	}
 
-	const [state, , service] = useMachine(machineToInterpret)
+	const [state, send, service] = useMachine(machineToInterpret)
 	interpretedMachines.add(service)
 
 	return [state, sendToBus, service]
