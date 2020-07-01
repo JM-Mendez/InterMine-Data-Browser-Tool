@@ -1,22 +1,13 @@
-import {
-	Button,
-	Classes,
-	Divider,
-	H4,
-	H5,
-	NonIdealState,
-	Popover,
-	PopoverInteractionKind,
-} from '@blueprintjs/core'
+import { Button, Classes, Divider, H4, H5, NonIdealState, Popover } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import { ClassNames } from '@emotion/core'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import { assign, Machine } from 'xstate'
 
-import { ADD_CONSTRAINT, DELETE_CONSTRAINT } from '../actionConstants'
-import { useMachineBus } from '../machineBus'
-import { CloseButton } from './Shared/Buttons'
+import { ADD_CONSTRAINT, DELETE_CONSTRAINT } from '../../actionConstants'
+import { useMachineBus } from '../../machineBus'
+import { CloseButton } from '../Shared/Buttons'
+import { PopupCard } from '../Shared/PopupCard'
 
 const CurrentConstraints = ({ currentConstraints, sendMsg }) => {
 	const [constraints, setConstraints] = useState(currentConstraints)
@@ -76,49 +67,34 @@ CurrentConstraints.defaultProps = {
 	currentConstraints: [],
 }
 
-const ViewAll = ({ currentConstraints, sendMsg }) => {
+export const ViewAllPopup = ({ currentConstraints, sendMsg }) => {
 	return (
-		<ClassNames>
-			{({ css }) => (
-				<Popover
-					fill={true}
-					usePortal={true}
-					lazy={true}
-					position="right"
-					popoverClassName={`${Classes.POPOVER_CONTENT_SIZING} ${css({
-						maxWidth: 500,
-						[`&& .${Classes.POPOVER_CONTENT}`]: { maxWidth: 500 },
-					})} `}
-					interactionKind={PopoverInteractionKind.CLICK}
-				>
-					<Button text="view all" intent="primary" fill={true} icon={IconNames.EYE_OPEN} />
-					<div>
-						<CloseButton />
-						<H4>Current</H4>
-						<CurrentConstraints currentConstraints={currentConstraints} sendMsg={sendMsg} />
-						<Divider css={{ width: '75%', marginBottom: 16 }} />
-						<H4>History</H4>
-						<NonIdealState
-							title="You have no historical queries"
-							icon={IconNames.INFO_SIGN}
-							css={{
-								paddingBottom: 32,
-								borderRadius: 3,
-							}}
-						/>
-					</div>
-				</Popover>
-			)}
-		</ClassNames>
+		<>
+			<div>
+				<CloseButton />
+				<H4>Current</H4>
+				<CurrentConstraints currentConstraints={currentConstraints} sendMsg={sendMsg} />
+				<Divider css={{ width: '75%', marginBottom: 16 }} />
+				<H4>History</H4>
+				<NonIdealState
+					title="You have no historical queries"
+					icon={IconNames.INFO_SIGN}
+					css={{
+						paddingBottom: 32,
+						borderRadius: 3,
+					}}
+				/>
+			</div>
+		</>
 	)
 }
 
-ViewAll.propTypes = {
+ViewAllPopup.propTypes = {
 	currentConstraints: PropTypes.array,
 	sendMsg: PropTypes.func,
 }
 
-ViewAll.defaultProps = {
+ViewAllPopup.defaultProps = {
 	currentConstraints: [],
 }
 
@@ -194,7 +170,10 @@ export const QueryController = () => {
 				<span css={{ color: 'var(--green5)' }}>4 </span>
 				<span css={{ color: 'var(--blue9)' }}>Constraints applied</span>
 			</H5>
-			<ViewAll currentConstraints={currentConstraints} sendMsg={send} />
+			<PopupCard>
+				<Button text="view all" intent="primary" fill={true} icon={IconNames.EYE_OPEN} />
+				<ViewAllPopup currentConstraints={currentConstraints} sendMsg={send} />
+			</PopupCard>
 			<RunQuery />
 		</div>
 	)
