@@ -7,37 +7,6 @@ import { MockMachineContext } from '../../machineBus'
 import { QueryController } from './QueryController'
 import { queryControllerMachine } from './queryControllerMachine'
 
-jest.mock(
-	'popper.js',
-	() =>
-		class Popper {
-			static placements = [
-				'auto',
-				'auto-end',
-				'auto-start',
-				'bottom',
-				'bottom-end',
-				'bottom-start',
-				'left',
-				'left-end',
-				'left-start',
-				'right',
-				'right-end',
-				'right-start',
-				'top',
-				'top-end',
-				'top-start',
-			]
-
-			constructor() {
-				return {
-					destroy: () => {},
-					scheduleUpdate: () => {},
-				}
-			}
-		}
-)
-
 describe('QueryController Machine', () => {
 	it.each(['a', 'b', 'c'].map((c, idx) => [c, idx]))(
 		'deletes a constraint from the current list - index %#',

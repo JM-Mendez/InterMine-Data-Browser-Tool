@@ -36,10 +36,10 @@ const sendToBus = (event, payload) => {
  * @param { import('xstate').StateMachine} machine
  * @returns {[import('xstate').State, typeof sendToBus, import('xstate').Interpreter]}
  */
-export const useMachineBus = (machine, { state = {}, ...restOptions } = {}) => {
+export const useMachineBus = (machine, { state = null, ...restOptions } = {}) => {
 	let mockState = state
 
-	if (enableMocks) {
+	if (enableMocks && mockState) {
 		// We only use this for storybook configs, so it's
 		// safe to use inside the conditional here. It will
 		// either always be called, or not called at all.
