@@ -36,7 +36,7 @@ const sendToBus = (event, payload) => {
  * @param { import('xstate').StateMachine} machine
  * @returns {[import('xstate').State, typeof sendToBus, import('xstate').Interpreter]}
  */
-export const useMachineBus = (machine, { state = null, ...restOptions } = {}) => {
+export const useMachineBus = (machine, { state = {}, ...restOptions } = {}) => {
 	let mockState = state
 
 	if (enableMocks && mockState) {
