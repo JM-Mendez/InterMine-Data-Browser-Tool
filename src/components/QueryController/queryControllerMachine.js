@@ -1,4 +1,5 @@
-import { assign, Machine } from 'xstate'
+import { assign } from '@xstate/immer'
+import { Machine } from 'xstate'
 
 import { ADD_QUERY_CONSTRAINT, DELETE_QUERY_CONSTRAINT } from '../../actionConstants'
 
@@ -41,18 +42,14 @@ export const queryControllerMachine = Machine(
 	},
 	{
 		actions: {
-			removeConstraint: assign({
-				currentConstraints: (context, event) => {
-					// @ts-ignore
-					return context.currentConstraints.filter((c) => c !== event.constraint)
-				},
+			addConstraint: assign((ctx, event) => {
+				// @ts-ignore
+				ctx.currentConstraints.push(event.constraint)
+				return ctx
 			}),
-			addConstraint: assign({
-				currentConstraints: (context, event) => {
-					// @ts-ignore
-					context.currentConstraints.push(event.constraint)
-					return context.currentConstraints
-				},
+			removeConstraint: assign((ctx, event) => {
+				// @ts-ignore
+				ctx.currentConstraints = ctx.currentConstraints.filter((c) => c !== event.constraint)
 			}),
 		},
 		guards: {

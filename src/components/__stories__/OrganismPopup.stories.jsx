@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 
+import { useMachineBus } from '../../machineBus'
 import { popupDecorator } from '../../utils/storybook'
 import { ConstraintPopup } from '../Constraints/ConstraintBase'
-import { OrganismPopup } from '../Constraints/Organism'
+import { organismMachine, OrganismPopup } from '../Constraints/Organism'
 
 export default {
 	title: 'Components/Popup Cards/Constraints/Organism',
@@ -25,22 +26,16 @@ export const ConstraintSet = () => (
 	</div>
 )
 
-export const Playground = () => {
-	const [constraintsChecked, updateConstraintsChecked] = useState([])
-	const [constraintSet, toggleConstraintSet] = useState(false)
+// use a normal function, otherwise storybook enters recursion hell
+export function Playground() {
+	const [state, send] = useMachineBus(organismMachine)
 
-	const updateConstraints = (value) => ({ target: { checked } }) => {
-		if (checked) {
-			updateConstraintsChecked([...constraintsChecked, value])
-		} else {
-			updateConstraintsChecked(constraintsChecked.filter((v) => v !== value))
-		}
-	}
+	const { availableOrganisms } = state.context
 
 	return (
 		<div css={{ maxWidth: 500, minWidth: 376 }}>
 			<ConstraintPopup constraintSet={false}>
-				<OrganismPopup constraintChangeHandler={updateConstraints} />
+				<OrganismPopup />
 			</ConstraintPopup>
 		</div>
 	)
