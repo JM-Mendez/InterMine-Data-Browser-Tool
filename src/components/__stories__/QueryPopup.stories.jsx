@@ -1,10 +1,10 @@
 import { Card } from '@blueprintjs/core'
 import React from 'react'
 
-import * as Controller from './QueryController/QueryController'
+import * as Controller from '../QueryController/QueryController'
 
 export default {
-	title: 'Components/Popup Cards/ViewAll',
+	title: 'Components/Popup Cards/Query Controller',
 	decorators: [(storyFn) => <Card css={{ maxWidth: 500 }}>{storyFn()}</Card>],
 }
 

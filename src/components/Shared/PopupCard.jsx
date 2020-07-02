@@ -17,7 +17,7 @@ export const PopupCard = ({ children }) => {
 					})} `}
 					interactionKind={PopoverInteractionKind.CLICK}
 				>
-					{children}
+					<div>{children}</div>
 				</Popover>
 			)}
 		</ClassNames>

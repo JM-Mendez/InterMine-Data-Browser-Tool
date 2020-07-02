@@ -1,7 +1,7 @@
 import React from 'react'
 
-import * as Constraints from '..'
-import { Constraint } from '../ConstraintBase'
+import * as Constraints from '../Constraints'
+import { Constraint } from '../Constraints/ConstraintBase'
 
 export default {
 	title: 'Components/Constraint',

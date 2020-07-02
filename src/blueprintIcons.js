@@ -1,6 +1,7 @@
 const { IconNames } = require('@blueprintjs/icons')
 exports.usedIcons = [
 	IconNames.EYE_OPEN,
+	IconNames.DISABLE,
 	IconNames.PLAY,
 	IconNames.TICK_CIRCLE,
 	IconNames.UNLOCK,

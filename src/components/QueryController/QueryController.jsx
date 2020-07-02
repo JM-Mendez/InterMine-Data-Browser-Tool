@@ -78,21 +78,19 @@ CurrentConstraints.defaultProps = {
 export const ViewAllPopup = ({ currentConstraints, sendMsg }) => {
 	return (
 		<>
-			<div>
-				<CloseButton />
-				<H4>Current</H4>
-				<CurrentConstraints currentConstraints={currentConstraints} sendMsg={sendMsg} />
-				<Divider css={{ width: '75%', marginBottom: 16 }} />
-				<H4>History</H4>
-				<NonIdealState
-					title="You have no historical queries"
-					icon={IconNames.INFO_SIGN}
-					css={{
-						paddingBottom: 32,
-						borderRadius: 3,
-					}}
-				/>
-			</div>
+			<CloseButton />
+			<H4>Current</H4>
+			<CurrentConstraints currentConstraints={currentConstraints} sendMsg={sendMsg} />
+			<Divider css={{ width: '75%', marginBottom: 16 }} />
+			<H4>History</H4>
+			<NonIdealState
+				title="You have no historical queries"
+				icon={IconNames.INFO_SIGN}
+				css={{
+					paddingBottom: 32,
+					borderRadius: 3,
+				}}
+			/>
 		</>
 	)
 }
