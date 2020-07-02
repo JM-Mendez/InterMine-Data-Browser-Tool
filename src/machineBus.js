@@ -36,8 +36,8 @@ const sendToBus = (event, payload) => {
  * @param { import('xstate').StateMachine} machine
  * @returns {[import('xstate').State, typeof sendToBus, import('xstate').Interpreter]}
  */
-export const useMachineBus = (machine) => {
-	let machineToInterpret = machine
+export const useMachineBus = (machine, { state = {}, ...restOptions } = {}) => {
+	let mockState = state
 
 	if (enableMocks) {
 		// We only use this for storybook configs, so it's
@@ -48,12 +48,13 @@ export const useMachineBus = (machine) => {
 
 		// istanbul ignore
 		if (machineMock?.id === machine.id) {
-			machineToInterpret = machineMock
+			mockState = machineMock.transition(machineMock.initialState, '')
 		}
 	}
 
-	const [state, , service] = useMachine(machineToInterpret)
+	// @ts-ignore
+	const [machineState, , service] = useMachine(machine, { ...restOptions, state: mockState })
 	interpretedMachines.add(service)
 
-	return [state, sendToBus, service]
+	return [machineState, sendToBus, service]
 }

@@ -1,13 +1,11 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
-import { interpret } from 'xstate'
 
 import { ADD_CONSTRAINT, DELETE_CONSTRAINT } from '../../actionConstants'
-import { useMachineBus } from '../../machineBus'
+import { MockMachineContext } from '../../machineBus'
 import { QueryController } from './QueryController'
 import { queryControllerMachine } from './queryControllerMachine'
-jest.mock('../../machineBus')
 
 jest.mock(
 	'popper.js',
@@ -96,41 +94,35 @@ describe('QueryController Machine', () => {
 })
 
 describe('QueryController UI', () => {
-	it('adds displays newly added constraints to the QueryController UI', async () => {
-		const machine = queryControllerMachine.withContext({ currentConstraints: [] })
-
-		const service = interpret(machine).start()
-		// @ts-ignore
-		useMachineBus.mockReturnValue([machine.initialState, service.send])
-
-		render(<QueryController />)
-
-		// @ts-ignore
-		service.send({ type: ADD_CONSTRAINT, constraint: 'a-constraint' })
+	it('displays empty state when no constraints are set', () => {
+		const machine = queryControllerMachine.withContext({
+			currentConstraints: [],
+		})
+		render(
+			<MockMachineContext.Provider value={machine}>
+				<QueryController />
+			</MockMachineContext.Provider>
+		)
 
 		userEvent.click(screen.getByText('view all'))
-
-		expect(screen.queryByText('a-constraint')).toBeInTheDocument()
+		expect(screen.getByText('No Constraints applied')).toBeInTheDocument()
+		expect(screen.getByText('You have no historical queries')).toBeInTheDocument()
 	})
 
-	it('does not display a new constraint when the max is reached', async () => {
+	it('removes constraints when the button is clicked', () => {
 		const machine = queryControllerMachine.withContext({
-			currentConstraints: Array.from('a'.repeat(25)),
+			currentConstraints: ['a-constraint', 'b-constraint'],
 		})
 
-		const service = interpret(machine).start()
-		// @ts-ignore
-		useMachineBus.mockReturnValue([machine.initialState, service.send])
-
-		render(<QueryController />)
-
-		// @ts-ignore
-		service.send({ type: ADD_CONSTRAINT, constraint: 'final-constraint' })
-		// @ts-ignore
-		service.send({ type: ADD_CONSTRAINT, constraint: 'constraints-are-maxed' })
+		render(
+			<MockMachineContext.Provider value={machine}>
+				<QueryController />
+			</MockMachineContext.Provider>
+		)
 
 		userEvent.click(screen.getByText('view all'))
+		userEvent.click(screen.getByLabelText(/b-constraint/))
 
-		expect(screen.queryByText('constraints-are-maxed')).not.toBeInTheDocument()
+		expect(screen.queryByText('b-constraint')).not.toBeInTheDocument()
 	})
 })
