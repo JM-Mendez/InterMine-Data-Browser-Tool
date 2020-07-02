@@ -36,7 +36,7 @@ const CurrentConstraints = ({ currentConstraints, sendMsg }) => {
 	}
 
 	return (
-		<ul css={{ padding: '16px 16px 0', listStyle: 'none' }}>
+		<ul css={{ padding: '0 16px', listStyle: 'none' }}>
 			{constraints.map((constraint) => {
 				return (
 					<li
