@@ -1,8 +1,10 @@
-import { Button, Icon, Popover } from '@blueprintjs/core'
+import { Button, ButtonGroup, Icon, Tag } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import styled from '@emotion/styled'
 import PropTypes from 'prop-types'
 import React from 'react'
+
+import { PopupCard } from '../Shared/PopupCard'
 
 const S_CountTag = styled.div`
 	display: flex;
@@ -77,12 +79,73 @@ export const Constraint = ({
 	)
 }
 
-export const ConstraintBase = ({ children, ...constraintProps }) => (
-	<Popover fill={true} usePortal={false} lazy={true} position="right" boundary="viewport">
-		<Constraint {...constraintProps} />
-		{children}
-	</Popover>
-)
+export const ConstraintPopup = ({
+	constraintSet = false,
+	addEnabled = false,
+	removeEnabled = false,
+	children,
+}) => {
+	const borderColor = constraintSet ? 'var(--blue4)' : 'var(--grey4)'
+	const iconColor = constraintSet ? 'var(--green5)' : 'var(--grey4)'
+	const textColor = constraintSet ? 'var(--blue9)' : 'var(--grey4)'
+	return (
+		<>
+			<div css={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+				<Tag
+					css={{
+						backgroundColor: 'unset',
+						border: `1px solid ${borderColor}`,
+						color: iconColor,
+					}}
+					// @ts-ignore
+					intent="" // HACK - decreases blueprintjs css specificity
+					icon={constraintSet ? IconNames.TICK_CIRCLE : IconNames.DISABLE}
+					minimal={true}
+				>
+					<span
+						// @ts-ignore
+						css={{ color: textColor, fontWeight: 'var(--fw-medium)' }}
+					>
+						Constraint Set
+					</span>
+				</Tag>
+			</div>
+			{children}
+			<ButtonGroup fill={true} css={{ marginTop: 48 }}>
+				<Button
+					text="Remove Constraint"
+					css={{ maxWidth: '50%' }}
+					intent={!removeEnabled ? 'none' : 'danger'}
+					disabled={!removeEnabled}
+				/>
+				<Button
+					text="Add Constraint"
+					css={{ maxWidth: '50%' }}
+					intent={!addEnabled ? 'none' : 'success'}
+					disabled={!addEnabled}
+				/>
+			</ButtonGroup>
+		</>
+	)
+}
+
+ConstraintPopup.propTypes = {
+	/**
+	 * Whether the contrainst is set
+	 */
+	constraintSet: PropTypes.bool,
+}
+
+export const ConstraintBase = ({ children = null, isOpen, constraintSet, ...constraintProps }) => {
+	return (
+		<PopupCard boundary="viewport" isOpen={isOpen}>
+			<Constraint {...constraintProps} />
+			<div>
+				<ConstraintPopup constraintSet={constraintSet}>{children}</ConstraintPopup>
+			</div>
+		</PopupCard>
+	)
+}
 
 const propTypes = {
 	/**
@@ -106,11 +169,23 @@ const propTypes = {
 	 */
 	ariaLabel: PropTypes.string,
 	popoverContent: PropTypes.node,
+	/**
+	 * Whether to force the popup into a controlled state.
+	 * Null will handle the popup, while `true` and `false`
+	 * make it a controlled component
+	 */
+	isOpen: PropTypes.oneOf([null, true, false]),
+	/**
+	 * Whether the constraints have been applied
+	 */
+	constaintSet: PropTypes.bool,
 }
 
 const defaultProps = {
 	labelBorderColor: 'black',
 	constraintCount: 0,
+	isOpen: null,
+	constraintSet: false,
 }
 
 Constraint.propTypes = propTypes

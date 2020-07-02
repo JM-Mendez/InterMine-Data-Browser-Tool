@@ -3,9 +3,8 @@ import { IconNames } from '@blueprintjs/icons'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 
-import { DELETE_CONSTRAINT } from '../../actionConstants'
+import { DELETE_QUERY_CONSTRAINT } from '../../actionConstants'
 import { useMachineBus } from '../../machineBus'
-import { CloseButton } from '../Shared/Buttons'
 import { PopupCard } from '../Shared/PopupCard'
 import { queryControllerMachine } from './queryControllerMachine'
 
@@ -52,7 +51,7 @@ const CurrentConstraints = ({ currentConstraints, sendMsg }) => {
 							icon={IconNames.REMOVE}
 							small={true}
 							minimal={true}
-							onClick={() => sendMsg({ type: DELETE_CONSTRAINT, constraint })}
+							onClick={() => sendMsg({ type: DELETE_QUERY_CONSTRAINT, constraint })}
 							aria-label={`remove constraint ${constraint.replace(/\./g, ' ')}`}
 							css={{ marginRight: 4 }}
 						/>
@@ -78,7 +77,6 @@ CurrentConstraints.defaultProps = {
 export const ViewAllPopup = ({ currentConstraints, sendMsg }) => {
 	return (
 		<>
-			<CloseButton />
 			<H4>Current</H4>
 			<CurrentConstraints currentConstraints={currentConstraints} sendMsg={sendMsg} />
 			<Divider css={{ width: '75%', marginBottom: 16 }} />

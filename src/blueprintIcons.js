@@ -18,4 +18,5 @@ exports.usedIcons = [
 	IconNames.CHEVRON_FORWARD,
 	IconNames.WARNING_SIGN,
 	IconNames.REMOVE,
+	IconNames.DELETE,
 ]

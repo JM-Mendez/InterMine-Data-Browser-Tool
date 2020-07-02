@@ -1,6 +1,6 @@
 import { assign, Machine } from 'xstate'
 
-import { ADD_CONSTRAINT, DELETE_CONSTRAINT } from '../../actionConstants'
+import { ADD_QUERY_CONSTRAINT, DELETE_QUERY_CONSTRAINT } from '../../actionConstants'
 
 export const queryControllerMachine = Machine(
 	{
@@ -12,10 +12,10 @@ export const queryControllerMachine = Machine(
 		states: {
 			idle: {
 				on: {
-					[DELETE_CONSTRAINT]: {
+					[DELETE_QUERY_CONSTRAINT]: {
 						actions: 'removeConstraint',
 					},
-					[ADD_CONSTRAINT]: [
+					[ADD_QUERY_CONSTRAINT]: [
 						{
 							target: 'constraintLimitReached',
 							cond: {
@@ -32,7 +32,7 @@ export const queryControllerMachine = Machine(
 			},
 			constraintLimitReached: {
 				on: {
-					[DELETE_CONSTRAINT]: {
+					[DELETE_QUERY_CONSTRAINT]: {
 						actions: 'removeConstraint',
 					},
 				},

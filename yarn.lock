@@ -5036,6 +5036,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xstate/immer@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@xstate/immer@npm:0.1.0"
+  peerDependencies:
+    immer: ^6.0.3
+    xstate: ^4.9.1
+  checksum: 1e31dc459afabed2b7d787a00990b832fdc8fbdfd2fe293767483eed5504552911bc07c4b45423e3348e3496f9a08238b7c0d9f448c50a848471953a6b5f9f16
+  languageName: node
+  linkType: hard
+
 "@xstate/react@npm:^0.8.1":
   version: 0.8.1
   resolution: "@xstate/react@npm:0.8.1"
@@ -12215,6 +12225,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"immer@npm:^7.0.5":
+  version: 7.0.5
+  resolution: "immer@npm:7.0.5"
+  checksum: 04e23e07250069be3a1cf1f3aa43b52d99db5c264645020b44610d45db16484bf5f3097efe37628535eacfe4553d83c8a053fb802c1cc139b4ddb3b97f9f3d69
+  languageName: node
+  linkType: hard
+
 "import-cwd@npm:^2.0.0":
   version: 2.1.0
   resolution: "import-cwd@npm:2.1.0"
@@ -12431,6 +12448,7 @@ fsevents@^1.2.7:
     "@types/dotenv": ^8.2.0
     "@typescript-eslint/eslint-plugin": 2.x
     "@typescript-eslint/parser": 2.x
+    "@xstate/immer": ^0.1.0
     "@xstate/react": ^0.8.1
     "@xstate/test": ^0.4.0
     babel-eslint: 10.x
@@ -12449,6 +12467,7 @@ fsevents@^1.2.7:
     eslint-plugin-simple-import-sort: ^5.0.3
     husky: ">=4"
     imjs: ^4.0.0
+    immer: ^7.0.5
     jest-axe: ^3.4.0
     lint-staged: ">=10"
     node-sass: ^4.14.1
@@ -12469,7 +12488,7 @@ fsevents@^1.2.7:
     stylelint-webpack-plugin: ^2.0.0
     underscore.string: ^3.3.5
     webpack-bundle-analyzer: ^3.8.0
-    xstate: ^4.10.0
+    xstate: latest
   languageName: unknown
   linkType: soft
 
@@ -23570,10 +23589,10 @@ resolve@1.15.0:
   languageName: node
   linkType: hard
 
-"xstate@npm:^4.10.0":
-  version: 4.10.0
-  resolution: "xstate@npm:4.10.0"
-  checksum: 2e2e1d539d1aee06d438a0c6b5d5c040c2e7ddc32907bf4d51737713b90bb1f7d6343d62f2b9e3daf90d7e6b8094fb832c34d428b748a63a82148a30d09a5494
+"xstate@npm:latest":
+  version: 4.11.0
+  resolution: "xstate@npm:4.11.0"
+  checksum: 76801a4e711101ae97d7b502a4fe271eaf16d2afd060cd3f4a01309d2f2ae6417068f3af854188d44c8e6468f35eb56c51a6be7a85bd7b6431bd809fbcd73224
   languageName: node
   linkType: hard
 

@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
 
-import { ADD_CONSTRAINT, DELETE_CONSTRAINT } from '../../actionConstants'
+import { ADD_QUERY_CONSTRAINT, DELETE_QUERY_CONSTRAINT } from '../../actionConstants'
 import { MockMachineContext } from '../../machineBus'
 import { QueryController } from './QueryController'
 import { queryControllerMachine } from './queryControllerMachine'
@@ -19,7 +19,7 @@ describe('QueryController Machine', () => {
 
 			const nextMachine = machine.transition(machine.initialState, {
 				// @ts-ignore
-				type: DELETE_CONSTRAINT,
+				type: DELETE_QUERY_CONSTRAINT,
 				constraint,
 			})
 
@@ -38,7 +38,7 @@ describe('QueryController Machine', () => {
 		const newConstraint = 'newly add constraint'
 		const nextMachine = machine.transition(machine.initialState, {
 			// @ts-ignore
-			type: ADD_CONSTRAINT,
+			type: ADD_QUERY_CONSTRAINT,
 			constraint: newConstraint,
 		})
 
@@ -53,7 +53,7 @@ describe('QueryController Machine', () => {
 
 		const nextMachine = machine.transition(machine.initialState, {
 			// @ts-ignore
-			type: ADD_CONSTRAINT,
+			type: ADD_QUERY_CONSTRAINT,
 			contraint: 'DO NOT ADD',
 		})
 
