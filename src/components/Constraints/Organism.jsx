@@ -18,15 +18,10 @@ import { ConstraintBase } from './ConstraintBase'
 import { organismConstraintQuery } from './constraintQueries'
 
 export const OrganismPopup = ({
-	allChecked = false,
-	allUnchecked = false,
 	constraintChangeHandler = (_value) => (_e) => {},
 	organisms = [],
+	selectedOrganisms = [],
 }) => {
-	let forceChecked = null
-	if (allChecked) forceChecked = true
-	if (allUnchecked) forceChecked = false
-
 	if (organisms.length === 0) {
 		return (
 			<NonIdealState
@@ -44,7 +39,7 @@ export const OrganismPopup = ({
 				<Checkbox
 					key={value.item}
 					label={`${value.item} (${value.count})`}
-					checked={forceChecked}
+					checked={selectedOrganisms.some((o) => o.value === value.item)}
 					onChange={constraintChangeHandler(organismConstraintQuery(value.item))}
 				/>
 			))}

@@ -1,9 +1,12 @@
+import { decorate } from '@storybook/addon-actions'
 import React, { useEffect, useState } from 'react'
 import { interpret } from 'xstate'
 
 import {
 	ADD_ORGANISM_CONSTRAINT,
+	APPLY_ORGANISM_CONSTRAINT,
 	RECEIVE_SUMMARY,
+	REMOVE_ALL_ORGANISM_CONSTRAINTS,
 	REMOVE_ORGANISM_CONSTRAINT,
 } from '../../actionConstants'
 import { organismSummary } from '../../stubs/geneSummaries'
@@ -19,23 +22,38 @@ export default {
 export const ConstraintNotSet = () => (
 	<div css={{ maxWidth: 500, minWidth: 376 }}>
 		<ConstraintPopup>
-			<OrganismPopup allUnchecked={true} organisms={organismSummary.results} />
+			<OrganismPopup selectedOrganisms={[]} organisms={organismSummary.results} />
 		</ConstraintPopup>
 	</div>
 )
 
-export const ConstraintSet = () => (
+export const ConstraintsChanged = () => (
 	<div css={{ maxWidth: 500, minWidth: 376 }}>
-		<ConstraintPopup constraintSet={true}>
-			<OrganismPopup allChecked={true} organisms={organismSummary.results} />
+		<ConstraintPopup addEnabled={true} constraintSet={false}>
+			<OrganismPopup
+				selectedOrganisms={organismSummary.results.map((i) => ({ value: i.item }))}
+				organisms={organismSummary.results}
+			/>
+		</ConstraintPopup>
+	</div>
+)
+
+export const ConstraintsApplied = () => (
+	<div css={{ maxWidth: 500, minWidth: 376 }}>
+		<ConstraintPopup removeEnabled={true} constraintSet={true}>
+			<OrganismPopup
+				selectedOrganisms={organismSummary.results.slice(0, 3).map((i) => ({ value: i.item }))}
+				organisms={organismSummary.results}
+			/>
 		</ConstraintPopup>
 	</div>
 )
 
 const service = interpret(organismMachine)
 
-// use a normal function, otherwise storybook enters recursion hell
-export function Playground() {
+const conArgs = decorate([(args) => args.map((a) => JSON.stringify(a))])
+
+export const Playground = () => {
 	const [state, setState] = useState(undefined)
 
 	useEffect(() => {
@@ -49,9 +67,19 @@ export function Playground() {
 		if (e.target.checked) {
 			// @ts-ignore
 			service.send({ type: ADD_ORGANISM_CONSTRAINT, constraint })
+			conArgs.action('ADD')(constraint)
 		} else {
 			// @ts-ignore
 			service.send({ type: REMOVE_ORGANISM_CONSTRAINT, constraint })
+			conArgs.action('REMOVE')(constraint)
+		}
+	}
+
+	const handleSubmit = (type) => {
+		if (type === 'REMOVE_CLICKED') {
+			service.send(REMOVE_ALL_ORGANISM_CONSTRAINTS)
+		} else {
+			service.send(APPLY_ORGANISM_CONSTRAINT)
 		}
 	}
 
@@ -64,10 +92,12 @@ export function Playground() {
 			<ConstraintPopup
 				removeEnabled={!disableAll && enableRemoved}
 				addEnabled={!disableAll && enableAdd}
-				constraintSet={state?.context.selectedOrganisms.length > 0}
+				constraintSet={!disableAll && enableRemoved}
+				handleSubmit={handleSubmit}
 			>
 				<OrganismPopup
 					organisms={state?.context.availableOrganisms}
+					selectedOrganisms={state?.context.selectedOrganisms}
 					constraintChangeHandler={constraintChangeHandler}
 				/>
 			</ConstraintPopup>

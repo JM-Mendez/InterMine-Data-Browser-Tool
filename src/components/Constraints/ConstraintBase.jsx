@@ -84,6 +84,7 @@ export const ConstraintPopup = ({
 	addEnabled = false,
 	removeEnabled = false,
 	children,
+	handleSubmit = (_type) => {},
 }) => {
 	const borderColor = constraintSet ? 'var(--blue4)' : 'var(--grey4)'
 	const iconColor = constraintSet ? 'var(--green5)' : 'var(--grey4)'
@@ -117,12 +118,14 @@ export const ConstraintPopup = ({
 					css={{ maxWidth: '50%' }}
 					intent={!removeEnabled ? 'none' : 'danger'}
 					disabled={!removeEnabled}
+					onClick={() => handleSubmit('REMOVE_CLICKED')}
 				/>
 				<Button
 					text="Add Constraint"
 					css={{ maxWidth: '50%' }}
 					intent={!addEnabled ? 'none' : 'success'}
 					disabled={!addEnabled}
+					onClick={() => handleSubmit('ADD_CLICKED')}
 				/>
 			</ButtonGroup>
 		</>
