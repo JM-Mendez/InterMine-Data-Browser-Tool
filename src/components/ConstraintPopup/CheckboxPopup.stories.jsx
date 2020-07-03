@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
+import { RECEIVE_SUMMARY } from '../../globalActions'
 import { ServiceContext, useMachineBus } from '../../machineBus2'
+import { organismSummary } from '../../stubs/geneSummaries'
 import { popupDecorator } from '../../utils/storybook'
 import { ConstraintPopupCard } from '../Constraints/Constraint'
-import { ConstraintPopup } from '../Constraints/ConstraintBase'
 import { checkboxMachine, CheckBoxPopup } from './CheckboxPopup'
 
 export default {
@@ -45,6 +46,11 @@ export default {
 
 export const Playground = () => {
 	const [state, send] = useMachineBus(checkboxMachine)
+
+	useEffect(() => {
+		send({ type: RECEIVE_SUMMARY, summary: organismSummary })
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
 		<div css={{ maxWidth: 500, minWidth: 376 }}>

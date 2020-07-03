@@ -114,7 +114,7 @@ export const ConstraintPopup = ({
 			{children}
 			<ButtonGroup fill={true} css={{ marginTop: 48 }}>
 				<Button
-					text="Remove Constraint"
+					text="Reset Constraint"
 					css={{ maxWidth: '50%' }}
 					intent={!removeEnabled ? 'none' : 'danger'}
 					disabled={!removeEnabled}

@@ -36,15 +36,17 @@ export const CheckBoxPopup = ({ title = '', description = '' }) => {
 	return (
 		<div>
 			<Label className="sr-only">Select organisms to set constraints</Label>
-			{availableValues.map((value) => (
-				<Checkbox
-					key={value.item}
-					label={`${value.item} (${value.count})`}
-					checked={selectedValues.some((o) => o.value === value.item)}
-					// @ts-ignore
-					onChange={onChangeHandler(value.item)}
-				/>
-			))}
+			{availableValues.map((value) => {
+				return (
+					<Checkbox
+						key={value.item}
+						label={`${value.item} (${value.count})`}
+						checked={selectedValues.some((name) => name === value.item)}
+						// @ts-ignore
+						onChange={onChangeHandler(value.item)}
+					/>
+				)
+			})}
 		</div>
 	)
 }
@@ -112,7 +114,7 @@ export const checkboxMachine = Machine(
 			}),
 			// @ts-ignore
 			removeConstraint: assign((ctx, { constraint }) => {
-				ctx.selectedValues = ctx.selectedValues.filter((cs) => cs.value !== constraint.value)
+				ctx.selectedValues = ctx.selectedValues.filter((name) => name !== constraint)
 			}),
 			removeAll: assign((ctx) => {
 				ctx.selectedValues = []

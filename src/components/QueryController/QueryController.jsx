@@ -45,7 +45,7 @@ const CurrentConstraints = ({ currentConstraints, sendMsg }) => {
 							small={true}
 							minimal={true}
 							onClick={() => sendMsg({ type: DELETE_QUERY_CONSTRAINT, constraint })}
-							aria-label={`remove constraint ${constraint.replace(/\./g, ' ')}`}
+							aria-label={`reset constraint ${constraint.replace(/\./g, ' ')}`}
 							css={{ marginRight: 4 }}
 						/>
 						<span css={{ fontSize: 'var(--fs-desktopM1)', display: 'inline-block' }}>

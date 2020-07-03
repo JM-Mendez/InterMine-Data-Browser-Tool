@@ -44,9 +44,9 @@ export const ConstraintPopupCard = ({ children }) => {
 			{children}
 			<ButtonGroup fill={true} css={{ marginTop: 48 }}>
 				<Button
-					text="Remove Constraint"
+					text="Reset Constraint"
 					css={{ maxWidth: '50%' }}
-					intent={!disableAll && constraintSet ? 'dander' : 'none'}
+					intent={!disableAll && constraintSet ? 'danger' : 'none'}
 					disabled={disableAll || !constraintSet}
 					onClick={() => send(RESET_CONSTRAINT)}
 				/>
