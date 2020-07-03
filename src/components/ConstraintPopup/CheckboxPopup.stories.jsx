@@ -9,13 +9,14 @@ import {
 	REMOVE_ALL_ORGANISM_CONSTRAINTS,
 	REMOVE_ORGANISM_CONSTRAINT,
 } from '../../actionConstants'
+import { useMachineBus } from '../../machineBus'
 import { organismSummary } from '../../stubs/geneSummaries'
 import { popupDecorator } from '../../utils/storybook'
 import { ConstraintPopup } from '../Constraints/ConstraintBase'
 import { organismMachine, OrganismPopup } from '../Constraints/Organism'
 
 export default {
-	title: 'Components/Popup Cards/Constraints/Organism',
+	title: 'Components/Popup Cards/CheckBox',
 	decorators: [...popupDecorator],
 }
 
@@ -49,37 +50,36 @@ export const ConstraintsApplied = () => (
 	</div>
 )
 
-const service = interpret(organismMachine)
+// const service = interpret(organismMachine)
 
 const conArgs = decorate([(args) => args.map((a) => JSON.stringify(a))])
 
 export const Playground = () => {
-	const [state, setState] = useState(undefined)
+	// const [state, setState] = useState(undefined)
+	const [state, send] = useMachineBus(organismMachine)
 
 	useEffect(() => {
-		service.onTransition(setState)
-		service.start()
 		// @ts-ignore
-		service.send({ type: RECEIVE_SUMMARY, summary: organismSummary })
+		send({ type: RECEIVE_SUMMARY, summary: organismSummary })
 	}, [])
 
 	const constraintChangeHandler = (constraint) => (e) => {
 		if (e.target.checked) {
 			// @ts-ignore
-			service.send({ type: ADD_ORGANISM_CONSTRAINT, constraint })
+			send({ type: ADD_ORGANISM_CONSTRAINT, constraint })
 			conArgs.action('ADD')(constraint)
 		} else {
 			// @ts-ignore
-			service.send({ type: REMOVE_ORGANISM_CONSTRAINT, constraint })
+			send({ type: REMOVE_ORGANISM_CONSTRAINT, constraint })
 			conArgs.action('REMOVE')(constraint)
 		}
 	}
 
 	const handleSubmit = (type) => {
 		if (type === 'REMOVE_CLICKED') {
-			service.send(REMOVE_ALL_ORGANISM_CONSTRAINTS)
+			send(REMOVE_ALL_ORGANISM_CONSTRAINTS)
 		} else {
-			service.send(APPLY_ORGANISM_CONSTRAINT)
+			send(APPLY_ORGANISM_CONSTRAINT)
 		}
 	}
 

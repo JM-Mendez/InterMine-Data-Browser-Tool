@@ -12,3 +12,13 @@ export const REMOVE_ALL_ORGANISM_CONSTRAINTS = 'organism/constraint/remove_all'
 export const LOCK_CONSTRAINTS = 'global/contraint/limit_reached'
 export const REMOVE_ALL_CONSTRAINTS = 'global/constraint/remove_all'
 export const RECEIVE_SUMMARY = 'global/fetch/receive_summary'
+
+// checkboxes
+export const generateCheckboxActions = (id) => {
+	return {
+		ADD_ORGANISM_CONSTRAINT: `machine-${id}/constraint/add`,
+		APPLY_ORGANISM_CONSTRAINT: `machine-${id}/constraint/apply`,
+		REMOVE_ORGANISM_CONSTRAINT: `machine-${id}/constraint/remove`,
+		REMOVE_ALL_ORGANISM_CONSTRAINTS: `machine-${id}/constraint/remove_all`,
+	}
+}
