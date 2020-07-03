@@ -14,8 +14,8 @@ import {
 	REMOVE_ALL_ORGANISM_CONSTRAINTS,
 	REMOVE_ORGANISM_CONSTRAINT,
 } from '../../actionConstants'
-import { organismSummary } from '../../stubs/geneSummaries'
 import { ConstraintBase } from './ConstraintBase'
+import { organismConstraintQuery } from './constraintQueries'
 
 export const OrganismPopup = ({
 	allChecked = false,
@@ -42,9 +42,10 @@ export const OrganismPopup = ({
 			<Label className="sr-only">Select organisms to set constraints</Label>
 			{organisms.map((value) => (
 				<Checkbox
+					key={value.item}
 					label={`${value.item} (${value.count})`}
 					checked={forceChecked}
-					onChange={constraintChangeHandler(value)}
+					onChange={constraintChangeHandler(organismConstraintQuery(value.item))}
 				/>
 			))}
 		</div>
@@ -70,7 +71,7 @@ export const Organism = () => (
 export const organismMachine = Machine(
 	{
 		id: 'Organism',
-		initial: 'init',
+		initial: 'noConstraintsSet',
 		context: {
 			selectedOrganisms: [],
 			availableOrganisms: [],
@@ -79,18 +80,9 @@ export const organismMachine = Machine(
 			[LOCK_CONSTRAINTS]: 'constraintLimitReached',
 			[REMOVE_ALL_CONSTRAINTS]: { target: 'noConstraintsSet', actions: 'removeAll' },
 			[REMOVE_ALL_ORGANISM_CONSTRAINTS]: { target: 'noConstraintsSet', actions: 'removeAll' },
+			[RECEIVE_SUMMARY]: { target: 'noConstraintsSet', actions: 'setAvailableOrganisms' },
 		},
-		always: [{ target: 'noConstraintsSet', cond: 'constraintListIsEmpty' }],
 		states: {
-			init: {
-				entry: 'fetchOrganisms',
-				on: {
-					[RECEIVE_SUMMARY]: {
-						target: 'noConstraintsSet',
-						actions: 'setAvailableOrganisms',
-					},
-				},
-			},
 			noConstraintsSet: {
 				on: {
 					[ADD_ORGANISM_CONSTRAINT]: {
@@ -100,6 +92,7 @@ export const organismMachine = Machine(
 				},
 			},
 			constraintsUpdated: {
+				always: [{ target: 'noConstraintsSet', cond: 'constraintListIsEmpty' }],
 				on: {
 					[ADD_ORGANISM_CONSTRAINT]: { actions: 'addConstraint' },
 					[REMOVE_ORGANISM_CONSTRAINT]: { actions: 'removeConstraint' },
@@ -133,13 +126,14 @@ export const organismMachine = Machine(
 			}),
 			// @ts-ignore
 			removeConstraint: assign((ctx, { constraint }) => {
-				ctx.selectedOrganisms = ctx.selectedOrganisms.filter((cs) => cs.value === constraint.value)
+				ctx.selectedOrganisms = ctx.selectedOrganisms.filter((cs) => cs.value !== constraint.value)
 			}),
 			removeAll: assign((ctx) => {
 				ctx.selectedOrganisms = []
 			}),
-			fetchOrganisms: assign((ctx) => {
-				ctx.availableOrganisms = organismSummary.results
+			setAvailableOrganisms: assign((ctx, event) => {
+				// @ts-ignore
+				ctx.availableOrganisms = event.summary.results
 			}),
 		},
 		guards: {

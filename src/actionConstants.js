@@ -11,4 +11,4 @@ export const REMOVE_ALL_ORGANISM_CONSTRAINTS = 'organism/constraint/remove_all'
 // global
 export const LOCK_CONSTRAINTS = 'global/contraint/limit_reached'
 export const REMOVE_ALL_CONSTRAINTS = 'global/constraint/remove_all'
-export const RECEIVE_SUMMARY = 'global/fetch/summary'
+export const RECEIVE_SUMMARY = 'global/fetch/receive_summary'
