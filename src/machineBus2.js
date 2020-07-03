@@ -12,7 +12,7 @@ const serviceStations = new Map()
  * @param { import('xstate').StateMachine} machine
  * @returns {[import('xstate').State, typeof sendToBus, import('xstate').Interpreter]}
  */
-export const useMachineBus = (machine, opts) => {
+export const useMachineBus = (machine, opts = {}) => {
 	const [machineState, , service] = useMachine(machine, opts)
 
 	const sendToBusWrapper = useMemo(() => {
@@ -55,13 +55,12 @@ export const sendToBus = (event, payload) => {
 	})
 }
 
-const ServiceContext = createContext(null)
+export const ServiceContext = createContext(null)
 export const useServiceContext = () => {
 	const service = useContext(ServiceContext)
-
 	if (!service) {
 		throw Error('You MUST have a ServiceContext up the tree from this component')
 	}
 
-	return service
+	return [service.state, service.send]
 }

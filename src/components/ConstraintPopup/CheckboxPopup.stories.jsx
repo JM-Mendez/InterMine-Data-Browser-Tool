@@ -1,12 +1,10 @@
-import { decorate } from '@storybook/addon-actions'
-import React, { useEffect } from 'react'
+import React from 'react'
 
-import { RECEIVE_SUMMARY } from '../../actionConstants'
-import { useMachineBus } from '../../machineBus'
-import { organismSummary } from '../../stubs/geneSummaries'
+import { ServiceContext, useMachineBus } from '../../machineBus2'
 import { popupDecorator } from '../../utils/storybook'
+import { ConstraintPopupCard } from '../Constraints/Constraint'
 import { ConstraintPopup } from '../Constraints/ConstraintBase'
-import { CheckBoxPopup } from './CheckboxPopup'
+import { checkboxMachine, CheckBoxPopup } from './CheckboxPopup'
 
 export default {
 	title: 'Components/Popup Cards/CheckBox',
@@ -45,55 +43,19 @@ export default {
 
 // const service = interpret(organismMachine)
 
-const conArgs = decorate([(args) => args.map((a) => JSON.stringify(a))])
-
 export const Playground = () => {
-	const [state, send, service] = useMachineBus()
-
-	useEffect(() => {
-		// @ts-ignore
-		send({ type: RECEIVE_SUMMARY, summary: organismSummary })
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [service.id])
-
-	const constraintChangeHandler = (constraint) => (e) => {
-		if (e.target.checked) {
-			// @ts-ignore
-			// send({ type: ADD_ORGANISM_CONSTRAINT, constraint })
-			conArgs.action('ADD')(constraint)
-		} else {
-			// @ts-ignore
-			// send({ type: REMOVE_ORGANISM_CONSTRAINT, constraint })
-			conArgs.action('REMOVE')(constraint)
-		}
-	}
-
-	const handleSubmit = (type) => {
-		if (type === 'REMOVE_CLICKED') {
-			// send(REMOVE_ALL_ORGANISM_CONSTRAINTS)
-		} else {
-			// send(APPLY_ORGANISM_CONSTRAINT)
-		}
-	}
-
-	const disableAll = state?.value === 'noConstraintsSet'
-	const enableAdd = state?.value === 'constraintsUpdated'
-	const enableRemoved = state?.value !== 'constraintsUpdated'
+	const [state, send] = useMachineBus(checkboxMachine)
 
 	return (
 		<div css={{ maxWidth: 500, minWidth: 376 }}>
-			<ConstraintPopup
-				removeEnabled={!disableAll && enableRemoved}
-				addEnabled={!disableAll && enableAdd}
-				constraintSet={!disableAll && enableRemoved}
-				handleSubmit={handleSubmit}
-			>
-				<CheckBoxPopup
-					availableValues={state?.context.availableValues}
-					selectedValues={state?.context.selectedValues}
-					constraintChangeHandler={constraintChangeHandler}
-				/>
-			</ConstraintPopup>
+			<ServiceContext.Provider value={{ state, send }}>
+				<ConstraintPopupCard>
+					<CheckBoxPopup
+						title="No organisms found"
+						description="If you feel this is a mistake, try refreshing the browser. If that doesn't work, let us know"
+					/>
+				</ConstraintPopupCard>
+			</ServiceContext.Provider>
 		</div>
 	)
 }

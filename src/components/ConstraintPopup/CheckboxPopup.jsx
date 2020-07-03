@@ -6,6 +6,7 @@ import React from 'react'
 import { Machine } from 'xstate'
 
 import { LOCK_ALL_CONSTRAINTS, RECEIVE_SUMMARY, RESET_ALL_CONSTRAINTS } from '../../globalActions'
+import { useServiceContext } from '../../machineBus2'
 import {
 	ADD_CONSTRAINT,
 	APPLY_CONSTRAINT,
@@ -13,19 +14,23 @@ import {
 	RESET_CONSTRAINT,
 } from '../Constraints/actions'
 
-export const CheckBoxPopup = ({
-	constraintChangeHandler = (_value) => (_e) => {},
-	availableValues = [],
-	selectedValues = [],
-}) => {
+export const CheckBoxPopup = ({ title = '', description = '' }) => {
+	const [state, send] = useServiceContext()
+
+	const { availableValues, selectedValues } = state?.context
+
 	if (availableValues.length === 0) {
-		return (
-			<NonIdealState
-				title="No organisms found"
-				description="If you feel this is a mistake, try refreshing the browser. If that doesn't work, let us know"
-				icon={IconNames.WARNING_SIGN}
-			/>
-		)
+		return <NonIdealState title={title} description={description} icon={IconNames.WARNING_SIGN} />
+	}
+
+	const onChangeHandler = (constraint) => (e) => {
+		if (e.target.checked) {
+			// @ts-ignore
+			send({ type: ADD_CONSTRAINT, constraint })
+		} else {
+			// @ts-ignore
+			send({ type: REMOVE_CONSTRAINT, constraint })
+		}
 	}
 
 	return (
@@ -36,7 +41,8 @@ export const CheckBoxPopup = ({
 					key={value.item}
 					label={`${value.item} (${value.count})`}
 					checked={selectedValues.some((o) => o.value === value.item)}
-					onChange={constraintChangeHandler(value.item)}
+					// @ts-ignore
+					onChange={onChangeHandler(value.item)}
 				/>
 			))}
 		</div>

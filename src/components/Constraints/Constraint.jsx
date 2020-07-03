@@ -1,7 +1,6 @@
 import { Button, ButtonGroup, Icon, Tag } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import styled from '@emotion/styled'
-import { useService } from '@xstate/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 
@@ -10,8 +9,7 @@ import { PopupCard } from '../Shared/PopupCard'
 import { APPLY_CONSTRAINT, RESET_CONSTRAINT } from './actions'
 
 export const ConstraintPopupCard = ({ children }) => {
-	const serviceContext = useServiceContext()
-	const [state, send] = useService(serviceContext)
+	const [state, send] = useServiceContext()
 
 	const disableAll = state?.value === 'noConstraintsSet'
 	const enableAdd = state?.value === 'constraintsUpdated'
@@ -48,15 +46,15 @@ export const ConstraintPopupCard = ({ children }) => {
 				<Button
 					text="Remove Constraint"
 					css={{ maxWidth: '50%' }}
-					intent={constraintSet ? 'none' : 'danger'}
-					disabled={constraintSet}
+					intent={!disableAll && constraintSet ? 'dander' : 'none'}
+					disabled={disableAll || !constraintSet}
 					onClick={() => send(RESET_CONSTRAINT)}
 				/>
 				<Button
 					text="Add Constraint"
 					css={{ maxWidth: '50%' }}
-					intent={!disableAll && enableAdd ? 'none' : 'success'}
-					disabled={!disableAll && enableAdd}
+					intent={!disableAll && enableAdd ? 'success' : 'none'}
+					disabled={disableAll || !enableAdd}
 					onClick={() => send(APPLY_CONSTRAINT)}
 				/>
 			</ButtonGroup>
