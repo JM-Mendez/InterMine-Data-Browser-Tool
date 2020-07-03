@@ -6,7 +6,7 @@ import { useMachineBus } from '../../machineBus'
 import { organismSummary } from '../../stubs/geneSummaries'
 import { popupDecorator } from '../../utils/storybook'
 import { ConstraintPopup } from '../Constraints/ConstraintBase'
-import { checkboxMachineFactory, CheckBoxPopup } from './CheckboxPopup'
+import { CheckBoxPopup } from './CheckboxPopup'
 
 export default {
 	title: 'Components/Popup Cards/CheckBox',
@@ -48,7 +48,7 @@ export default {
 const conArgs = decorate([(args) => args.map((a) => JSON.stringify(a))])
 
 export const Playground = () => {
-	const [state, send, service] = useMachineBus(checkboxMachineFactory())
+	const [state, send, service] = useMachineBus()
 
 	useEffect(() => {
 		// @ts-ignore

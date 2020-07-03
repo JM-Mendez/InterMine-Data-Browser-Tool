@@ -6,6 +6,12 @@ import React from 'react'
 import { Machine } from 'xstate'
 
 import { LOCK_ALL_CONSTRAINTS, RECEIVE_SUMMARY, RESET_ALL_CONSTRAINTS } from '../../globalActions'
+import {
+	ADD_CONSTRAINT,
+	APPLY_CONSTRAINT,
+	REMOVE_CONSTRAINT,
+	RESET_CONSTRAINT,
+} from '../Constraints/actions'
 
 export const CheckBoxPopup = ({
 	constraintChangeHandler = (_value) => (_e) => {},
@@ -41,11 +47,6 @@ CheckBoxPopup.propTypes = {
 	checkAll: PropTypes.bool,
 	disableAll: PropTypes.bool,
 }
-
-const ADD_CONSTRAINT = 'checkbox/constraint/add'
-const REMOVE_CONSTRAINT = 'checkbox/constraint/remove'
-const APPLY_CONSTRAINT = 'checkbox/constraint/apply'
-const RESET_CONSTRAINT = 'checkbox/constraint/reset'
 
 export const checkboxMachine = Machine(
 	{
