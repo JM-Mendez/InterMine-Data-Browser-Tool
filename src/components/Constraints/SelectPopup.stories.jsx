@@ -2,6 +2,7 @@ import React from 'react'
 
 import { ServiceContext, useMachineBus } from '../../machineBus'
 import { popupDecorator } from '../../utils/storybook'
+import { constraintMachineFactory } from './common'
 import { ConstraintPopupCard } from './Constraint'
 import { SelectPopup } from './SelectPopup'
 import { machineStub } from './utils'
@@ -43,4 +44,20 @@ const SelectBuilder = ({
 
 export const NoValuesFound = () => <SelectBuilder />
 
-export const ConstraintNotSet = () => <SelectBuilder availableValues={mockResults} />
+export const ConstraintsChanged = () => (
+	<SelectBuilder
+		availableValues={mockResults}
+		selectedValues={[mockResults[0].item, mockResults[1].item]}
+		initialState="constraintsUpdated"
+	/>
+)
+
+export const Playground = () => (
+	<SelectBuilder
+		availableValues={mockResults}
+		machine={constraintMachineFactory({ id: 'select' }).withContext({
+			selectedValues: [],
+			availableValues: mockResults,
+		})}
+	/>
+)
