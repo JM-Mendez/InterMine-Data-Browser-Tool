@@ -22,6 +22,10 @@ export const SelectPopup = ({
 		return <NoValuesProvided title={nonIdealTitle} description={nonIdealDescription} />
 	}
 
+	const unselectedItems = availableValues.flatMap((v) => {
+		return selectedValues.includes(v.item) ? [] : [{ name: `${v.item} (${v.count})`, item: v.item }]
+	})
+
 	// Blueprintjs requires a value renderer, but we add the value directly the added
 	// constraints list when clicked
 	const renderInputValue = (value) => ''
@@ -29,7 +33,6 @@ export const SelectPopup = ({
 	const handleItemSelect = ({ item: constraint }) => {
 		send({ type: ADD_CONSTRAINT, constraint })
 	}
-
 	return (
 		<div>
 			{selectedValues.length > 0 && (
@@ -71,7 +74,7 @@ export const SelectPopup = ({
 				<Suggest
 					// @ts-ignore
 					id={`selectPopup-${uniqueId}`}
-					items={availableValues.map((i) => ({ name: `${i.item} (${i.count})`, item: i.item }))}
+					items={unselectedItems}
 					itemRenderer={PlainSelectMenuItems}
 					inputValueRenderer={renderInputValue}
 					fill={true}
