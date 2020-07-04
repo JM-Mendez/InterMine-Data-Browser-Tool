@@ -5,7 +5,7 @@ import React from 'react'
 
 import { useServiceContext } from '../../machineBus'
 import { PlainSelectMenuItems } from '../Selects'
-import { ADD_CONSTRAINT } from './actions'
+import { ADD_CONSTRAINT, REMOVE_CONSTRAINT } from './actions'
 import { NoValuesProvided } from './NoValuesProvided'
 
 export const SelectPopup = ({
@@ -33,6 +33,11 @@ export const SelectPopup = ({
 	const handleItemSelect = ({ item: constraint }) => {
 		send({ type: ADD_CONSTRAINT, constraint })
 	}
+
+	const handleButtonClick = (constraint) => () => {
+		send({ type: REMOVE_CONSTRAINT, constraint })
+	}
+
 	return (
 		<div>
 			{selectedValues.length > 0 && (
@@ -56,8 +61,8 @@ export const SelectPopup = ({
 										icon={IconNames.REMOVE}
 										small={true}
 										minimal={true}
-										// onClick={() => sendMsg({ type: DELETE_QUERY_CONSTRAINT, constraint })}
-										// aria-label={`reset constraint ${constraint.replace(/\./g, ' ')}`}
+										onClick={handleButtonClick(constraint)}
+										aria-label={`delete ${constraint}`}
 										css={{ marginRight: 4 }}
 									/>
 									<span css={{ fontSize: 'var(--fs-desktopM1)', display: 'inline-block' }}>
