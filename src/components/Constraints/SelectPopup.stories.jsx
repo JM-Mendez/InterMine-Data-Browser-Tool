@@ -44,6 +44,10 @@ const SelectBuilder = ({
 
 export const NoValuesFound = () => <SelectBuilder />
 
+export const ConstraintsNotSet = () => (
+	<SelectBuilder availableValues={mockResults} initialState="noConstraintsSet" />
+)
+
 export const ConstraintsChanged = () => (
 	<SelectBuilder
 		availableValues={mockResults}
