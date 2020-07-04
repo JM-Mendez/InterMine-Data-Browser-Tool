@@ -52,6 +52,14 @@ export const ConstraintsChanged = () => (
 	/>
 )
 
+export const ConstraintsApplied = () => (
+	<SelectBuilder
+		availableValues={mockResults}
+		selectedValues={[mockResults[0].item, mockResults[1].item]}
+		initialState="constraintsApplied"
+	/>
+)
+
 export const Playground = () => (
 	<SelectBuilder
 		availableValues={mockResults}
