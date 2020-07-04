@@ -4,7 +4,7 @@ import * as Constraints from '../Constraints'
 import { Constraint } from '../Constraints/ConstraintBase'
 
 export default {
-	title: 'Components/Constraint',
+	title: 'Components/Constraint-old',
 	parameters: {
 		componentSubtitle:
 			'The Constraint component filters applies a filter to the class being queried',

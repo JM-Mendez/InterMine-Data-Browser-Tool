@@ -109,11 +109,11 @@ const S_ConstraintIcon = styled.div`
  */
 export const Constraint = ({
 	children = null,
-	constraintName = '',
+	constraintName,
 	labelBorderColor = 'black',
 	constraintCount = 0,
 	ariaLabel = '',
-	labelText = '',
+	constraintIconText,
 }) => {
 	return (
 		<PopupCard boundary="viewport">
@@ -129,7 +129,7 @@ export const Constraint = ({
 						// @ts-ignore
 						labelBorderColor={labelBorderColor}
 					>
-						<span>{labelText}</span>
+						<span>{constraintIconText}</span>
 					</S_ConstraintIcon>
 					{constraintName}
 					{constraintCount > 0 && (
@@ -159,7 +159,7 @@ const propTypes = {
 	/**
 	 * Text for the label icon
 	 */
-	labelText: PropTypes.string,
+	constraintIconTExt: PropTypes.string,
 	/**
 	 * Label icon border color
 	 */
@@ -172,17 +172,6 @@ const propTypes = {
 	 * The text to be read by a screenreader
 	 */
 	ariaLabel: PropTypes.string,
-	popoverContent: PropTypes.node,
-	/**
-	 * Whether to force the popup into a controlled state.
-	 * Null will handle the popup, while `true` and `false`
-	 * make it a controlled component
-	 */
-	isOpen: PropTypes.oneOf([null, true, false]),
-	/**
-	 * Whether the constraints have been applied
-	 */
-	constaintSet: PropTypes.bool,
 }
 
 Constraint.propTypes = propTypes
