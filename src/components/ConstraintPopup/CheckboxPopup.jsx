@@ -14,7 +14,7 @@ import {
 	RESET_CONSTRAINT,
 } from '../Constraints/actions'
 
-export const CheckBoxPopup = ({ title = '', description = '' }) => {
+export const CheckboxPopup = ({ title = '', description = '' }) => {
 	const [state, send] = useServiceContext()
 
 	const { availableValues, selectedValues } = state?.context
@@ -51,7 +51,7 @@ export const CheckBoxPopup = ({ title = '', description = '' }) => {
 	)
 }
 
-CheckBoxPopup.propTypes = {
+CheckboxPopup.propTypes = {
 	checkAll: PropTypes.bool,
 	disableAll: PropTypes.bool,
 }

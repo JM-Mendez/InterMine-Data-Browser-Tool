@@ -1,62 +1,43 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { Machine } from 'xstate'
 
-import { RECEIVE_SUMMARY } from '../../globalActions'
 import { ServiceContext, useMachineBus } from '../../machineBus2'
 import { organismSummary } from '../../stubs/geneSummaries'
 import { popupDecorator } from '../../utils/storybook'
 import { ConstraintPopupCard } from '../Constraints/Constraint'
-import { checkboxMachine, CheckBoxPopup } from './CheckboxPopup'
+import { checkboxMachine, CheckboxPopup } from './CheckboxPopup'
 
 export default {
 	title: 'Components/Popup Cards/CheckBox',
 	decorators: [...popupDecorator],
 }
 
-// export const ConstraintNotSet = () => (
-// 	<div css={{ maxWidth: 500, minWidth: 376 }}>
-// 		<ConstraintPopup>
-// 			<OrganismPopup selectedOrganisms={[]} organisms={organismSummary.results} />
-// 		</ConstraintPopup>
-// 	</div>
-// )
+const mockCheckboxMachine = (initialState, selected) =>
+	Machine({
+		id: 'mockmachine',
+		initial: initialState,
+		context: {
+			selectedValues: selected,
+			availableValues: organismSummary.results,
+		},
+		states: {
+			noConstraintsSet: {},
+			constraintsUpdated: {},
+			constraintsApplied: {},
+			constraintsLimitReached: {},
+		},
+	})
 
-// export const ConstraintsChanged = () => (
-// 	<div css={{ maxWidth: 500, minWidth: 376 }}>
-// 		<ConstraintPopup addEnabled={true} constraintSet={false}>
-// 			<OrganismPopup
-// 				selectedOrganisms={organismSummary.results.map((i) => ({ value: i.item }))}
-// 				organisms={organismSummary.results}
-// 			/>
-// 		</ConstraintPopup>
-// 	</div>
-// )
-
-// export const ConstraintsApplied = () => (
-// 	<div css={{ maxWidth: 500, minWidth: 376 }}>
-// 		<ConstraintPopup removeEnabled={true} constraintSet={true}>
-// 			<OrganismPopup
-// 				selectedOrganisms={organismSummary.results.slice(0, 3).map((i) => ({ value: i.item }))}
-// 				organisms={organismSummary.results}
-// 			/>
-// 		</ConstraintPopup>
-// 	</div>
-// )
-
-// const service = interpret(organismMachine)
-
-export const Playground = () => {
-	const [state, send] = useMachineBus(checkboxMachine)
-
-	useEffect(() => {
-		send({ type: RECEIVE_SUMMARY, summary: organismSummary })
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+const CheckboxBuilder = ({ initialState = '', selectedValues = [], machine = null }) => {
+	const [state, send] = useMachineBus(
+		machine ? machine : mockCheckboxMachine(initialState, selectedValues)
+	)
 
 	return (
 		<div css={{ maxWidth: 500, minWidth: 376 }}>
 			<ServiceContext.Provider value={{ state, send }}>
 				<ConstraintPopupCard>
-					<CheckBoxPopup
+					<CheckboxPopup
 						title="No organisms found"
 						description="If you feel this is a mistake, try refreshing the browser. If that doesn't work, let us know"
 					/>
@@ -64,4 +45,31 @@ export const Playground = () => {
 			</ServiceContext.Provider>
 		</div>
 	)
+}
+
+export const ConstraintNotSet = () => (
+	<CheckboxBuilder initialState="noConstraintsSet" selectedValues={[]} />
+)
+
+export const ConstraintsChanged = () => (
+	<CheckboxBuilder
+		initialState="constraintsUpdated"
+		selectedValues={['M. musculus', 'H. sapiens']}
+	/>
+)
+
+export const ConstraintsApplied = () => (
+	<CheckboxBuilder
+		initialState="constraintsApplied"
+		selectedValues={['H. sapiens', 'C. elegans']}
+	/>
+)
+
+export const Playground = () => {
+	const machine = checkboxMachine.withContext({
+		selectedValues: [],
+		availableValues: organismSummary.results,
+	})
+
+	return <CheckboxBuilder machine={machine} />
 }
