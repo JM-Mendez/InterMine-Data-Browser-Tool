@@ -21,7 +21,9 @@ export const SelectPopup = ({
 	const [matchedItems, setMatchedItems] = useState(availableValues)
 
 	const fuse = useMemo(() => {
-		return new Fuse(availableValues, {
+		const origValues = [...availableValues]
+
+		return new Fuse(origValues, {
 			keys: ['item'],
 		})
 	}, [availableValues])
@@ -39,12 +41,16 @@ export const SelectPopup = ({
 			: [{ name: `${constraint} (${count})`, item: v.item }]
 	})
 
-	// Blueprintjs requires a value renderer, but we add the value directly the added
-	// constraints list when clicked
-	const renderInputValue = (value) => ''
+	// Blueprintjs requires a value renderer, but we add the value directly to the
+	// added constraints list when clicked
+	const renderInputValue = () => ''
 
 	const handleItemSelect = ({ item }) => {
-		const constraint = item?.constraint ?? item
+		const constraint = item?.item ?? item
+
+		fuse.remove((doc) => {
+			return doc?.item === constraint
+		})
 		send({ type: ADD_CONSTRAINT, constraint })
 	}
 
@@ -108,6 +114,8 @@ export const SelectPopup = ({
 					fill={true}
 					onItemSelect={handleItemSelect}
 					onQueryChange={handleQueryChange}
+					closeOnSelect={false}
+					resetOnSelect={true}
 				/>
 			</FormGroup>
 		</div>
