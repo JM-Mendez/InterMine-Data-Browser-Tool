@@ -2,7 +2,7 @@ import { Card } from '@blueprintjs/core'
 import React from 'react'
 
 import { popupDecorator } from '../../utils/storybook'
-import * as Controller from '../QueryController/QueryController'
+import * as Controller from './QueryController'
 
 export default {
 	title: 'Components/Popup Cards/Query Controller',

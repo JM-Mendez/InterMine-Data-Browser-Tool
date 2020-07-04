@@ -5,14 +5,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Machine } from 'xstate'
 
-import { LOCK_ALL_CONSTRAINTS, RECEIVE_SUMMARY, RESET_ALL_CONSTRAINTS } from '../../globalActions'
+import { RECEIVE_SUMMARY } from '../../globalActions'
 import { useServiceContext } from '../../machineBus2'
-import {
-	ADD_CONSTRAINT,
-	APPLY_CONSTRAINT,
-	REMOVE_CONSTRAINT,
-	RESET_CONSTRAINT,
-} from '../Constraints/actions'
+import { ADD_CONSTRAINT, REMOVE_CONSTRAINT } from './actions'
+import { constraintPopupGlobalActions, constraintPopupStates } from './common'
 
 export const CheckboxPopup = ({ title = '', description = '' }) => {
 	const [state, send] = useServiceContext()
@@ -65,45 +61,11 @@ export const checkboxMachine = Machine(
 			availableValues: [],
 		},
 		on: {
-			[LOCK_ALL_CONSTRAINTS]: 'constraintLimitReached',
-			[RESET_ALL_CONSTRAINTS]: { target: 'noConstraintsSet', actions: 'removeAll' },
-			[RESET_CONSTRAINT]: { target: 'noConstraintsSet', actions: 'removeAll' },
+			...constraintPopupGlobalActions,
 			[RECEIVE_SUMMARY]: { target: 'noConstraintsSet', actions: 'setAvailableValues' },
 		},
 		states: {
-			noConstraintsSet: {
-				on: {
-					[ADD_CONSTRAINT]: {
-						target: 'constraintsUpdated',
-						actions: 'addConstraint',
-					},
-				},
-			},
-			constraintsUpdated: {
-				always: [{ target: 'noConstraintsSet', cond: 'constraintListIsEmpty' }],
-				on: {
-					[ADD_CONSTRAINT]: { actions: 'addConstraint' },
-					[REMOVE_CONSTRAINT]: { actions: 'removeConstraint' },
-					[APPLY_CONSTRAINT]: 'constraintsApplied',
-				},
-			},
-			constraintsApplied: {
-				on: {
-					[ADD_CONSTRAINT]: {
-						target: 'constraintsUpdated',
-						actions: 'addConstraint',
-					},
-					[REMOVE_CONSTRAINT]: {
-						target: 'constraintsUpdated',
-						actions: 'removeConstraint',
-					},
-				},
-			},
-			constraintLimitReached: {
-				on: {
-					[REMOVE_CONSTRAINT]: { actions: 'removeConstraint' },
-				},
-			},
+			...constraintPopupStates,
 		},
 	},
 	{

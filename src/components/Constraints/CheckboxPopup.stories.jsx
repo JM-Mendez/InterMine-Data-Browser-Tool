@@ -4,21 +4,21 @@ import { Machine } from 'xstate'
 import { ServiceContext, useMachineBus } from '../../machineBus2'
 import { organismSummary } from '../../stubs/geneSummaries'
 import { popupDecorator } from '../../utils/storybook'
-import { ConstraintPopupCard } from '../Constraints/Constraint'
 import { checkboxMachine, CheckboxPopup } from './CheckboxPopup'
+import { ConstraintPopupCard } from './Constraint'
 
 export default {
 	title: 'Components/Popup Cards/CheckBox',
 	decorators: [...popupDecorator],
 }
 
-const mockCheckboxMachine = (initialState, selected) =>
+const mockCheckboxMachine = (initialState, available, selected) =>
 	Machine({
 		id: 'mockmachine',
 		initial: initialState,
 		context: {
 			selectedValues: selected,
-			availableValues: organismSummary.results,
+			availableValues: available,
 		},
 		states: {
 			noConstraintsSet: {},
@@ -28,9 +28,14 @@ const mockCheckboxMachine = (initialState, selected) =>
 		},
 	})
 
-const CheckboxBuilder = ({ initialState = '', selectedValues = [], machine = null }) => {
+const CheckboxBuilder = ({
+	initialState = '',
+	selectedValues = [],
+	availableValues = organismSummary.results,
+	machine = null,
+}) => {
 	const [state, send] = useMachineBus(
-		machine ? machine : mockCheckboxMachine(initialState, selectedValues)
+		machine ? machine : mockCheckboxMachine(initialState, availableValues, selectedValues)
 	)
 
 	return (
@@ -46,6 +51,10 @@ const CheckboxBuilder = ({ initialState = '', selectedValues = [], machine = nul
 		</div>
 	)
 }
+
+export const NonIdealState = () => (
+	<CheckboxBuilder initialState="noConstraintsSet" availableValues={[]} />
+)
 
 export const ConstraintNotSet = () => (
 	<CheckboxBuilder initialState="noConstraintsSet" selectedValues={[]} />

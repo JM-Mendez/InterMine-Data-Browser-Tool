@@ -6,7 +6,7 @@ import React from 'react'
 
 import { useServiceContext } from '../../machineBus2'
 import { PopupCard } from '../Shared/PopupCard'
-import { APPLY_CONSTRAINT, RESET_CONSTRAINT } from './actions'
+import { APPLY_CONSTRAINT, RESET_LOCAL_CONSTRAINT } from './actions'
 
 export const ConstraintPopupCard = ({ children }) => {
 	const [state, send] = useServiceContext()
@@ -48,7 +48,7 @@ export const ConstraintPopupCard = ({ children }) => {
 					css={{ maxWidth: '50%' }}
 					intent={!disableAll && constraintSet ? 'danger' : 'none'}
 					disabled={disableAll || !constraintSet}
-					onClick={() => send(RESET_CONSTRAINT)}
+					onClick={() => send(RESET_LOCAL_CONSTRAINT)}
 				/>
 				<Button
 					text="Add Constraint"
