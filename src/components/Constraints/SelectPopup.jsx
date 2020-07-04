@@ -1,7 +1,8 @@
 import { Button, Divider, FormGroup, H4 } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { Suggest } from '@blueprintjs/select'
-import React from 'react'
+import Fuse from 'fuse.js'
+import React, { useMemo, useState } from 'react'
 
 import { useServiceContext } from '../../machineBus'
 import { PlainSelectMenuItems } from '../Selects'
@@ -15,27 +16,48 @@ export const SelectPopup = ({
 	uniqueId,
 }) => {
 	const [state, send] = useServiceContext()
-
 	const { availableValues, selectedValues } = state?.context
+
+	const [matchedItems, setMatchedItems] = useState(availableValues)
+
+	const fuse = useMemo(() => {
+		return new Fuse(availableValues, {
+			keys: ['item'],
+		})
+	}, [availableValues])
 
 	if (availableValues.length === 0) {
 		return <NoValuesProvided title={nonIdealTitle} description={nonIdealDescription} />
 	}
 
-	const unselectedItems = availableValues.flatMap((v) => {
-		return selectedValues.includes(v.item) ? [] : [{ name: `${v.item} (${v.count})`, item: v.item }]
+	const unselectedItems = matchedItems.flatMap((v) => {
+		const constraint = v.item?.item ?? v.item
+		const count = v.item?.count ?? v.count
+
+		return selectedValues.includes(v.item)
+			? []
+			: [{ name: `${constraint} (${count})`, item: v.item }]
 	})
 
 	// Blueprintjs requires a value renderer, but we add the value directly the added
 	// constraints list when clicked
 	const renderInputValue = (value) => ''
 
-	const handleItemSelect = ({ item: constraint }) => {
+	const handleItemSelect = ({ item }) => {
+		const constraint = item?.constraint ?? item
 		send({ type: ADD_CONSTRAINT, constraint })
 	}
 
 	const handleButtonClick = (constraint) => () => {
 		send({ type: REMOVE_CONSTRAINT, constraint })
+	}
+
+	const handleQueryChange = (query, e) => {
+		if (query === '') {
+			setMatchedItems(availableValues)
+		} else {
+			setMatchedItems(fuse.search(query))
+		}
 	}
 
 	return (
@@ -61,7 +83,8 @@ export const SelectPopup = ({
 										icon={IconNames.REMOVE}
 										small={true}
 										minimal={true}
-										onClick={handleButtonClick(constraint)}
+										// We handle
+										onClick={handleButtonClick(constraint?.item ?? constraint)}
 										aria-label={`delete ${constraint}`}
 										css={{ marginRight: 4 }}
 									/>
@@ -84,6 +107,7 @@ export const SelectPopup = ({
 					inputValueRenderer={renderInputValue}
 					fill={true}
 					onItemSelect={handleItemSelect}
+					onQueryChange={handleQueryChange}
 				/>
 			</FormGroup>
 		</div>
