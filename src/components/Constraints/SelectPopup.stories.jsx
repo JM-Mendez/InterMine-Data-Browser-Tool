@@ -11,8 +11,17 @@ export default {
 	title: 'Components/Popup Cards/Select',
 }
 
-export const SelectBuilder = ({
-	initialState,
+const mockResults = [
+	{ item: 'Signal Transduction', count: 5226 },
+	{ item: 'Signaling by GPCR', count: 2272 },
+	{ item: 'GPCR downstream signaling', count: 2176 },
+	{ item: 'Cytokine Signaling in immune system', count: 1393 },
+]
+
+let count = 0
+
+const SelectBuilder = ({
+	initialState = undefined,
 	selectedValues = [],
 	availableValues = [],
 	machine = null,
@@ -25,9 +34,13 @@ export const SelectBuilder = ({
 		<div css={{ maxWidth: 500, minWidth: 376 }}>
 			<ServiceContext.Provider value={{ state, send }}>
 				<ConstraintPopupCard>
-					<SelectPopup />
+					<SelectPopup label="Protein Name" uniqueId={`select-${count++}`} />
 				</ConstraintPopupCard>
 			</ServiceContext.Provider>
 		</div>
 	)
 }
+
+export const NoValuesFound = () => <SelectBuilder />
+
+export const ConstraintNotSet = () => <SelectBuilder availableValues={mockResults} />
