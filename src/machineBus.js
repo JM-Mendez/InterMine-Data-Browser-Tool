@@ -10,15 +10,7 @@ const enableMocks =
 const serviceStations = new Map()
 export const MockMachineContext = createContext(null)
 
-/**
- * Interprets a machine and registers it on the service bus.
- * If a machine is provided through the MockMachineContext, it will
- * use that machine instead.
- *
- 
- * @param { import('xstate').StateMachine} machine
- * @returns {[import('xstate').State, typeof sendToBus, import('xstate').Interpreter]}
- */
+/** @type {import('./types').useMachineBus} */
 export const useMachineBus = (machine, opts = {}) => {
 	let activeMachine = machine
 
@@ -37,6 +29,7 @@ export const useMachineBus = (machine, opts = {}) => {
 
 	const [machineState, , service] = useMachine(activeMachine, opts)
 
+	/** @type {import('./types').sendToBusWrapper} */
 	const sendToBusWrapper = useMemo(() => {
 		return (event, payload) => {
 			const receiver = serviceStations.get(event?.to ? event.to : service.sessionId)
@@ -65,7 +58,7 @@ export const useMachineBus = (machine, opts = {}) => {
  * Sends a message to all services on the bus. Only the active services
  * who are registered for the event will act.
  *
- * @param {?} event - a string or event object (see https://xstate.js.org/docs/guides/events.html#events)
+ * @param {import('./types').ConstraintEvents} event - a string or event object (see https://xstate.js.org/docs/guides/events.html#events)
  * @param {import('xstate').EventData} [payload] - the payload for the event
  */
 export const sendToBus = (event, payload) => {

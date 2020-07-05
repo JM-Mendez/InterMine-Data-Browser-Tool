@@ -17,7 +17,7 @@ const CheckboxBuilder = ({
 	initialState = '',
 	selectedValues = [],
 	availableValues = organismSummary.results,
-	machine = null,
+	machine = undefined,
 }) => {
 	const [state, send] = useMachineBus(
 		machine ? machine : machineStub(initialState, availableValues, selectedValues)
