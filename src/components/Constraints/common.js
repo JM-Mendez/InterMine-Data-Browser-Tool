@@ -9,7 +9,7 @@ import {
 	RESET_LOCAL_CONSTRAINT,
 } from './actions'
 
-/** @type {import('../../types').constraintMachineFactory} */
+/** @type {import('../../types').ConstraintMachineFactory} */
 export const constraintMachineFactory = ({ id, initial = 'noConstraintsSet' }) => {
 	/** @type {import('../../types').ConstraintMachineConfig} */
 	const config = {

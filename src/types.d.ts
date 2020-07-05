@@ -47,23 +47,26 @@ export type ConstraintMachineConfig = MachineConfig<
 	ConstraintEvents
 >
 
-type ConstraintState = Typestate<ConstraintContext>
+type ConstraintTypeState = Typestate<ConstraintContext>
+export type ConstraintState = State<ConstraintContext, ConstraintEvents>
 
-export type ConstraintStateMachine = StateMachine<
+export type ConstraintTypeStateMachine = StateMachine<
 	ConstraintContext,
 	ConstraintSchema,
 	ConstraintEvents,
-	ConstraintState
+	ConstraintTypeState
 >
 
+// export interface Service extends Interpreter<ConstraintContext, any, ConstraintEvents, any> {
+// 	send: Interpreter<ConstraintContext, any, ConstraintEvents, any>['send']
+// 	state: Interpreter<ConstraintContext, any, ConstraintEvents, any>['state']
+// }
+export type Service = Interpreter<ConstraintContext, any, ConstraintEvents, any>
+
 export type useMachineBus = (
-	machine: ConstraintStateMachine,
+	machine: ConstraintTypeStateMachine,
 	opts?: any
-) => [
-	State<ConstraintContext, ConstraintEvents, any>,
-	any,
-	Interpreter<ConstraintContext, any, ConstraintEvents, any>
-]
+) => [State<ConstraintContext, ConstraintEvents, any>, SendToBusWrapper, Service]
 
 type MachineFactoryOptions = {
 	id: string
@@ -74,9 +77,13 @@ type MachineFactoryOptions = {
 		| 'constraintLimitReached'
 }
 
-export type constraintMachineFactory = (options: MachineFactoryOptions) => ConstraintStateMachine
+export type ConstraintMachineFactory = (
+	options: MachineFactoryOptions
+) => ConstraintTypeStateMachine
 
-export type sendToBusWrapper = (
+export type SendToBusWrapper = (
 	event: ConstraintEvents,
 	payload?: EventData | undefined
-) => State<ConstraintContext, ConstraintEvents, ConstraintSchema, ConstraintState> | void
+) => State<ConstraintContext, ConstraintEvents, ConstraintSchema, ConstraintTypeState> | void
+
+export type UseServiceContext = () => [Service['state'], Service['send']]

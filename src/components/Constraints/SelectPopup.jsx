@@ -16,7 +16,7 @@ export const SelectPopup = ({
 	uniqueId,
 }) => {
 	const [state, send] = useServiceContext()
-	const { availableValues, selectedValues } = state?.context
+	const { availableValues, selectedValues } = state.context
 
 	const [matchedItems, setMatchedItems] = useState(availableValues)
 
@@ -70,8 +70,6 @@ export const SelectPopup = ({
 		}
 	}
 
-	console.log({ unselectedItems })
-
 	return (
 		<div>
 			{selectedValues.length > 0 && (
@@ -96,7 +94,7 @@ export const SelectPopup = ({
 										small={true}
 										minimal={true}
 										// We handle
-										onClick={handleButtonClick(constraint?.item ?? constraint)}
+										onClick={handleButtonClick(constraint)}
 										aria-label={`delete ${constraint}`}
 										css={{ marginRight: 4 }}
 									/>

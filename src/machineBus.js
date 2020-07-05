@@ -29,7 +29,7 @@ export const useMachineBus = (machine, opts = {}) => {
 
 	const [machineState, , service] = useMachine(activeMachine, opts)
 
-	/** @type {import('./types').sendToBusWrapper} */
+	/** @type {import('./types').SendToBusWrapper} */
 	const sendToBusWrapper = useMemo(() => {
 		return (event, payload) => {
 			const receiver = serviceStations.get(event?.to ? event.to : service.sessionId)
@@ -71,6 +71,8 @@ export const sendToBus = (event, payload) => {
 }
 
 export const ServiceContext = createContext(null)
+
+/** @type {import('./types').UseServiceContext} */
 export const useServiceContext = () => {
 	const service = useContext(ServiceContext)
 	if (!service) {
