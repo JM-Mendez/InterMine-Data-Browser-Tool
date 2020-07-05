@@ -1,4 +1,4 @@
-import { Button, Divider, FormGroup, H4 } from '@blueprintjs/core'
+import { Button, Classes, Divider, FormGroup, H4 } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { Suggest } from '@blueprintjs/select'
 import Fuse from 'fuse.js'
@@ -32,7 +32,7 @@ export const SelectPopup = ({
 		return <NoValuesProvided title={nonIdealTitle} description={nonIdealDescription} />
 	}
 
-	const unselectedItems = matchedItems.flatMap((v) => {
+	let unselectedItems = matchedItems.flatMap((v) => {
 		const constraint = v.item?.item ?? v.item
 		const count = v.item?.count ?? v.count
 
@@ -40,6 +40,10 @@ export const SelectPopup = ({
 			? []
 			: [{ name: `${constraint} (${count})`, item: v.item }]
 	})
+
+	if (unselectedItems.length === 0) {
+		unselectedItems = [{ name: 'No items match your search', item: '' }]
+	}
 
 	// Blueprintjs requires a value renderer, but we add the value directly to the
 	// added constraints list when clicked
@@ -65,6 +69,8 @@ export const SelectPopup = ({
 			setMatchedItems(fuse.search(query))
 		}
 	}
+
+	console.log({ unselectedItems })
 
 	return (
 		<div>
@@ -116,6 +122,15 @@ export const SelectPopup = ({
 					onQueryChange={handleQueryChange}
 					closeOnSelect={false}
 					resetOnSelect={true}
+					css={{
+						[`& .${Classes.INPUT}`]: {
+							boxShadow:
+								unselectedItems[0].name === 'No items match your search'
+									? '0 0 0 1px var(--red3), 0 0 0 2px var(--red3), inset 0 0px 0px var(--red9)'
+									: // Use an invalid value here so that it can default to the original styling for non-errors
+									  '',
+						},
+					}}
 				/>
 			</FormGroup>
 		</div>
