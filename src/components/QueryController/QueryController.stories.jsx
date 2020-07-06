@@ -16,11 +16,7 @@ const machine = queryControllerMachine.withContext({
 		{
 			path: 'organism.shortname',
 			op: 'ONE OF',
-			values: [
-				'Gene.organism.shortName = M. musculus',
-				'Gene.organism.shortName = H. sapiens',
-				'Gene LOOKUP MGI:1918911',
-			],
+			values: ['M. musculus', 'H. sapiens', 'R. rerio'],
 		},
 	],
 })

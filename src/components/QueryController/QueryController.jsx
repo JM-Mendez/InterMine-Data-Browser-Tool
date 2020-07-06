@@ -9,6 +9,15 @@ import { NonIdealStateWarning } from '../Shared/NonIdealStates'
 import { PopupCard } from '../Shared/PopupCard'
 import { queryControllerMachine } from './queryControllerMachine'
 
+const getOperantSymbol = (operant) => {
+	switch (operant) {
+		case 'ONE OF':
+			return '='
+		default:
+			return ''
+	}
+}
+
 const CurrentConstraints = ({ currentConstraints, sendMsg }) => {
 	if (currentConstraints.length === 0) {
 		return (
@@ -22,31 +31,31 @@ const CurrentConstraints = ({ currentConstraints, sendMsg }) => {
 	return (
 		<ul css={{ padding: '0 16px', listStyle: 'none' }}>
 			{currentConstraints.flatMap((constraintConfig) => {
-				return constraintConfig?.values.map((constraint) => {
-					return (
-						<li
-							key={constraint}
-							css={{
-								display: 'flex',
-								alignItems: 'center',
-								padding: '6px 0',
-							}}
-						>
+				return (
+					<li key={constraintConfig.path} css={{ alignItems: 'center', padding: '6px 0' }}>
+						<div css={{ display: 'flex' }}>
 							<Button
 								intent="danger"
 								icon={IconNames.REMOVE}
 								small={true}
 								minimal={true}
-								onClick={() => sendMsg({ type: DELETE_QUERY_CONSTRAINT, constraint })}
-								aria-label={`reset constraint ${constraint.replace(/\./g, ' ')}`}
+								onClick={() =>
+									sendMsg({ type: DELETE_QUERY_CONSTRAINT, constraint: constraintConfig.path })
+								}
+								aria-label={`reset constraint ${constraintConfig.path.replace(/\./g, ' ')}`}
 								css={{ marginRight: 4 }}
 							/>
 							<span css={{ fontSize: 'var(--fs-desktopM1)', display: 'inline-block' }}>
-								{constraint}
+								{constraintConfig.path}
 							</span>
-						</li>
-					)
-				})
+						</div>
+						<ul css={{ listStyle: 'none', paddingLeft: 36 }}>
+							{constraintConfig.values.map((value) => {
+								return <li key={value}>{`${getOperantSymbol(constraintConfig.op)} ${value}`}</li>
+							})}
+						</ul>
+					</li>
+				)
 			})}
 		</ul>
 	)
