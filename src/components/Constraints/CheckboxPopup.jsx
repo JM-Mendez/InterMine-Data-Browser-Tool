@@ -11,6 +11,7 @@ export const CheckboxPopup = ({ nonIdealTitle = undefined, nonIdealDescription =
 	const { selectedValues } = state?.context
 
 	const availableValues = [
+		// fixme: remove this mock
 		{ item: 'one specis', count: 0 },
 		{ item: 'two cpesics', count: 0 },
 	]

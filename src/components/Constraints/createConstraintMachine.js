@@ -22,7 +22,11 @@ export const createConstraintMachine = ({ id, initial = 'noConstraintsSet', path
 		initial,
 		context: {
 			selectedValues: [],
-			availableValues: [],
+			availableValues: [
+				// fixme: remove this mock
+				{ item: 'one specis', count: 0 },
+				{ item: 'two cpesics', count: 0 },
+			],
 		},
 		on: {
 			[LOCK_ALL_CONSTRAINTS]: 'constraintLimitReached',
@@ -88,6 +92,9 @@ export const createConstraintMachine = ({ id, initial = 'noConstraintsSet', path
 					path,
 					op,
 					values: ctx.selectedValues,
+					itemDescription: ctx.selectedValues.map((selected) => {
+						return ctx.availableValues.find((v) => v.item === selected)
+					}),
 				}
 
 				sendToBus({ query, to: '*', type: APPLY_CONSTRAINT_TO_QUERY })
