@@ -124,8 +124,8 @@ export type UseMachineBus = <TContext, TEvent extends EventObject>(
 		Partial<MachineOptions<TContext, TEvent>>
 ) => [State<TContext, TEvent>, SendToBusWrapper, Interpreter<TContext, any, TEvent>]
 
-type MachineFactoryOptions = {
-	id: string
+type ConstraintMachineFactoryOpts = {
+	id: 'checkbox' | 'suggest'
 	initial?:
 		| 'noConstraintsSet'
 		| 'constraintsUpdated'

@@ -19,8 +19,6 @@ const mockResults = [
 	{ item: 'Cytokine Signaling in immune system', count: 1393 },
 ]
 
-let count = 0
-
 const SelectBuilder = ({
 	initialState = undefined,
 	selectedValues = [],
@@ -35,7 +33,7 @@ const SelectBuilder = ({
 		<div css={{ maxWidth: 500, minWidth: 376 }}>
 			<ConstraintServiceContext.Provider value={{ state, send }}>
 				<ConstraintPopupCard>
-					<SelectPopup label="Protein Name" uniqueId={`select-${count++}`} />
+					<SelectPopup label="Protein Name" />
 				</ConstraintPopupCard>
 			</ConstraintServiceContext.Provider>
 		</div>
