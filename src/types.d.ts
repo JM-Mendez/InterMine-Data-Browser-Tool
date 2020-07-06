@@ -1,21 +1,25 @@
-import { LOCK_ALL_CONSTRAINTS, RESET_ALL_CONSTRAINTS } from './globalActions'
+import {
+	EventData,
+	EventObject,
+	Interpreter,
+	InterpreterOptions,
+	MachineConfig,
+	MachineOptions,
+	State,
+	StateConfig,
+	StateMachine,
+	StateNode,
+	StateSchema,
+	Typestate,
+} from 'xstate'
 
 import {
-	RESET_LOCAL_CONSTRAINT,
 	ADD_CONSTRAINT,
-	REMOVE_CONSTRAINT,
 	APPLY_CONSTRAINT,
+	REMOVE_CONSTRAINT,
+	RESET_LOCAL_CONSTRAINT,
 } from './components/Constraints/actions'
-import {
-	MachineConfig,
-	StateMachine,
-	StateSchema,
-	EventObject,
-	State,
-	Interpreter,
-	EventData,
-} from 'xstate'
-import { Constraint } from './components/Constraints/Constraint'
+import { LOCK_ALL_CONSTRAINTS, RESET_ALL_CONSTRAINTS } from './globalActions'
 
 export interface ConstraintSchema extends StateSchema {
 	states: {
@@ -50,23 +54,34 @@ export type ConstraintMachineConfig = MachineConfig<
 type ConstraintTypeState = Typestate<ConstraintContext>
 export type ConstraintState = State<ConstraintContext, ConstraintEvents>
 
-export type ConstraintTypeStateMachine = StateMachine<
-	ConstraintContext,
-	ConstraintSchema,
-	ConstraintEvents,
-	ConstraintTypeState
->
+export type ConstraintTypeStateMachine =
+	| StateMachine<ConstraintContext, ConstraintSchema, ConstraintEvents, ConstraintTypeState>
+	| StateNode<ConstraintContext, any, ConstraintEvents, any>
 
-// export interface Service extends Interpreter<ConstraintContext, any, ConstraintEvents, any> {
-// 	send: Interpreter<ConstraintContext, any, ConstraintEvents, any>['send']
-// 	state: Interpreter<ConstraintContext, any, ConstraintEvents, any>['state']
-// }
 export type Service = Interpreter<ConstraintContext, any, ConstraintEvents, any>
 
-export type useMachineBus = (
-	machine: ConstraintTypeStateMachine,
-	opts?: any
-) => [State<ConstraintContext, ConstraintEvents, any>, SendToBusWrapper, Service]
+interface UseMachineOptions<TContext, TEvent extends EventObject> {
+	/**
+	 * If provided, will be merged with machine's `context`.
+	 */
+	context?: Partial<TContext>
+	/**
+	 * If `true`, service will start immediately (before mount).
+	 */
+	immediate: boolean
+	/**
+	 * The state to rehydrate the machine to. The machine will
+	 * start at this state instead of its `initialState`.
+	 */
+	state?: StateConfig<TContext, TEvent>
+}
+
+export type UseMachineBus = <TContext, TEvent extends EventObject>(
+	machine: StateMachine<TContext, any, TEvent>,
+	options?: Partial<InterpreterOptions> &
+		Partial<UseMachineOptions<TContext, TEvent>> &
+		Partial<MachineOptions<TContext, TEvent>>
+) => [State<TContext, TEvent>, SendToBusWrapper, Interpreter<TContext, any, TEvent>]
 
 type MachineFactoryOptions = {
 	id: string
@@ -76,10 +91,6 @@ type MachineFactoryOptions = {
 		| 'constraintsApplied'
 		| 'constraintLimitReached'
 }
-
-export type ConstraintMachineFactory = (
-	options: MachineFactoryOptions
-) => ConstraintTypeStateMachine
 
 export type SendToBusWrapper = (
 	event: ConstraintEvents,

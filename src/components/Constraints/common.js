@@ -9,7 +9,12 @@ import {
 	RESET_LOCAL_CONSTRAINT,
 } from './actions'
 
-/** @type {import('../../types').ConstraintMachineFactory} */
+/**
+ * @param {{
+ * 	id: string,
+ * 	initial?: import('../../types').MachineFactoryOptions['initial']
+ * }} options
+ */
 export const constraintMachineFactory = ({ id, initial = 'noConstraintsSet' }) => {
 	/** @type {import('../../types').ConstraintMachineConfig} */
 	const config = {
@@ -63,9 +68,11 @@ export const constraintMachineFactory = ({ id, initial = 'noConstraintsSet' }) =
 
 	return Machine(config, {
 		actions: {
-			addConstraint: assign((ctx, event) => {
-				ctx.selectedValues.push(event?.constraint)
+			// @ts-ignore
+			addConstraint: assign((ctx, { constraint }) => {
+				ctx.selectedValues.push(constraint)
 			}),
+			// @ts-ignore
 			removeConstraint: assign((ctx, { constraint }) => {
 				ctx.selectedValues = ctx.selectedValues.filter((name) => name !== constraint)
 			}),

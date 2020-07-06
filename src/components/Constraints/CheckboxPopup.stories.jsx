@@ -13,8 +13,16 @@ export default {
 	decorators: [...popupDecorator],
 }
 
+/**
+ * @param {{
+ * 	initialState?: import('../../types').MachineFactoryOptions['initial'],
+ * 	selectedValues?: string[],
+ * 	availableValues?: any[],
+ * 	machine?: import('../../types').ConstraintTypeStateMachine
+ * }} props
+ */
 const CheckboxBuilder = ({
-	initialState = '',
+	initialState,
 	selectedValues = [],
 	availableValues = organismSummary.results,
 	machine = undefined,

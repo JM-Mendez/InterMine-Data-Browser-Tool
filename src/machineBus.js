@@ -10,7 +10,7 @@ const enableMocks =
 const serviceStations = new Map()
 export const MockMachineContext = createContext(null)
 
-/** @type {import('./types').useMachineBus} */
+/** @type {import('./types').UseMachineBus} */
 export const useMachineBus = (machine, opts = {}) => {
 	let activeMachine = machine
 
