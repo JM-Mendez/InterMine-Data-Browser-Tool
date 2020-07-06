@@ -8,20 +8,42 @@ import { SelectPopup } from '../Constraints/SelectPopup'
 import { DATA_VIZ_COLORS } from '../DataViz/dataVizColors'
 import { QueryController } from '../QueryController/QueryController'
 
-const constraintMocks = [
+/** @type {{
+ * 	type: import('../../types').ConstraintMachineFactoryOpts['id']
+ * 	name: string
+ * 	label: string
+ * 	path: string
+ * 	op: import('../../types').ConstraintMachineFactoryOpts['op']
+ * }[]}
+ * */
+const defaultConstraints = [
 	{
 		type: 'checkbox',
-		name: 'organism',
+		name: 'Organism',
 		label: 'Or',
 		path: 'organism.shortname',
-		op: 'ONE_OF',
+		op: 'ONE OF',
+	},
+	{
+		type: 'select',
+		name: 'Pathway Name',
+		label: 'Pn',
+		path: 'pathways.name',
+		op: 'ONE OF',
+	},
+	{
+		type: 'select',
+		name: 'GO Annotation',
+		label: 'GA',
+		path: 'goAnnotation.ontologyTerm.name',
+		op: 'ONE OF',
 	},
 ]
 
 const ConstraintBuilder = ({ constraintConfig, color }) => {
 	const { type, name, label, path, op } = constraintConfig
 
-	const [state, send] = useMachineBus(createConstraintMachine({ id: type }))
+	const [state, send] = useMachineBus(createConstraintMachine({ id: type, path, op }))
 
 	let Popup
 
@@ -64,7 +86,7 @@ export const ConstraintSection = () => {
 					height: '77vh',
 				}}
 			>
-				{constraintMocks.map((config, idx) => (
+				{defaultConstraints.map((config, idx) => (
 					<li css={{ margin: '0.875em 0' }} key={idx}>
 						<ConstraintBuilder
 							constraintConfig={config}
