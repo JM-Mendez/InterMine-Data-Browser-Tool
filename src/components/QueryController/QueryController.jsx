@@ -1,7 +1,7 @@
 import { Button, Divider, H4, H5, NonIdealState, Popover } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import PropTypes from 'prop-types'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import { DELETE_QUERY_CONSTRAINT } from '../../actionConstants'
 import { useMachineBus } from '../../machineBus'
@@ -10,14 +10,6 @@ import { PopupCard } from '../Shared/PopupCard'
 import { queryControllerMachine } from './queryControllerMachine'
 
 const CurrentConstraints = ({ currentConstraints, sendMsg }) => {
-	const [constraints, setConstraints] = useState(currentConstraints)
-
-	useEffect(() => {
-		if (currentConstraints !== constraints) {
-			setConstraints(currentConstraints)
-		}
-	}, [currentConstraints, constraints])
-
 	if (currentConstraints.length === 0) {
 		return (
 			<NonIdealStateWarning
@@ -29,30 +21,32 @@ const CurrentConstraints = ({ currentConstraints, sendMsg }) => {
 
 	return (
 		<ul css={{ padding: '0 16px', listStyle: 'none' }}>
-			{constraints.map((constraint) => {
-				return (
-					<li
-						key={constraint}
-						css={{
-							display: 'flex',
-							alignItems: 'center',
-							padding: '6px 0',
-						}}
-					>
-						<Button
-							intent="danger"
-							icon={IconNames.REMOVE}
-							small={true}
-							minimal={true}
-							onClick={() => sendMsg({ type: DELETE_QUERY_CONSTRAINT, constraint })}
-							aria-label={`reset constraint ${constraint.replace(/\./g, ' ')}`}
-							css={{ marginRight: 4 }}
-						/>
-						<span css={{ fontSize: 'var(--fs-desktopM1)', display: 'inline-block' }}>
-							{constraint}
-						</span>
-					</li>
-				)
+			{currentConstraints.flatMap((constraintConfig) => {
+				return constraintConfig.values.map((constraint) => {
+					return (
+						<li
+							key={constraint}
+							css={{
+								display: 'flex',
+								alignItems: 'center',
+								padding: '6px 0',
+							}}
+						>
+							<Button
+								intent="danger"
+								icon={IconNames.REMOVE}
+								small={true}
+								minimal={true}
+								onClick={() => sendMsg({ type: DELETE_QUERY_CONSTRAINT, constraint })}
+								aria-label={`reset constraint ${constraint.replace(/\./g, ' ')}`}
+								css={{ marginRight: 4 }}
+							/>
+							<span css={{ fontSize: 'var(--fs-desktopM1)', display: 'inline-block' }}>
+								{constraint}
+							</span>
+						</li>
+					)
+				})
 			})}
 		</ul>
 	)

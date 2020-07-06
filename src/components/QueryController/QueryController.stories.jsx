@@ -13,9 +13,15 @@ export default {
 
 const machine = queryControllerMachine.withContext({
 	currentConstraints: [
-		'Gene.organism.shortName = M. musculus',
-		'Gene.organism.shortName = H. sapiens',
-		'Gene LOOKUP MGI:1918911',
+		{
+			path: 'organism.shortname',
+			op: 'ONE OF',
+			values: [
+				'Gene.organism.shortName = M. musculus',
+				'Gene.organism.shortName = H. sapiens',
+				'Gene LOOKUP MGI:1918911',
+			],
+		},
 	],
 })
 
