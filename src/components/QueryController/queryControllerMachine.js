@@ -1,7 +1,8 @@
 import { assign } from '@xstate/immer'
+import { APPLY_CONSTRAINT_TO_QUERY } from 'src/globalActions'
 import { Machine } from 'xstate'
 
-import { ADD_QUERY_CONSTRAINT, DELETE_QUERY_CONSTRAINT } from '../../actionConstants'
+import { DELETE_QUERY_CONSTRAINT } from '../../actionConstants'
 
 export const queryControllerMachine = Machine(
 	{
@@ -16,7 +17,7 @@ export const queryControllerMachine = Machine(
 					[DELETE_QUERY_CONSTRAINT]: {
 						actions: 'removeConstraint',
 					},
-					[ADD_QUERY_CONSTRAINT]: [
+					[APPLY_CONSTRAINT_TO_QUERY]: [
 						{
 							target: 'constraintLimitReached',
 							cond: {
@@ -43,13 +44,13 @@ export const queryControllerMachine = Machine(
 	{
 		actions: {
 			// @ts-ignore
-			addConstraint: assign((ctx, { constraint }) => {
-				ctx.currentConstraints.push(constraint)
+			addConstraint: assign((ctx, { query }) => {
+				ctx.currentConstraints.push(query)
 			}),
 			// @ts-ignore
-			removeConstraint: assign((ctx, { constraint }) => {
+			removeConstraint: assign((ctx, { query }) => {
 				ctx.currentConstraints = ctx.currentConstraints.filter((c) => {
-					return c.path === constraint.path
+					return c.path === query.path
 				})
 			}),
 		},

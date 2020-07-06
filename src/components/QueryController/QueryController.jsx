@@ -22,7 +22,7 @@ const CurrentConstraints = ({ currentConstraints, sendMsg }) => {
 	return (
 		<ul css={{ padding: '0 16px', listStyle: 'none' }}>
 			{currentConstraints.flatMap((constraintConfig) => {
-				return constraintConfig.values.map((constraint) => {
+				return constraintConfig?.values.map((constraint) => {
 					return (
 						<li
 							key={constraint}

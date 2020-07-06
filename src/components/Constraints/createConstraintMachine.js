@@ -83,15 +83,15 @@ export const createConstraintMachine = ({ id, initial = 'noConstraintsSet', path
 				// @ts-ignore
 				ctx.availableValues = event.values
 			}),
-			applyConstraint: assign((ctx) => {
+			applyConstraint: (ctx) => {
 				const query = {
 					path,
 					op,
 					values: ctx.selectedValues,
 				}
 
-				sendToBus({ type: APPLY_CONSTRAINT_TO_QUERY, query })
-			}),
+				sendToBus({ query, to: '*', type: APPLY_CONSTRAINT_TO_QUERY })
+			},
 		},
 		guards: {
 			constraintListIsEmpty: (ctx) => {
