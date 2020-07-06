@@ -3,16 +3,14 @@ import { sendToBus } from 'src/machineBus'
 import { Machine } from 'xstate'
 
 import {
-	APPLY_CONSTRAINT_TO_QUERY,
-	LOCK_ALL_CONSTRAINTS,
-	RESET_ALL_CONSTRAINTS,
-} from '../../globalActions'
-import {
 	ADD_CONSTRAINT,
 	APPLY_CONSTRAINT,
+	APPLY_CONSTRAINT_TO_QUERY,
+	LOCK_ALL_CONSTRAINTS,
 	REMOVE_CONSTRAINT,
+	RESET_ALL_CONSTRAINTS,
 	RESET_LOCAL_CONSTRAINT,
-} from './actions'
+} from '../../actionConstants'
 
 /** @type {import('../../types').CreateConstraintMachine} */
 export const createConstraintMachine = ({ id, initial = 'noConstraintsSet', path = '', op }) => {

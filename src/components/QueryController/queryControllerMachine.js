@@ -1,5 +1,5 @@
 import { assign } from '@xstate/immer'
-import { APPLY_CONSTRAINT_TO_QUERY } from 'src/globalActions'
+import { APPLY_CONSTRAINT_TO_QUERY } from 'src/actionConstants'
 import { Machine } from 'xstate'
 
 import { DELETE_QUERY_CONSTRAINT } from '../../actionConstants'
@@ -49,9 +49,15 @@ export const queryControllerMachine = Machine(
 			}),
 			// @ts-ignore
 			removeConstraint: assign((ctx, { query }) => {
+				const prevCount = ctx.currentConstraints.length
 				ctx.currentConstraints = ctx.currentConstraints.filter((c) => {
-					return c.path === query.path
+					return c.path !== query.path
 				})
+
+				const nextCount = ctx.currentConstraints.length
+
+				if (nextCount !== prevCount) {
+				}
 			}),
 		},
 		guards: {

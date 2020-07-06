@@ -1,8 +1,8 @@
 import { Checkbox, Label } from '@blueprintjs/core'
 import React from 'react'
+import { ADD_CONSTRAINT, REMOVE_CONSTRAINT } from 'src/actionConstants'
 
 import { useServiceContext } from '../../machineBus'
-import { ADD_CONSTRAINT, REMOVE_CONSTRAINT } from './actions'
 import { NoValuesProvided } from './NoValuesProvided'
 
 export const CheckboxPopup = ({ nonIdealTitle = undefined, nonIdealDescription = undefined }) => {

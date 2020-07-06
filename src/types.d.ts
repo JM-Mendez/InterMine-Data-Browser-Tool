@@ -68,7 +68,7 @@ export type ConstraintStateMachine =
 	| StateNode<ConstraintMachineContext, any, ConstraintEvents, any>
 
 /**
- * 
+ *
  */
 export type ImjsOperations = 'ONE OF'
 
@@ -85,7 +85,6 @@ export interface QueryMachineSchema extends StateSchema {
 export interface QueryMachineContext {
 	currentConstraints: QueryConfig[]
 }
-
 
 export type QueryConfig = {
 	path: string
@@ -140,14 +139,6 @@ export type SendToBusWrapper = (
 	ConstraintMachineSchema,
 	ConstraintTypeState
 > | void
-
-type ServiceContextTypes = 'constraints' | 'queryController'
-
-export type ConstraintService = Interpreter<ConstraintMachineContext, any, ConstraintEvents, any>
-export type UseServiceContext = (
-	serviceRequested: ServiceContextTypes
-) => [ConstraintService['state'], ConstraintService['send']]
-
 
 type ConstraintMachineFactoryOpts = {
 	id: 'checkbox' | 'select'
