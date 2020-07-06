@@ -47,6 +47,7 @@ export type ConstraintEvents = EventObject &
 		| { to?: string; type: typeof ADD_CONSTRAINT; constraint: string }
 		| { to?: string; type: typeof REMOVE_CONSTRAINT; constraint: string }
 		| { to?: string; type: typeof APPLY_CONSTRAINT }
+		| { to?: string; type: typeof APPLY_CONSTRAINT_TO_QUERY; query: QueryConfig }
 	)
 
 export type ConstraintMachineConfig = MachineConfig<
@@ -67,6 +68,11 @@ export type ConstraintStateMachine =
 	| StateNode<ConstraintMachineContext, any, ConstraintEvents, any>
 
 /**
+ * 
+ */
+export type ImjsOperations = 'ONE OF'
+
+/**
  * Query Machine
  */
 export interface QueryMachineSchema extends StateSchema {
@@ -80,10 +86,11 @@ export interface QueryMachineContext {
 	currentConstraints: QueryConfig[]
 }
 
+
 export type QueryConfig = {
 	path: string
 	values: string[]
-	op: 'ONE OF'
+	op: ImjsOperations
 }
 
 export type QueryMachineEvents = EventObject &
@@ -124,15 +131,6 @@ export type UseMachineBus = <TContext, TEvent extends EventObject>(
 		Partial<MachineOptions<TContext, TEvent>>
 ) => [State<TContext, TEvent>, SendToBusWrapper, Interpreter<TContext, any, TEvent>]
 
-type ConstraintMachineFactoryOpts = {
-	id: 'checkbox' | 'select'
-	initial?:
-		| 'noConstraintsSet'
-		| 'constraintsUpdated'
-		| 'constraintsApplied'
-		| 'constraintLimitReached'
-}
-
 export type SendToBusWrapper = (
 	event: ConstraintEvents,
 	payload?: EventData | undefined
@@ -149,3 +147,19 @@ export type ConstraintService = Interpreter<ConstraintMachineContext, any, Const
 export type UseServiceContext = (
 	serviceRequested: ServiceContextTypes
 ) => [ConstraintService['state'], ConstraintService['send']]
+
+
+type ConstraintMachineFactoryOpts = {
+	id: 'checkbox' | 'select'
+	initial?:
+		| 'noConstraintsSet'
+		| 'constraintsUpdated'
+		| 'constraintsApplied'
+		| 'constraintLimitReached'
+	path?: string
+	op?: ImjsOperations
+}
+
+export type CreateConstraintMachine = (
+	options: ConstraintMachineFactoryOpts
+) => StateMachine<ConstraintMachineContext, any, ConstraintEvents, any>
