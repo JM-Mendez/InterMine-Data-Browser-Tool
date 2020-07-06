@@ -2,7 +2,7 @@ import React from 'react'
 
 import { ConstraintServiceContext, useMachineBus } from '../../machineBus'
 import { popupDecorator } from '../../utils/storybook'
-import { constraintMachineFactory } from './common'
+import { createConstraintMachine } from './common'
 import { ConstraintPopupCard } from './Constraint'
 import { SelectPopup } from './SelectPopup'
 import { machineStub } from './utils'
@@ -67,7 +67,7 @@ export const ConstraintsApplied = () => (
 export const Playground = () => (
 	<SelectBuilder
 		availableValues={mockResults}
-		machine={constraintMachineFactory({ id: 'select' }).withContext({
+		machine={createConstraintMachine({ id: 'select' }).withContext({
 			selectedValues: [],
 			availableValues: mockResults,
 		})}

@@ -7,15 +7,7 @@ import { Constraint } from '../Constraints/Constraint'
 import { DATA_VIZ_COLORS } from '../DataViz/dataVizColors'
 import { QueryController } from '../QueryController/QueryController'
 
-const constraintMocks = [
-	['Intermine List', 'IL'],
-	['Symbol', 'Sy'],
-	['Organism', 'Or'],
-	['Pathway Name', 'PN'],
-	['GO Annotation', 'GA'],
-	['Expression', 'Ex'],
-	['Interactions', 'In'],
-]
+const constraintMocks = [['Intermine List', 'IL']]
 
 const mockCheckboxMachine = Machine({
 	id: 'mockmachine',
@@ -67,7 +59,11 @@ export const ConstraintSection = () => {
 			>
 				{constraintMocks.map((c, idx) => (
 					<li css={{ margin: '0.875em 0' }} key={idx}>
-						<ConstraintBuilder name={c[0]} label={c[1]} color={DATA_VIZ_COLORS[idx]} />
+						<ConstraintBuilder
+							name={c[0]}
+							label={c[1]}
+							color={DATA_VIZ_COLORS[idx % DATA_VIZ_COLORS.length]}
+						/>
 					</li>
 				))}
 			</ul>

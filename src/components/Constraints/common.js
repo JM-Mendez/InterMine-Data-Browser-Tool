@@ -17,7 +17,7 @@ import {
  *
  * @returns
  */
-export const constraintMachineFactory = ({ id, initial = 'noConstraintsSet' }) => {
+export const createConstraintMachine = ({ id, initial = 'noConstraintsSet' }) => {
 	/** @type {import('../../types').ConstraintMachineConfig} */
 	const config = {
 		id,
