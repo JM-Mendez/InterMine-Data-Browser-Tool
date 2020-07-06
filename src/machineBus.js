@@ -12,15 +12,10 @@ export const MockMachineContext = createContext(null)
 
 /** @type {import('./types').UseMachineBus} */
 export const useMachineBus = (machine, opts = {}) => {
+	const mockMachine = useContext(MockMachineContext)
 	let activeMachine = machine
 
-	if (enableMocks) {
-		// We only use this for storybook configs, so it's
-		// safe to use inside the conditional here. It will
-		// either always be called, or not called at all.
-		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const mockMachine = useContext(MockMachineContext)
-
+	if (enableMocks && mockMachine) {
 		// istanbul ignore
 		if (mockMachine?.id === machine.id) {
 			activeMachine = mockMachine
@@ -32,6 +27,12 @@ export const useMachineBus = (machine, opts = {}) => {
 	/** @type {import('./types').SendToBusWrapper} */
 	const sendToBusWrapper = useMemo(() => {
 		return (event, payload) => {
+			const sendToAll = event?.to === '*'
+
+			if (sendToAll) {
+				return sendToBus(event, payload)
+			}
+
 			const receiver = serviceStations.get(event?.to ? event.to : service.sessionId)
 
 			if (receiver) {
@@ -70,11 +71,24 @@ export const sendToBus = (event, payload) => {
 	})
 }
 
-export const ServiceContext = createContext(null)
+export const ConstraintServiceContext = createContext(null)
+export const QueryServiceContext = createContext(null)
 
 /** @type {import('./types').UseServiceContext} */
-export const useServiceContext = () => {
-	const service = useContext(ServiceContext)
+export const useServiceContext = (serviceRequested = null) => {
+	const constraintService = useContext(ConstraintServiceContext)
+	const queryService = useContext(QueryServiceContext)
+
+	let service
+
+	if (serviceRequested === 'constraints') {
+		service = constraintService
+	}
+
+	if (serviceRequested === 'queryController') {
+		service = queryService
+	}
+
 	if (!service) {
 		throw Error('You MUST have a ServiceContext up the tree from this component')
 	}

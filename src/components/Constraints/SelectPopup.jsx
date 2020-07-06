@@ -15,7 +15,7 @@ export const SelectPopup = ({
 	label,
 	uniqueId,
 }) => {
-	const [state, send] = useServiceContext()
+	const [state, send] = useServiceContext('constraints')
 	const { availableValues, selectedValues } = state.context
 
 	const [matchedItems, setMatchedItems] = useState(availableValues)

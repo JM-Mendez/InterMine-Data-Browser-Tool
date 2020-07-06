@@ -7,7 +7,7 @@ import { ADD_CONSTRAINT, REMOVE_CONSTRAINT } from './actions'
 import { NoValuesProvided } from './NoValuesProvided'
 
 export const CheckboxPopup = ({ title = undefined, description = undefined }) => {
-	const [state, send] = useServiceContext()
+	const [state, send] = useServiceContext('constraints')
 
 	const { availableValues, selectedValues } = state?.context
 
