@@ -1,3 +1,4 @@
+import { ADD_QUERY_CONSTRAINT, DELETE_QUERY_CONSTRAINT } from 'src/actionConstants'
 import {
 	EventData,
 	EventObject,
@@ -21,6 +22,85 @@ import {
 } from './components/Constraints/actions'
 import { LOCK_ALL_CONSTRAINTS, RESET_ALL_CONSTRAINTS } from './globalActions'
 
+/**
+ * Constraint Machines
+ */
+export interface ConstraintMachineSchema extends StateSchema {
+	states: {
+		noConstraintsSet: {}
+		constraintsUpdated: {}
+		constraintsApplied: {}
+		constraintLimitReached: {}
+	}
+}
+
+export interface ConstraintMachineContext {
+	selectedValues: string[]
+	availableValues: any[]
+}
+
+export type ConstraintEvents = EventObject &
+	(
+		| { to?: string; type: typeof LOCK_ALL_CONSTRAINTS }
+		| { to?: string; type: typeof RESET_ALL_CONSTRAINTS }
+		| { to?: string; type: typeof RESET_LOCAL_CONSTRAINT }
+		| { to?: string; type: typeof ADD_CONSTRAINT; constraint: string }
+		| { to?: string; type: typeof REMOVE_CONSTRAINT; constraint: string }
+		| { to?: string; type: typeof APPLY_CONSTRAINT }
+	)
+
+export type ConstraintMachineConfig = MachineConfig<
+	ConstraintMachineContext,
+	ConstraintMachineSchema,
+	ConstraintEvents
+>
+
+type ConstraintTypeState = Typestate<ConstraintMachineContext>
+
+export type ConstraintStateMachine =
+	| StateMachine<
+			ConstraintMachineContext,
+			ConstraintMachineSchema,
+			ConstraintEvents,
+			ConstraintTypeState
+	  >
+	| StateNode<ConstraintMachineContext, any, ConstraintEvents, any>
+
+/**
+ * Query Machine
+ */
+export interface QueryMachineSchema extends StateSchema {
+	states: {
+		idle: {}
+		constraintLimitReached: {}
+	}
+}
+
+export interface QueryMachineContext {
+	currentConstraints: QueryConfig[]
+}
+
+export type QueryConfig = {
+	path: string
+	values: string[]
+	op: 'ONE OF'
+}
+
+export type QueryMachineEvents = EventObject &
+	(
+		| { to?: string; type: typeof DELETE_QUERY_CONSTRAINT; constraint: QueryConfig }
+		| { to?: string; type: typeof ADD_QUERY_CONSTRAINT; constraint: QueryConfig }
+	)
+
+export type QueryMachineConfig = MachineConfig<
+	QueryMachineContext,
+	QueryMachineSchema,
+	QueryMachineEvents
+>
+
+/**
+ * Machine bus
+ */
 interface UseMachineOptions<TContext, TEvent extends EventObject> {
 	/**
 	 * If provided, will be merged with machine's `context`.
@@ -53,50 +133,19 @@ type MachineFactoryOptions = {
 		| 'constraintLimitReached'
 }
 
-export interface ConstraintSchema extends StateSchema {
-	states: {
-		noConstraintsSet: {}
-		constraintsUpdated: {}
-		constraintsApplied: {}
-		constraintLimitReached: {}
-	}
-}
-
-export type ConstraintMachineConfig = MachineConfig<
-	ConstraintContext,
-	ConstraintSchema,
-	ConstraintEvents
->
-
-type ConstraintTypeState = Typestate<ConstraintContext>
-
-export type ConstraintStateMachine =
-	| StateMachine<ConstraintContext, ConstraintSchema, ConstraintEvents, ConstraintTypeState>
-	| StateNode<ConstraintContext, any, ConstraintEvents, any>
-
 export type SendToBusWrapper = (
 	event: ConstraintEvents,
 	payload?: EventData | undefined
-) => State<ConstraintContext, ConstraintEvents, ConstraintSchema, ConstraintTypeState> | void
-
-export type ConstraintEvents = EventObject &
-	(
-		| { to?: string; type: typeof LOCK_ALL_CONSTRAINTS }
-		| { to?: string; type: typeof RESET_ALL_CONSTRAINTS }
-		| { to?: string; type: typeof RESET_LOCAL_CONSTRAINT }
-		| { to?: string; type: typeof ADD_CONSTRAINT; constraint: string }
-		| { to?: string; type: typeof REMOVE_CONSTRAINT; constraint: string }
-		| { to?: string; type: typeof APPLY_CONSTRAINT }
-	)
-
-export interface ConstraintContext {
-	selectedValues: string[]
-	availableValues: any[]
-}
+) => State<
+	ConstraintMachineContext,
+	ConstraintEvents,
+	ConstraintMachineSchema,
+	ConstraintTypeState
+> | void
 
 type ServiceContextTypes = 'constraints' | 'queryController'
 
-export type ConstraintService = Interpreter<ConstraintContext, any, ConstraintEvents, any>
+export type ConstraintService = Interpreter<ConstraintMachineContext, any, ConstraintEvents, any>
 export type UseServiceContext = (
 	serviceRequested: ServiceContextTypes
 ) => [ConstraintService['state'], ConstraintService['send']]

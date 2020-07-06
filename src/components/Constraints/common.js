@@ -14,6 +14,8 @@ import {
  * 	id: string,
  * 	initial?: import('../../types').MachineFactoryOptions['initial']
  * }} options
+ *
+ * @returns
  */
 export const constraintMachineFactory = ({ id, initial = 'noConstraintsSet' }) => {
 	/** @type {import('../../types').ConstraintMachineConfig} */
