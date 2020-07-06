@@ -17,7 +17,7 @@
 	},
 	"scripts": {
 		"analyze": "cross-env ANALYZE=true yarn run build",
-		"build": "yarn build:css && cross-env EXTEND_ESLINT=true TSC_COMPILE_ON_ERROR=true craco build",
+		"build": "yarn build:css && cross-env EXTEND_ESLINT=true craco build",
 		"build:css": "node-sass --importer=./node_modules/node-sass-magic-importer/dist/cli --include-path ./src  --include-path ./node_modules/ ./src/theme -o ./src/theme",
 		"eject": "craco eject",
 		"lint": "concurrently \"yarn:lint:*\"",
@@ -25,7 +25,7 @@
 		"lint:js": "cross-env NODE_ENV=development eslint src/**/*.{js,jsx}",
 		"serve:app": "serve build",
 		"serve:orig": "serve orig_app",
-		"start": "yarn build:css && cross-env EXTEND_ESLINT=true TSC_COMPILE_ON_ERROR=true craco start",
+		"start": "yarn build:css && cross-env EXTEND_ESLINT=true craco start",
 		"storybook": "yarn build:css && cross-env EXTEND_ESLINT=true start-storybook -p 9000",
 		"storybook:build": "yarn build:css && cross-env STORYBOOK_USEMOCK=true EXTEND_ESLINT=true build-storybook --no-dll -c .storybook -o storybook-dist",
 		"test": "craco test",

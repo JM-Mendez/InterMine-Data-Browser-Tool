@@ -4,8 +4,8 @@ import { ConstraintServiceContext, useMachineBus } from '../../machineBus'
 import { organismSummary } from '../../stubs/geneSummaries'
 import { popupDecorator } from '../../utils/storybook'
 import { CheckboxPopup } from './CheckboxPopup'
-import { createConstraintMachine } from './common'
 import { ConstraintPopupCard } from './Constraint'
+import { createConstraintMachine } from './createConstraintMachine'
 import { machineStub } from './utils'
 
 export default {

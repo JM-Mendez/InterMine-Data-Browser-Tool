@@ -2,8 +2,8 @@ import React from 'react'
 
 import { ConstraintServiceContext, useMachineBus } from '../../machineBus'
 import { popupDecorator } from '../../utils/storybook'
-import { createConstraintMachine } from './common'
 import { ConstraintPopupCard } from './Constraint'
+import { createConstraintMachine } from './createConstraintMachine'
 import { SelectPopup } from './SelectPopup'
 import { machineStub } from './utils'
 
