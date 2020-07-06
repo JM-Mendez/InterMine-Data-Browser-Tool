@@ -11,8 +11,8 @@ import {
 
 /**
  * @param {{
- * 	id: string,
- * 	initial?: import('../../types').MachineFactoryOptions['initial']
+ * 	id: import('../../types').ConstraintMachineFactoryOpts['id'],
+ * 	initial?: import('../../types').ConstraintMachineFactoryOpts['initial']
  * }} options
  *
  * @returns

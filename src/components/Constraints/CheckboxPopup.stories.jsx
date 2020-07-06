@@ -15,7 +15,7 @@ export default {
 
 /**
  * @param {{
- * 	initialState?: import('../../types').MachineFactoryOptions['initial'],
+ * 	initialState?: import('../../types').ConstraintMachineFactoryOpts['initial'],
  * 	selectedValues?: string[],
  * 	availableValues?: any[],
  * 	machine?: import('../../types').ConstraintStateMachine

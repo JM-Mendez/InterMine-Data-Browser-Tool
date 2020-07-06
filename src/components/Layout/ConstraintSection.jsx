@@ -1,38 +1,45 @@
 import React from 'react'
-import { Machine } from 'xstate'
 
 import { ConstraintServiceContext, useMachineBus } from '../../machineBus'
 import { CheckboxPopup } from '../Constraints/CheckboxPopup'
+import { createConstraintMachine } from '../Constraints/common'
 import { Constraint } from '../Constraints/Constraint'
+import { SelectPopup } from '../Constraints/SelectPopup'
 import { DATA_VIZ_COLORS } from '../DataViz/dataVizColors'
 import { QueryController } from '../QueryController/QueryController'
 
-const constraintMocks = [['Intermine List', 'IL']]
-
-const mockCheckboxMachine = Machine({
-	id: 'mockmachine',
-	initial: 'noConstraintsSet',
-	context: {
-		selectedValues: [],
-		availableValues: [],
+const constraintMocks = [
+	{
+		type: 'checkbox',
+		name: 'organism',
+		label: 'Or',
+		path: 'organism.shortname',
+		op: 'ONE_OF',
 	},
-	states: {
-		noConstraintsSet: {},
-		constraintsUpdated: {},
-		constraintsApplied: {},
-		constraintsLimitReached: {},
-	},
-})
+]
 
-const ConstraintBuilder = ({ name, label, color }) => {
-	const [state, send] = useMachineBus(mockCheckboxMachine)
+const ConstraintBuilder = ({ constraintConfig, color }) => {
+	const { type, name, label, path, op } = constraintConfig
+
+	const [state, send] = useMachineBus(createConstraintMachine({ id: type }))
+
+	let Popup
+
+	switch (type) {
+		case 'checkbox':
+			Popup = CheckboxPopup
+			break
+		default:
+			Popup = SelectPopup
+			break
+	}
 
 	return (
 		<ConstraintServiceContext.Provider value={{ state, send }}>
 			<Constraint constraintIconText={label} constraintName={name} labelBorderColor={color}>
-				<CheckboxPopup
-					title="No items found"
-					description="If you feel this is a mistake, try refreshing the browser. If that doesn't work, let us know"
+				<Popup
+					nonIdealTitle="No items found"
+					nonIdealDescription="If you feel this is a mistake, try refreshing the browser. If that doesn't work, let us know"
 				/>
 			</Constraint>
 		</ConstraintServiceContext.Provider>
@@ -57,11 +64,10 @@ export const ConstraintSection = () => {
 					height: '77vh',
 				}}
 			>
-				{constraintMocks.map((c, idx) => (
+				{constraintMocks.map((config, idx) => (
 					<li css={{ margin: '0.875em 0' }} key={idx}>
 						<ConstraintBuilder
-							name={c[0]}
-							label={c[1]}
+							constraintConfig={config}
 							color={DATA_VIZ_COLORS[idx % DATA_VIZ_COLORS.length]}
 						/>
 					</li>
