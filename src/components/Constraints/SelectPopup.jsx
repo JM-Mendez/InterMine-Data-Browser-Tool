@@ -53,7 +53,7 @@ export const SelectPopup = ({
 
 	const filterQuery = (query, items) => {
 		if (query === '') {
-			return items
+			return items.filter((i) => !selectedValues.includes(i.name))
 		}
 
 		const fuseResults = fuse.current.search(query)
