@@ -2,7 +2,7 @@ import { Button, Classes, Divider, FormGroup, H4 } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { Suggest } from '@blueprintjs/select'
 import Fuse from 'fuse.js'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { ADD_CONSTRAINT, REMOVE_CONSTRAINT } from 'src/actionConstants'
 import { generateId } from 'src/generateId'
 
@@ -19,12 +19,12 @@ export const SelectPopup = ({
 	const [state, send] = useServiceContext('constraints')
 	const { availableValues, selectedValues } = state.context
 
-	const [matchedItems, setMatchedItems] = useState(availableValues)
+	const fuse = useRef(new Fuse([]))
 
-	const fuse = useMemo(() => {
+	useEffect(() => {
 		const origValues = [...availableValues]
 
-		return new Fuse(origValues, {
+		fuse.current = new Fuse(origValues, {
 			keys: ['item'],
 		})
 	}, [availableValues])
@@ -33,14 +33,7 @@ export const SelectPopup = ({
 		return <NoValuesProvided title={nonIdealTitle} description={nonIdealDescription} />
 	}
 
-	let unselectedItems = matchedItems.flatMap((v) => {
-		const constraint = v.item?.item ?? v.item
-		const count = v.item?.count ?? v.count
-
-		return selectedValues.includes(v.item)
-			? []
-			: [{ name: `${constraint} (${count})`, item: v.item }]
-	})
+	let unselectedItems = availableValues.map((i) => ({ name: i.item, count: i.count }))
 
 	if (unselectedItems.length === 0) {
 		unselectedItems = [{ name: 'No items match your search', item: '' }]
@@ -50,25 +43,21 @@ export const SelectPopup = ({
 	// added constraints list when clicked
 	const renderInputValue = () => ''
 
-	const handleItemSelect = ({ item }) => {
-		const constraint = item?.item ?? item
-
-		fuse.remove((doc) => {
-			return doc?.item === constraint
-		})
-		send({ type: ADD_CONSTRAINT, constraint })
+	const handleItemSelect = ({ name }) => {
+		send({ type: ADD_CONSTRAINT, constraint: name })
 	}
 
 	const handleButtonClick = (constraint) => () => {
 		send({ type: REMOVE_CONSTRAINT, constraint })
 	}
 
-	const handleQueryChange = (query, e) => {
+	const filterQuery = (query, items) => {
 		if (query === '') {
-			setMatchedItems(availableValues)
-		} else {
-			setMatchedItems(fuse.search(query))
+			return items
 		}
+
+		const fuseResults = fuse.current.search(query)
+		return fuseResults.map((r) => ({ name: r.item.item, count: r.item.count }))
 	}
 
 	return (
@@ -116,20 +105,10 @@ export const SelectPopup = ({
 					items={unselectedItems}
 					itemRenderer={PlainSelectMenuItems}
 					inputValueRenderer={renderInputValue}
+					itemListPredicate={filterQuery}
 					fill={true}
 					onItemSelect={handleItemSelect}
-					onQueryChange={handleQueryChange}
-					closeOnSelect={false}
 					resetOnSelect={true}
-					css={{
-						[`& .${Classes.INPUT}`]: {
-							boxShadow:
-								unselectedItems[0].name === 'No items match your search'
-									? '0 0 0 1px var(--red3), 0 0 0 2px var(--red3), inset 0 0px 0px var(--red9)'
-									: // Use an invalid value here so that it can default to the original styling for non-errors
-									  '',
-						},
-					}}
 				/>
 			</FormGroup>
 		</div>
