@@ -37,6 +37,7 @@ export interface ConstraintMachineSchema extends StateSchema {
 export interface ConstraintMachineContext {
 	selectedValues: string[]
 	availableValues: any[]
+	constraintPath: string
 }
 
 export type ConstraintEvents = EventObject &
@@ -48,6 +49,7 @@ export type ConstraintEvents = EventObject &
 		| { to?: string; type: typeof REMOVE_CONSTRAINT; constraint: string }
 		| { to?: string; type: typeof APPLY_CONSTRAINT }
 		| { to?: string; type: typeof APPLY_CONSTRAINT_TO_QUERY; query: QueryConfig }
+		| { to?: string; type: typeof DELETE_QUERY_CONSTRAINT; path: string }
 	)
 
 export type ConstraintMachineConfig = MachineConfig<

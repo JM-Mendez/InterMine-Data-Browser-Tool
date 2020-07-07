@@ -68,6 +68,7 @@ export const Playground = () => {
 	const machine = createConstraintMachine({ id: 'checkbox' }).withContext({
 		selectedValues: [],
 		availableValues: organismSummary.results,
+		constraintPath: '',
 	})
 
 	return <CheckboxBuilder machine={machine} />

@@ -68,6 +68,7 @@ export const Playground = () => (
 		machine={createConstraintMachine({ id: 'select' }).withContext({
 			selectedValues: [],
 			availableValues: mockResults,
+			constraintPath: '',
 		})}
 	/>
 )

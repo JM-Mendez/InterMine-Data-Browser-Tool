@@ -12,8 +12,8 @@ export const CheckboxPopup = ({ nonIdealTitle = undefined, nonIdealDescription =
 
 	const availableValues = [
 		// fixme: remove this mock
-		{ item: 'one specis', count: 0 },
-		{ item: 'two cpesics', count: 0 },
+		{ item: 'one species', count: 0 },
+		{ item: 'two chemics', count: 0 },
 	]
 
 	if (availableValues.length === 0) {

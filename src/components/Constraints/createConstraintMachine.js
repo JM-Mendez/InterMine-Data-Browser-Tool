@@ -10,6 +10,7 @@ import {
 	REMOVE_CONSTRAINT,
 	RESET_ALL_CONSTRAINTS,
 	RESET_LOCAL_CONSTRAINT,
+	UNSET_CONSTRAINT,
 } from '../../actionConstants'
 
 /** @type {import('../../types').CreateConstraintMachine} */
@@ -19,17 +20,19 @@ export const createConstraintMachine = ({ id, initial = 'noConstraintsSet', path
 		id,
 		initial,
 		context: {
+			constraintPath: path,
 			selectedValues: [],
 			availableValues: [
 				// fixme: remove this mock
-				{ item: 'one specis', count: 0 },
-				{ item: 'two cpesics', count: 0 },
+				{ item: 'one species', count: 0 },
+				{ item: 'two chemics', count: 0 },
 			],
 		},
 		on: {
 			[LOCK_ALL_CONSTRAINTS]: 'constraintLimitReached',
 			[RESET_ALL_CONSTRAINTS]: { target: 'noConstraintsSet', actions: 'removeAll' },
 			[RESET_LOCAL_CONSTRAINT]: { target: 'noConstraintsSet', actions: 'removeAll' },
+			[UNSET_CONSTRAINT]: { target: 'constraintsUpdated', cond: 'pathMatches' },
 		},
 		states: {
 			noConstraintsSet: {
@@ -101,6 +104,10 @@ export const createConstraintMachine = ({ id, initial = 'noConstraintsSet', path
 		guards: {
 			constraintListIsEmpty: (ctx) => {
 				return ctx.selectedValues.length === 0
+			},
+			// @ts-ignore
+			pathMatches: (ctx, { path }) => {
+				return ctx.constraintPath === path
 			},
 		},
 	})

@@ -1,5 +1,6 @@
 import { assign } from '@xstate/immer'
-import { APPLY_CONSTRAINT_TO_QUERY } from 'src/actionConstants'
+import { APPLY_CONSTRAINT_TO_QUERY, UNSET_CONSTRAINT } from 'src/actionConstants'
+import { sendToBus } from 'src/machineBus'
 import { Machine } from 'xstate'
 
 import { DELETE_QUERY_CONSTRAINT } from '../../actionConstants'
@@ -14,9 +15,7 @@ export const queryControllerMachine = Machine(
 		states: {
 			idle: {
 				on: {
-					[DELETE_QUERY_CONSTRAINT]: {
-						actions: 'removeConstraint',
-					},
+					[DELETE_QUERY_CONSTRAINT]: { actions: 'removeConstraint' },
 					[APPLY_CONSTRAINT_TO_QUERY]: [
 						{
 							target: 'constraintLimitReached',
@@ -57,6 +56,7 @@ export const queryControllerMachine = Machine(
 				const nextCount = ctx.currentConstraints.length
 
 				if (nextCount !== prevCount) {
+					sendToBus({ type: UNSET_CONSTRAINT, path: query.path })
 				}
 			}),
 		},
