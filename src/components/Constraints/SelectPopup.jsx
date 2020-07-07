@@ -1,4 +1,4 @@
-import { Button, Classes, Divider, FormGroup, H4 } from '@blueprintjs/core'
+import { Button, Classes, Divider, FormGroup, H4, MenuItem } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { Suggest } from '@blueprintjs/select'
 import Fuse from 'fuse.js'
@@ -39,8 +39,8 @@ export const SelectPopup = ({
 		unselectedItems = [{ name: 'No items match your search', item: '' }]
 	}
 
-	// Blueprintjs requires a value renderer, but we add the value directly to the
-	// added constraints list when clicked
+	// Blueprintjs requires a value renderer to display a value when selected. But we add
+	// the value directly to the added constraints list when clicked, so we reset the input here
 	const renderInputValue = () => ''
 
 	const handleItemSelect = ({ name }) => {
@@ -109,6 +109,7 @@ export const SelectPopup = ({
 					fill={true}
 					onItemSelect={handleItemSelect}
 					resetOnSelect={true}
+					noResults={<MenuItem disabled={true} text="No results match your entry" />}
 				/>
 			</FormGroup>
 		</div>
