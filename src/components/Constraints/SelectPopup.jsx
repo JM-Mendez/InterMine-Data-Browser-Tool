@@ -22,21 +22,14 @@ export const SelectPopup = ({
 	const fuse = useRef(new Fuse([]))
 
 	useEffect(() => {
-		const origValues = [...availableValues]
-
-		fuse.current = new Fuse(origValues, {
+		fuse.current = new Fuse(availableValues, {
 			keys: ['item'],
+			useExtendedSearch: true,
 		})
 	}, [availableValues])
 
 	if (availableValues.length === 0) {
 		return <NoValuesProvided title={nonIdealTitle} description={nonIdealDescription} />
-	}
-
-	let unselectedItems = availableValues.map((i) => ({ name: i.item, count: i.count }))
-
-	if (unselectedItems.length === 0) {
-		unselectedItems = [{ name: 'No items match your search', item: '' }]
 	}
 
 	// Blueprintjs requires a value renderer to display a value when selected. But we add
@@ -57,7 +50,13 @@ export const SelectPopup = ({
 		}
 
 		const fuseResults = fuse.current.search(query)
-		return fuseResults.map((r) => ({ name: r.item.item, count: r.item.count }))
+		return fuseResults.flatMap((r) => {
+			if (selectedValues.includes(r.item.item)) {
+				return []
+			}
+
+			return [{ name: r.item.item, count: r.item.count }]
+		})
 	}
 
 	return (
@@ -102,7 +101,7 @@ export const SelectPopup = ({
 				<Suggest
 					// @ts-ignore
 					id={`selectPopup-${uniqueId}`}
-					items={unselectedItems}
+					items={availableValues.map((i) => ({ name: i.item, count: i.count }))}
 					itemRenderer={PlainSelectMenuItems}
 					inputValueRenderer={renderInputValue}
 					itemListPredicate={filterQuery}
